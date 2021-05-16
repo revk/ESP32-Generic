@@ -4,8 +4,26 @@ static const char TAG[] = "BatMon";
 
 #include "revk.h"
 #include "esp_sleep.h"          // esp_sleep_enable_ulp_wakeup(), esp_deep_sleep_start()
-#include "ulp-util.h"
+#include "esp32/ulp.h"
+#include "ulp-main.h"
 #include "wake.h"
+
+#ifndef CONFIG_ESP32_ULP_COPROC_ENABLED
+#error Set CONFIG_ESP32_ULP_COPROC_ENABLED
+#endif
+
+extern const uint8_t _ulp_start[] asm("_binary_ulp_main_bin_start");
+extern const uint8_t _ulp_end[] asm("_binary_ulp_main_bin_end");
+
+void ulp_init()
+{
+   ESP_ERROR_CHECK(ulp_load_binary(0, _ulp_start, (_ulp_end - _ulp_start) / sizeof(ulp_entry)));
+}
+
+void ulp_start()
+{
+   ESP_ERROR_CHECK(ulp_run(&ulp_entry - RTC_SLOW_MEM));
+}
 
 uint8_t busy = 0;               // Don't sleep
 
@@ -25,11 +43,16 @@ void app_main()
          usleep(100000);
       else
          break;
+   ESP_LOGE(TAG,"Online");
    // Do some stuff...
    // Now to sleep
    sleep(10);
    if (busy)
-      return;
+   {
+      ESP_LOGE(TAG, "Waiting");
+      while (1)
+         sleep(1);
+   }
    revk_mqtt_close("Sleep");
    time_t now = time(0);
    //ulp_time = 1000 * (60 - (now % 60));;
