@@ -6,7 +6,6 @@ static const char TAG[] = "BatMon";
 #include "esp_sleep.h"          // esp_sleep_enable_ulp_wakeup(), esp_deep_sleep_start()
 #include "esp32/ulp.h"
 #include "ulp-main.h"
-#include "wake.h"
 
 #ifndef CONFIG_ESP32_ULP_COPROC_ENABLED
 #error Set CONFIG_ESP32_ULP_COPROC_ENABLED
