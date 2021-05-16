@@ -30,8 +30,10 @@ void app_main()
    sleep(10);
    if (busy)
       return;
+   revk_mqtt_close();
+   usleep(10000);
    time_t now = time(0);
-   ulp_time = 1000 * (60 - (now % 60));;
+   //ulp_time = 1000 * (60 - (now % 60));;
    ESP_LOGE(TAG, "Going to sleep %dms", ulp_time);
    ulp_init();
    ulp_start();
