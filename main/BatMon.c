@@ -29,6 +29,7 @@ uint8_t busy = 0;               // Don't sleep
 
 const char *app_command(const char *tag, unsigned int len, const unsigned char *value)
 {
+	ESP_LOGE(TAG,"%s",tag);
    if (!strcmp(tag, "upgrade"))
       busy = 1;
    return "";
@@ -43,23 +44,28 @@ void app_main()
          usleep(100000);
       else
          break;
-   ESP_LOGE(TAG,"Online");
+   ESP_LOGE(TAG, "Online");
    // Do some stuff...
    // Now to sleep
-   sleep(10);
+   sleep(5);
    if (busy)
    {
       ESP_LOGE(TAG, "Waiting");
       while (1)
          sleep(1);
    }
+   ESP_LOGE(TAG, "Sleeping");
    revk_mqtt_close("Sleep");
    time_t now = time(0);
-   //ulp_time = 1000 * (60 - (now % 60));;
-   //ESP_LOGE(TAG, "Going to sleep %dms", ulp_time);
+   ulp_time = 1000 * (60 - (now % 60));;
+   ESP_LOGE(TAG, "Going to sleep %dms", ulp_time);
    ulp_init();
-   ulp_start();
    esp_sleep_enable_ulp_wakeup();
+   ulp_start();
+   ESP_LOGE(TAG, "Deep sleep");
    esp_deep_sleep_start();
-   ESP_LOGE(TAG, "awake");
+   // Should not get here
+   ESP_LOGE(TAG, "Awake");
+   while (1)
+      sleep(1);
 }

@@ -2,16 +2,28 @@
 #include "soc/soc_ulp.h"
 #include "soc/rtc_io_reg.h"
 
-    .bss
-
-    .text
 	.global entry
+	.global	time
 
+	.data
+time:
+	.long 10000
+
+    	.text
 entry:
-	wait 1000
-end:
-	wake
+	move r1,time
+	ld r1,r1,0
+	move r2,done
+
+loop:
+	wait 8000
+	sub r1,r1,1
+	jump r2,eq
+	jump loop
+
 done:
+	wake
+	wait 65535
 	jump done
 
 
