@@ -36,7 +36,7 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
 
 void app_main()
 {
-   ESP_LOGE(TAG, "Start");
+   ESP_LOGE(TAG, "Start %ld",time(0)%60);
    revk_init(&app_command);
    for (int t = 100; t; t--)
       if (revk_offline())
@@ -59,7 +59,7 @@ void app_main()
    revk_mqtt_close("Sleep");
    ulp_init();
    time_t now = time(0);
-   ulp_time = 1000 * (60 - (now % 60)); // After init else overwrites
+   ulp_time = 1000 * (60 - (now % 60));
    ESP_LOGE(TAG, "Going to sleep %dms now=%ld", ulp_time, now);
    esp_sleep_enable_ulp_wakeup();
    ulp_start();
