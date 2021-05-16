@@ -7,7 +7,7 @@
 
 	.data
 time:
-	.long 10000
+	.long 1000
 
     	.text
 entry:
