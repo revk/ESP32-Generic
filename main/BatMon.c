@@ -47,7 +47,7 @@ void app_main()
    ESP_LOGE(TAG, "Online");
    // Do some stuff...
    // Now to sleep
-   sleep(5);
+   sleep(1);
    if (busy)
    {
       ESP_LOGE(TAG, "Waiting");

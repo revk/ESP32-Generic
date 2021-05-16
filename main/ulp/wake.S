@@ -23,7 +23,6 @@ loop:
 
 done:
 	wake
-	wait 65535
-	jump done
+	halt
 
 
