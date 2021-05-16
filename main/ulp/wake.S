@@ -23,6 +23,7 @@ loop:
 
 done:
 	wake
+	REG_WR 0x006, 24, 24, 0 // Stop ULP timer (clear RTC_CNTL_ULP_CP_SLP_TIMER_EN)
 	halt
 
 
