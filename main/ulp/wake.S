@@ -16,7 +16,7 @@ entry:
 	move r2,done
 
 loop:
-	wait 8000
+	wait 7980 // one second less time to loop
 	sub r1,r1,1
 	jump r2,eq
 	jump loop

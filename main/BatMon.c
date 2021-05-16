@@ -44,7 +44,7 @@ void app_main()
          usleep(100000);
       else
          break;
-   ESP_LOGE(TAG, "Online");
+   ESP_LOGE(TAG, "Online %d",revk_offline());
    // Do some stuff...
    // Now to sleep
    sleep(1);
@@ -58,7 +58,7 @@ void app_main()
    revk_mqtt_close("Sleep");
    time_t now = time(0);
    ulp_time = 1000 * (60 - (now % 60));;
-   ESP_LOGE(TAG, "Going to sleep %dms", ulp_time);
+   ESP_LOGE(TAG, "Going to sleep %dms now=%ld", ulp_time,now);
    ulp_init();
    esp_sleep_enable_ulp_wakeup();
    ulp_start();
