@@ -9,7 +9,7 @@ static const char TAG[] = "BatMon";
 
 #define	settings		\
 	u32(period,60)	\
-	u32(awake,10)	\
+	u32(awake,1)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
