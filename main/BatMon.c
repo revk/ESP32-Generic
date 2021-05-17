@@ -70,9 +70,13 @@ void app_main()
          usleep(100000);
       else
          break;
-   ESP_LOGE(TAG, "Online %lld", esp_timer_get_time());
-   while (time(0) < 10)
-      sleep(1);                 // Wait clock set
+   if (time(0) < 10)
+   {
+      ESP_LOGE(TAG, "Wait clock set");
+      while (time(0) < 10)
+         sleep(1);              // Wait clock set
+   }
+   ESP_LOGE(TAG, "Online for %d", awake);
    // Do some stuff...
    // Now to sleep
    sleep(awake);
