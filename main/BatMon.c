@@ -50,7 +50,6 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
 
 void app_main()
 {
-   ESP_LOGE(TAG, "Start %ld", time(0) % period);
    revk_init(&app_command);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
 #define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
@@ -63,7 +62,10 @@ void app_main()
 #undef u8
 #undef b
 #undef s
-       for (int t = 100; t; t--)
+       if (!period)
+      period = 60;              // Avoid divide by zero
+   ESP_LOGE(TAG, "Start %ld", time(0) % period);
+   for (int t = 100; t; t--)
       if (revk_offline())
          usleep(100000);
       else
@@ -86,8 +88,6 @@ void app_main()
    struct timeval tv;
    struct timezone tz;
    gettimeofday(&tv, &tz);
-   if (!period)
-      period = 60; // Avoid a divide by zero
    ulp_time = 1000 * ((period - 1) - (tv.tv_sec % period)) + (1000 - tv.tv_usec / 1000);
    ESP_LOGE(TAG, "Going to sleep %dms", ulp_time);
    esp_sleep_enable_ulp_wakeup();
