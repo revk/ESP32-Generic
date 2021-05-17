@@ -36,14 +36,14 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
 
 void app_main()
 {
-   ESP_LOGE(TAG, "Start %ld",time(0)%60);
+   ESP_LOGE(TAG, "Start %ld", time(0) % 60);
    revk_init(&app_command);
    for (int t = 100; t; t--)
       if (revk_offline())
          usleep(100000);
       else
          break;
-   ESP_LOGE(TAG, "Online");
+   ESP_LOGE(TAG, "Online %lld", esp_timer_get_time());
    while (time(0) < 10)
       sleep(1);                 // Wait clock set
    // Do some stuff...
@@ -58,9 +58,11 @@ void app_main()
    ESP_LOGE(TAG, "Sleeping");
    revk_mqtt_close("Sleep");
    ulp_init();
-   time_t now = time(0);
-   ulp_time = 1000 * (60 - (now % 60));
-   ESP_LOGE(TAG, "Going to sleep %dms now=%ld", ulp_time, now);
+   struct timeval tv;
+   struct timezone tz;
+   gettimeofday(&tv, &tz);
+   ulp_time = 1000 * (59 - (tv.tv_sec % 60)) + (1000 - tv.tv_usec / 1000);
+   ESP_LOGE(TAG, "Going to sleep %dms", ulp_time );
    esp_sleep_enable_ulp_wakeup();
    ulp_start();
    ESP_LOGE(TAG, "Deep sleep");
