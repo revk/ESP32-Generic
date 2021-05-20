@@ -533,7 +533,7 @@ U 1 1 6043326C
 P 2950 2950
 F 0 "U1" H 2950 4531 50  0000 C CNN
 F 1 "ESP32-WROOM-32" H 2950 4440 50  0000 C CNN
-F 2 "RF_Module:ESP32-WROOM-32" H 2950 1450 50  0001 C CNN
+F 2 "RevK:ESP32-WROOM-32" H 2950 1450 50  0001 C CNN
 F 3 "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf" H 2650 3000 50  0001 C CNN
 	1    2950 2950
 	1    0    0    -1  
@@ -593,17 +593,6 @@ F 2 "Package_TO_SOT_SMD:SOT-23" H 4450 1775 50  0001 L CIN
 F 3 "https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF" H 4250 1850 50  0001 L CNN
 	1    4250 1850
 	1    0    0    -1  
-$EndComp
-$Comp
-L Transistor_BJT:EMH3 Q1
-U 1 1 609F3D36
-P 4550 2700
-F 0 "Q1" H 4841 2654 50  0000 L CNN
-F 1 "RN1701" H 4841 2745 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-563" H 4555 2260 50  0001 C CNN
-F 3 "http://rohmfs.rohm.com/en/products/databook/datasheet/discrete/transistor/digital/emh3t2r-e.pdf" H 4700 2700 50  0001 C CNN
-	1    4550 2700
-	-1   0    0    1   
 $EndComp
 $Comp
 L Device:R R10
@@ -670,17 +659,6 @@ Wire Wire Line
 Connection ~ 9150 1800
 Text GLabel 7750 3750 2    50   Input ~ 0
 USB3.3
-$Comp
-L Transistor_BJT:EMH3 Q1
-U 2 1 60A1D52A
-P 1400 1950
-F 0 "Q1" H 1690 1996 50  0000 L CNN
-F 1 "RN1701" H 1690 1905 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-563" H 1405 1510 50  0001 C CNN
-F 3 "http://rohmfs.rohm.com/en/products/databook/datasheet/discrete/transistor/digital/emh3t2r-e.pdf" H 1550 1950 50  0001 C CNN
-	2    1400 1950
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1600 1750 2350 1750
 $Comp
@@ -743,7 +721,6 @@ Text GLabel 7800 5250 2    50   Input ~ 0
 CBUS
 Text GLabel 3550 3250 2    50   Input ~ 0
 CBUS
-Connection ~ 1600 1750
 $Comp
 L Device:LED D1
 U 1 1 60A3EE9D
@@ -840,4 +817,27 @@ Wire Wire Line
 	3775 3850 3775 4925
 Wire Wire Line
 	3775 4925 4550 4925
+$Comp
+L RevK:RN1701 Q1
+U 1 1 60A739E6
+P 1550 1950
+F 0 "Q1" H 1691 1996 50  0000 L CNN
+F 1 "RN1701" H 1691 1905 50  0000 L CNN
+F 2 "RevK:USV-5" H 1550 1950 50  0001 C CNN
+F 3 "~" H 1550 1950 50  0001 C CNN
+	1    1550 1950
+	1    0    0    -1  
+$EndComp
+Connection ~ 1600 1750
+$Comp
+L RevK:RN1701 Q1
+U 2 1 60A78720
+P 4400 2700
+F 0 "Q1" H 4541 2746 50  0000 L CNN
+F 1 "RN1701" H 4541 2655 50  0000 L CNN
+F 2 "RevK:USV-5" H 4400 2700 50  0001 C CNN
+F 3 "~" H 4400 2700 50  0001 C CNN
+	2    4400 2700
+	-1   0    0    -1  
+$EndComp
 $EndSCHEMATC
