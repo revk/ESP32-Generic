@@ -859,8 +859,6 @@ ADCON
 Wire Wire Line
 	10225 3200 10225 3300
 Connection ~ 10225 3300
-Text Notes 9700 4000 0    50   ~ 0
-FIX PIN OUT
 Wire Wire Line
 	9650 3600 9850 3600
 Connection ~ 9850 3600
