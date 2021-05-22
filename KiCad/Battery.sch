@@ -838,4 +838,6 @@ Wire Wire Line
 Connection ~ 3900 3875
 Wire Wire Line
 	3900 3875 3900 4425
+Text Notes 4125 4725 0    50   ~ 0
+FIX THIS
 $EndSCHEMATC
