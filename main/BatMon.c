@@ -1,11 +1,12 @@
 // BatMon app
-// Copyright Â© 2019-21 Adrian Kennard, Andrews & Arnold Ltd. See LICENCE file for details. GPL 3.0
-static const char TAG[] = "BatMon";
+// Copyright Â ©2019 - 21 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0
+      static const char TAG[] = "BatMon";
 
 #include "revk.h"
 #include "esp_sleep.h"          // esp_sleep_enable_ulp_wakeup(), esp_deep_sleep_start()
 #include "esp32/ulp.h"
 #include "ulp-main.h"
+      #include <driver/gpio.h>
 
 #define	settings		\
 	u32(period,60)	\
@@ -28,19 +29,23 @@ settings
 extern const uint8_t _ulp_start[] asm("_binary_ulp_main_bin_start");
 extern const uint8_t _ulp_end[] asm("_binary_ulp_main_bin_end");
 
-void ulp_init()
+void 
+ulp_init()
 {
    ESP_ERROR_CHECK(ulp_load_binary(0, _ulp_start, (_ulp_end - _ulp_start) / sizeof(ulp_entry)));
 }
 
-void ulp_start()
+void 
+ulp_start()
 {
    ESP_ERROR_CHECK(ulp_run(&ulp_entry - RTC_SLOW_MEM));
 }
 
-uint8_t busy = 0;               // Don't sleep
+uint8_t         busy = 0;
+//Don 't sleep
 
-const char *app_command(const char *tag, unsigned int len, const unsigned char *value)
+const char     *
+app_command(const char *tag, unsigned int len, const unsigned char *value)
 {
    ESP_LOGE(TAG, "%s", tag);
    if (!strcmp(tag, "upgrade"))
@@ -48,7 +53,8 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
    return "";
 }
 
-void app_main()
+void 
+app_main()
 {
    revk_init(&app_command);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
@@ -62,9 +68,10 @@ void app_main()
 #undef u8
 #undef b
 #undef s
-       if (!period)
-      period = 60;              // Avoid divide by zero
-   ESP_LOGE(TAG, "Start %ld", time(0) % period);
+      if (!period)
+      period = 60;
+   //Avoid divide by zero
+      ESP_LOGE(TAG, "Start %ld", time(0) % period);
    for (int t = 100; t; t--)
       if (revk_offline())
          usleep(100000);
@@ -72,20 +79,23 @@ void app_main()
          break;
    ESP_LOGE(TAG, "Online %lld", esp_timer_get_time());
    while (time(0) < 10)
-      sleep(1);                 // Wait clock set
-   // Do some stuff...
-   // Now to sleep
-   sleep(awake);
+      sleep(1);
+   //Wait clock set
+      // Do some stuff...
+      // Now to sleep
+      sleep(awake);
    if (busy)
    {
       ESP_LOGE(TAG, "Waiting");
       while (1)
          sleep(1);
    }
+   gpio_pullup_dis(26);
+   gpio_pullup_dis(27);
    ESP_LOGE(TAG, "Sleeping");
    revk_mqtt_close("Sleep");
    ulp_init();
-   struct timeval tv;
+   struct timeval  tv;
    struct timezone tz;
    gettimeofday(&tv, &tz);
    ulp_time = 1000 * ((period - 1) - (tv.tv_sec % period)) + (1000 - tv.tv_usec / 1000);
@@ -94,8 +104,8 @@ void app_main()
    ulp_start();
    ESP_LOGE(TAG, "Deep sleep");
    esp_deep_sleep_start();
-   // Should not get here
-   ESP_LOGE(TAG, "Awake");
+   //Should not get here
+      ESP_LOGE(TAG, "Awake");
    while (1)
       sleep(1);
 }
