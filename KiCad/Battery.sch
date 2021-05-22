@@ -164,8 +164,6 @@ Text GLabel 3550 2550 2    50   Input ~ 0
 IO4
 Text GLabel 3550 2150 2    50   Input ~ 0
 IO5
-Text GLabel 4650 1650 2    50   Input ~ 0
-O
 Text GLabel 4250 6200 2    50   Input ~ 0
 IO1
 Text GLabel 4250 6300 2    50   Input ~ 0
@@ -573,46 +571,6 @@ F 3 "" H 6000 5250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Transistor_FET:2N7002 Q2
-U 1 1 609F0266
-P 4250 1850
-F 0 "Q2" H 4454 1896 50  0000 L CNN
-F 1 "BSS169" H 4454 1805 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 4450 1775 50  0001 L CIN
-F 3 "https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF" H 4250 1850 50  0001 L CNN
-	1    4250 1850
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R10
-U 1 1 609FC357
-P 4350 1500
-F 0 "R10" V 4557 1500 50  0000 C CNN
-F 1 "10K" V 4466 1500 50  0000 C CNN
-F 2 "RevK:R_0603" V 4280 1500 50  0001 C CNN
-F 3 "~" H 4350 1500 50  0001 C CNN
-	1    4350 1500
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR0107
-U 1 1 609FE111
-P 4350 2050
-F 0 "#PWR0107" H 4350 1800 50  0001 C CNN
-F 1 "GND" H 4355 1877 50  0000 C CNN
-F 2 "" H 4350 2050 50  0001 C CNN
-F 3 "" H 4350 2050 50  0001 C CNN
-	1    4350 2050
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4650 1650 4350 1650
-Connection ~ 4350 1650
-Text GLabel 4350 1350 1    50   Input ~ 0
-USB3.3
-Wire Wire Line
-	3550 1850 4050 1850
-$Comp
 L power:VBUS #PWR0108
 U 1 1 60A03A7F
 P 7000 3450
@@ -750,7 +708,7 @@ L Transistor_FET:2N7002 Q3
 U 1 1 60A1A002
 P 4450 4425
 F 0 "Q3" H 4654 4471 50  0000 L CNN
-F 1 "BSS169" H 4654 4380 50  0000 L CNN
+F 1 "2N7002" H 4654 4380 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-23" H 4650 4350 50  0001 L CIN
 F 3 "https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF" H 4450 4425 50  0001 L CNN
 	1    4450 4425
@@ -852,4 +810,6 @@ F 3 "~" H 8050 1300 50  0001 C CNN
 $EndComp
 Text GLabel 8200 1300 2    50   Input ~ 0
 DC
+Text GLabel 3550 1850 2    50   Input ~ 0
+O
 $EndSCHEMATC

@@ -4,9 +4,7 @@
 static const char TAG[] = "BatMon";
 
 #include "revk.h"
-#include "esp_sleep.h"          // esp_sleep_enable_ulp_wakeup(), esp_deep_sleep_start()
-#include "esp32/ulp.h"
-#include "ulp-main.h"
+#include "esp_sleep.h"
 #include <driver/gpio.h>
 
 #define	settings		\
@@ -28,25 +26,8 @@ settings
 #undef u8
 #undef b
 #undef s
-#ifndef CONFIG_ESP32_ULP_COPROC_ENABLED
-#error Set CONFIG_ESP32_ULP_COPROC_ENABLED
-#endif
-extern const uint8_t _ulp_start[] asm("_binary_ulp_main_bin_start");
-extern const uint8_t _ulp_end[] asm("_binary_ulp_main_bin_end");
 
-void
-ulp_init()
-{
-   ESP_ERROR_CHECK(ulp_load_binary(0, _ulp_start, (_ulp_end - _ulp_start) / sizeof(ulp_entry)));
-}
-
-void
-ulp_start()
-{
-   ESP_ERROR_CHECK(ulp_run(&ulp_entry - RTC_SLOW_MEM));
-}
-
-uint64_t        busy = 0;
+uint64_t busy = 0;
 
 const char     *
 app_command(const char *tag, unsigned int len, const unsigned char *value)
@@ -78,12 +59,15 @@ app_main()
 #undef b
 #undef s
       ESP_LOGE(TAG, "Start %ld", time(0) % period);
-   for (int port = 39; port >= 0; port--)
-      if (GPIO_IS_VALID_GPIO(port) && (port < 6 || port > 11))
-      {                         /* TODO check if USB connected first */
-         gpio_reset_pin(port);
-         gpio_set_pull_mode(port, GPIO_FLOATING);
-      }
+   char            usb = 0;
+   if (cbus)
+   {
+      gpio_reset_pin(cbus & 0x3F);
+      gpio_set_pull_mode(cbus & 0x3F, GPIO_PULLDOWN_ONLY);
+      usleep(1000);
+      if (gpio_get_level(cbus & 0x3F) == ((cbus & 0x40) ? 0 : 1))
+         usb = 1;
+   }
    if (led)
    {
       gpio_set_direction(led & 0x3F, GPIO_MODE_OUTPUT);
@@ -120,17 +104,16 @@ app_main()
    }
    if (led)
       gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0); /* Off */
-   ESP_LOGE(TAG, "Sleeping");
+   struct timeval  tv;
+   gettimeofday(&tv, NULL);
+   uint64_t t=((period - 1) - (tv.tv_sec % period)) * 1000000ULL + 1000000ULL - tv.tv_usec;
    revk_mqtt_close("Sleep");
-   ulp_init();
-   ulp_time = period - (time(0) % period);
-   ESP_LOGE(TAG, "Going to sleep %ds", ulp_time);
-   esp_sleep_enable_ulp_wakeup();
-   ulp_start();
-   ESP_LOGE(TAG, "Deep sleep");
-   esp_deep_sleep_start();
-   //Should not get here
-      ESP_LOGE(TAG, "Awake");
+   esp_wifi_stop();
+   esp_sleep_config_gpio_isolate();
+   esp_deep_sleep(t);
+
+   /* Should not get here */
+   ESP_LOGE(TAG, "Awake");
    while (1)
       sleep(1);
 }
