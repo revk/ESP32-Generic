@@ -513,7 +513,6 @@ F 3 "" H 2950 4350 50  0001 C CNN
 	1    2950 4350
 	1    0    0    -1  
 $EndComp
-Connection ~ 2950 1550
 $Comp
 L RF_Module:ESP32-WROOM-32 U1
 U 1 1 6043326C
@@ -755,9 +754,7 @@ DC
 Wire Wire Line
 	3550 3750 3900 3750
 Wire Wire Line
-	3900 3750 3900 4425
-Wire Wire Line
-	3900 4425 4250 4425
+	3900 3750 3900 3875
 Wire Wire Line
 	3550 3850 3775 3850
 Wire Wire Line
@@ -812,4 +809,33 @@ Text GLabel 8200 1300 2    50   Input ~ 0
 DC
 Text GLabel 3550 1850 2    50   Input ~ 0
 O
+$Comp
+L Device:R R10
+U 1 1 60A9502C
+P 4250 3875
+F 0 "R10" V 4475 3875 50  0000 C CNN
+F 1 "10K" V 4375 3875 50  0000 C CNN
+F 2 "RevK:R_0603" V 4180 3875 50  0001 C CNN
+F 3 "~" H 4250 3875 50  0001 C CNN
+	1    4250 3875
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR0101
+U 1 1 60A96861
+P 4400 3875
+F 0 "#PWR0101" H 4400 3625 50  0001 C CNN
+F 1 "GND" V 4405 3747 50  0000 R CNN
+F 2 "" H 4400 3875 50  0001 C CNN
+F 3 "" H 4400 3875 50  0001 C CNN
+	1    4400 3875
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3900 4425 4250 4425
+Wire Wire Line
+	4100 3875 3900 3875
+Connection ~ 3900 3875
+Wire Wire Line
+	3900 3875 3900 4425
 $EndSCHEMATC
