@@ -21,7 +21,7 @@ zap:    bootmode flash
 
 # Program the FTDI
 ftdi: ftdizap/ftdizap
-	./ftdizap/ftdizap --serial="RevK" --description="ESP32" --cbus0-mode=8 --cbus1-mode=4 --cbus2-mode=13 --cbus3-mode=5
+	./ftdizap/ftdizap --serial="RevK" --description="BatMon" --cbus0-mode=8 --cbus1-mode=4 --cbus2-mode=13 --cbus3-mode=5 --invert-rts=1 --invert-dtr=1
 
 ftdizap/ftdizap: ftdizap/ftdizap.c
 	make -C ftdizap
