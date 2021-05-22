@@ -14,12 +14,19 @@ entry:
 	move r1,time
 	ld r1,r1,0
 	move r2,done
+	move r3,end1
 
-loop:
-	wait 7980 // one second less time to loop
+loop1:
+	move r0,1000	// one second
+loop2:
+	wait 7980 // one milli second less time to loop
+	sub r0,r0,1
+	jump r3,eq
+	jump loop2
+end1:
 	sub r1,r1,1
 	jump r2,eq
-	jump loop
+	jump loop1
 
 done:
 	wake

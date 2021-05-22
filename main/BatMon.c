@@ -89,11 +89,8 @@ void app_main()
    ESP_LOGE(TAG, "Sleeping");
    revk_mqtt_close("Sleep");
    ulp_init();
-   struct timeval tv;
-   struct timezone tz;
-   gettimeofday(&tv, &tz);
-   ulp_time = 1000 * ((period - 1) - (tv.tv_sec % period)) + (1000 - tv.tv_usec / 1000);
-   ESP_LOGE(TAG, "Going to sleep %dms", ulp_time);
+   ulp_time = period - (time(0) % period);
+   ESP_LOGE(TAG, "Going to sleep %ds", ulp_time);
    esp_sleep_enable_ulp_wakeup();
    ulp_start();
    ESP_LOGE(TAG, "Deep sleep");
