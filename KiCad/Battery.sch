@@ -5,8 +5,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Generic ESP32 (battery operation)"
-Date "2021-05-14"
-Rev "1"
+Date "2021-05-22"
+Rev "2"
 Comp ""
 Comment1 "@TheRealRevK"
 Comment2 "www.me.uk"
@@ -367,17 +367,6 @@ Wire Wire Line
 Connection ~ 4050 6600
 Wire Wire Line
 	3000 6600 4050 6600
-$Comp
-L power:VBUS #PWR0101
-U 1 1 60732D3D
-P 4050 5700
-F 0 "#PWR0101" H 4050 5550 50  0001 C CNN
-F 1 "VBUS" H 4065 5873 50  0000 C CNN
-F 2 "" H 4050 5700 50  0001 C CNN
-F 3 "" H 4050 5700 50  0001 C CNN
-	1    4050 5700
-	1    0    0    -1  
-$EndComp
 Text GLabel 4750 2700 2    50   Input ~ 0
 GPIO0
 NoConn ~ 3550 2250
@@ -642,7 +631,7 @@ Wire Wire Line
 Wire Wire Line
 	9500 1300 9300 1300
 Wire Wire Line
-	9300 1300 9300 1600
+	9300 1300 9300 1425
 Wire Wire Line
 	9300 1600 9550 1600
 Wire Wire Line
@@ -803,7 +792,7 @@ $EndComp
 Connection ~ 4550 4925
 Text GLabel 4550 4225 1    50   Input ~ 0
 DC
-Text GLabel 9300 1425 2    50   Input ~ 0
+Text GLabel 9575 1425 2    50   Input ~ 0
 DC
 Wire Wire Line
 	3550 3750 3900 3750
@@ -840,4 +829,27 @@ F 3 "~" H 4400 2700 50  0001 C CNN
 	2    4400 2700
 	-1   0    0    -1  
 $EndComp
+Text GLabel 4050 5700 1    50   Input ~ 0
+DC
+Wire Wire Line
+	9300 1425 9575 1425
+Connection ~ 9300 1425
+Wire Wire Line
+	9300 1425 9300 1600
+Wire Wire Line
+	7700 1300 7900 1300
+Connection ~ 7700 1300
+$Comp
+L Device:D D2
+U 1 1 60A93E56
+P 8050 1300
+F 0 "D2" H 8050 1083 50  0000 C CNN
+F 1 "D" H 8050 1174 50  0000 C CNN
+F 2 "Diode_SMD:D_1206_3216Metric" H 8050 1300 50  0001 C CNN
+F 3 "~" H 8050 1300 50  0001 C CNN
+	1    8050 1300
+	-1   0    0    1   
+$EndComp
+Text GLabel 8200 1300 2    50   Input ~ 0
+DC
 $EndSCHEMATC
