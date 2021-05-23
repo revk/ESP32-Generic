@@ -715,7 +715,6 @@ F 3 "~" H 1550 1950 50  0001 C CNN
 	1    1550 1950
 	1    0    0    -1  
 $EndComp
-Connection ~ 1600 1750
 $Comp
 L RevK:RN1701 Q1
 U 2 1 60A78720
@@ -752,8 +751,6 @@ Text GLabel 8200 1300 2    50   Input ~ 0
 DC
 Text GLabel 3550 1850 2    50   Input ~ 0
 O
-Wire Wire Line
-	4550 4925 4550 4900
 $Comp
 L Device:R R10
 U 1 1 60A9502C
@@ -764,17 +761,6 @@ F 2 "RevK:R_0603" V 9280 3950 50  0001 C CNN
 F 3 "~" H 9350 3950 50  0001 C CNN
 	1    9350 3950
 	-1   0    0    1   
-$EndComp
-$Comp
-L power:GND #PWR0121
-U 1 1 60A22E69
-P 4550 4925
-F 0 "#PWR0121" H 4550 4675 50  0001 C CNN
-F 1 "GND" H 4555 4752 50  0000 C CNN
-F 2 "" H 4550 4925 50  0001 C CNN
-F 3 "" H 4550 4925 50  0001 C CNN
-	1    4550 4925
-	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R13
@@ -798,13 +784,6 @@ F 3 "~" H 10225 3950 50  0001 C CNN
 	1    10225 3950
 	1    0    0    -1  
 $EndComp
-Text Notes 5225 4950 1    197  ~ 0
-FIX THIS
-Wire Wire Line
-	4550 4900 4250 4900
-Connection ~ 4550 4900
-Wire Wire Line
-	4550 4900 4550 4825
 Text GLabel 10225 3200 1    50   Input ~ 0
 DC
 $Comp
@@ -887,4 +866,5 @@ F 3 "" H 10175 3025 50  0001 C CNN
 	2    10225 3600
 	1    0    0    1   
 $EndComp
+Connection ~ 1600 1750
 $EndSCHEMATC

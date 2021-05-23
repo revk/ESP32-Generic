@@ -5,3 +5,6 @@
 	path = ftdizap
 	url = https://github.com/revk/ftdizap
 	branch = main
+[submodule "components/ESP32-VL53L0X"]
+	path = components/ESP32-VL53L0X
+	url = https://github.com/revk/ESP32-VL53L0X
