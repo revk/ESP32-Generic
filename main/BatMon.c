@@ -5,6 +5,7 @@ static const char TAG[] = "BatMon";
 
 #include "revk.h"
 #include "esp_sleep.h"
+#include "vl53l0x.h"
 #include <driver/gpio.h>
 
 #define	settings		\
@@ -12,6 +13,10 @@ static const char TAG[] = "BatMon";
 	u32(awake,1)	\
 	io(cbus)	\
 	io(led)	\
+	io(rangergnd)	\
+	io(rangerpwr)	\
+	io(rangerscl)	\
+	io(rangersda)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
