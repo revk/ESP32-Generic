@@ -11,14 +11,6 @@ update:
 	git submodule update --init --recursive --remote
 	git commit -a -m "Library update"
 
-# Set GPIO low (whichever CBUS is set to mode 8/GPIO)
-bootmode: ftdizap/ftdizap
-	./ftdizap/ftdizap --cbus=0
-
-# Flash with GPIO control on CBUS0 (FT230X design)
-zap:    bootmode flash
-	./ftdizap/ftdizap --cbus=1 --reset
-
 # Program the FTDI
 ftdi: ftdizap/ftdizap
 	./ftdizap/ftdizap --serial="RevK" --description="BatMon" --cbus0-mode=17 --invert-rts=1 --invert-dtr=1

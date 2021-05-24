@@ -313,11 +313,10 @@ Wire Wire Line
 	7200 4050 7200 3750
 Wire Wire Line
 	7200 3750 7750 3750
-NoConn ~ 3550 2850
+NoConn ~ 3550 3150
 Wire Wire Line
 	2950 1550 3950 1550
-NoConn ~ 3550 3150
-NoConn ~ 3550 3350
+NoConn ~ 3550 2850
 $Comp
 L Connector:Conn_01x02_Male J3
 U 1 1 60460B50
@@ -428,7 +427,6 @@ F 3 "" H 7800 5050 50  0001 C CNN
 	1    7800 5050
 	0    -1   -1   0   
 $EndComp
-NoConn ~ 7800 5350
 NoConn ~ 7800 5450
 NoConn ~ 7800 5550
 $Comp
@@ -664,9 +662,9 @@ $EndComp
 Text Notes 6050 6250 0    50   ~ 0
 Note that RTS and DTR need to be inverted in FT231X configuration
 Text GLabel 7800 5250 2    50   Input ~ 0
-CBUS
+VBUS_SENSE
 Text GLabel 3550 3250 2    50   Input ~ 0
-CBUS
+VBUS_SENSE
 $Comp
 L Device:LED D1
 U 1 1 60A3EE9D
@@ -867,4 +865,8 @@ F 3 "" H 10175 3025 50  0001 C CNN
 	1    0    0    1   
 $EndComp
 Connection ~ 1600 1750
+Text GLabel 3550 3350 2    50   Input ~ 0
+BCD_CHARGER
+Text GLabel 7800 5350 2    50   Input ~ 0
+BCD_CHARGER
 $EndSCHEMATC
