@@ -45,7 +45,6 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
    ESP_LOGE(TAG, "%s", tag);
    if (!strcmp(tag, "upgrade") || !strcmp(tag, "wait"))
    {
-      revk_info(TAG, "Waiting");
       busy = esp_timer_get_time() + 60000000ULL;
       return "";
    }
