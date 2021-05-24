@@ -172,6 +172,11 @@ void app_main()
       p += snprintf(p, (int) (e - p), "}");
       revk_info(NULL, "%s", temp);
    }
+   if (!busy)
+   {
+      ESP_LOGE(TAG, "Wait for %d", awake);      /* wait a bit */
+      sleep(awake);
+   }
    if (busy)
    {
       revk_info(TAG, "Waiting %d", (busy - esp_timer_get_time()) / 1000000ULL);
@@ -185,11 +190,6 @@ void app_main()
             gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0);   /* Off */
          usleep(500000);
       }
-   } else
-   {
-      ESP_LOGE(TAG, "Wait for %d", awake);
-      /* wait a bit */
-      sleep(awake);
    }
    if (led)
       gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0); /* Off */
