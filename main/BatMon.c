@@ -149,12 +149,22 @@ void app_main()
       ESP_LOGE(TAG, "No MQTT");
    else
    {
-      if (usb_present)
-         revk_info("usb", "1");
+      struct tm tm;
+      time_t now = time(0);
+      gmtime_r(&now, &tm);
+      char temp[200],
+      *p = temp,
+          *e = temp + sizeof(temp) - 1;
+      p += snprintf(p, (int) (e - p), "{\"ts\":\"%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+      if (range)
+         p += snprintf(p, (int) (e - p), ",\"range\":%d", range);
       if (charger_present)
-         revk_info("charger", "1");
-      if(range)
-      revk_info("range","%d",range);
+         p += snprintf(p, (int) (e - p), ",\"charger\":true");
+      else if (usb_present)
+         p += snprintf(p, (int) (e - p), ",\"usb\":true");
+      /* TODO bat level */
+      p += snprintf(p, (int) (e - p), "}");
+      revk_info("batmon", "%s", temp);
    }
    if (time(0) < 10)
    {                            /* wait clock set */
@@ -186,9 +196,16 @@ void app_main()
    struct timeval tv;
    gettimeofday(&tv, NULL);
    uint64_t t = ((period - 1) - (tv.tv_sec % period)) * 1000000ULL + 1000000ULL - tv.tv_usec;
-   revk_mqtt_close("Sleep");
+   {
+      char reason[50];
+      struct tm tm;
+      time_t now = time(0) + (t / 1000000ULL);
+      gmtime_r(&now, &tm);
+      sprintf(reason, "Sleep until %04d-%02d-%02dT%02d:%02d:%02dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+      revk_mqtt_close(reason);
+   }
    revk_wifi_close();
-   uart_wait_tx_done(0, 1000 / portTICK_PERIOD_MS); // Debug done
+   uart_wait_tx_done(0, 1000 / portTICK_PERIOD_MS);     // Debug done
    esp_sleep_config_gpio_isolate();
    esp_deep_sleep(t);
 
