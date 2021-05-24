@@ -50,6 +50,8 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
       busy = esp_timer_get_time() + 60000000ULL;
       return "";
    }
+   if (!strcmp(tag, "sleep"))
+      busy = 0;
    return NULL;
 }
 
@@ -179,8 +181,8 @@ void app_main()
    }
    if (busy)
    {
-      revk_info(TAG, "Waiting %d", (busy - esp_timer_get_time()) / 1000000ULL);
-      ESP_LOGE(TAG, "Waiting");
+      revk_info(TAG, "Waiting %d", (int) ((busy - esp_timer_get_time()) / 1000000ULL));
+      ESP_LOGE(TAG, "Waiting %d", (int) ((busy - esp_timer_get_time()) / 1000000ULL));
       while (busy > esp_timer_get_time())
       {
          if (led)
@@ -202,8 +204,9 @@ void app_main()
       revk_mqtt_close(reason);
    }
    revk_wifi_close();
-   uart_wait_tx_done(0, 1000 / portTICK_PERIOD_MS);     // Debug done
    esp_sleep_config_gpio_isolate();
+   if (usb_present && !charger_present)
+      sleep(2);
    struct timeval tv;
    gettimeofday(&tv, NULL);
    if (next < tv.tv_sec + 1)
