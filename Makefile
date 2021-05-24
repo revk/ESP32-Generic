@@ -21,17 +21,17 @@ ftdizap/ftdizap: ftdizap/ftdizap.c
 PCBCase/case: PCBCase/case.c
 	make -C PCBCase
 
-scad: KiCad/Generic.scad KiCad/Generic-nohole.scad
-stl: KiCad/Generic.stl KiCad/Generic-nohole.stl
+scad: KiCad/Battery.scad KiCad/Battery-nohole.scad
+stl: KiCad/Battery.stl KiCad/Battery-nohole.stl
 
 %.stl: %.scad
 	echo "Making $@"
 	/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD $< -o $@
 	echo "Made $@"
 
-KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
+KiCad/Battery.scad: KiCad/Battery.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=4.9
 
-KiCad/Generic-nohole.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
+KiCad/Battery-nohole.scad: KiCad/Battery.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=4.9 --ignore=J3
 
