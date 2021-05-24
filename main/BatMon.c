@@ -139,24 +139,23 @@ void app_main()
    }
    if (!period)
       period = 60;              /* avoid divide by zero */
-   for (int t = 100; t; t--)
-      if (revk_offline())
-         usleep(100000);
-      else
-         break;
-   if (usb_present)
-      revk_info("usb", "1");
-   if (charger_present)
-      revk_info("charger", "1");
+   if (!revk_wait_wifi(10))
+      ESP_LOGE(TAG, "No WiFi");
+   else if (!revk_wait_mqtt(10))
+      ESP_LOGE(TAG, "No MQTT");
+   else
+   {
+      if (usb_present)
+         revk_info("usb", "1");
+      if (charger_present)
+         revk_info("charger", "1");
+   }
    if (time(0) < 10)
    {                            /* wait clock set */
       ESP_LOGE(TAG, "Wait clock set");
       while (time(0) < 10)
          sleep(1);
    }
-   ESP_LOGE(TAG, "Online for %d", awake);
-   /* wait a bit */
-   sleep(awake);
    if (busy)
    {
       ESP_LOGE(TAG, "Waiting");
@@ -169,6 +168,11 @@ void app_main()
             gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0);   /* Off */
          usleep(500000);
       }
+   } else
+   {
+      ESP_LOGE(TAG, "Wait for %d", awake);
+      /* wait a bit */
+      sleep(awake);
    }
    if (led)
       gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0); /* Off */
