@@ -11,12 +11,14 @@ static const char TAG[] = "BatMon";
 #define	settings		\
 	u32(period,60)	\
 	u32(awake,1)	\
-	io(cbus)	\
+	io(usb)	\
+	io(charger)	\
 	io(led)	\
 	io(rangergnd)	\
 	io(rangerpwr)	\
 	io(rangerscl)	\
 	io(rangersda)	\
+        u8(rangeraddress,0x29)  \
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -31,23 +33,30 @@ settings
 #undef u8
 #undef b
 #undef s
+    uint64_t busy = 0;
+    char usb_present=0;
+    char charger_present=0;
+const char *rangererr = NULL;
+uint16_t range = 0;
+vl53l0x_t *v = NULL;
 
-uint64_t busy = 0;
-
-const char     *
-app_command(const char *tag, unsigned int len, const unsigned char *value)
+const char *app_command(const char *tag, unsigned int len, const unsigned char *value)
 {
    ESP_LOGE(TAG, "%s", tag);
    if (!strcmp(tag, "upgrade") || !strcmp(tag, "wait"))
    {
+      revk_info(TAG, "Waiting");
       busy = esp_timer_get_time() + 60000000ULL;
       return "";
+   }
+   if (!strcmp(tag, "connect"))
+   {
+	   // TODO
    }
    return NULL;
 }
 
-void
-app_main()
+void app_main()
 {
    revk_init(&app_command);
 #define io(n)           revk_register(#n,0,sizeof(n),&n,"-",SETTING_SET|SETTING_BITFIELD);
@@ -63,20 +72,59 @@ app_main()
 #undef u8
 #undef b
 #undef s
-      ESP_LOGE(TAG, "Start %ld", time(0) % period);
-   char            usb = 0;
-   if (cbus)
+       ESP_LOGE(TAG, "Start %ld", time(0) % period);
+   if (usb)
    {
-      gpio_reset_pin(cbus & 0x3F);
-      gpio_set_pull_mode(cbus & 0x3F, GPIO_PULLDOWN_ONLY);
+      gpio_reset_pin(usb & 0x3F);
+      gpio_set_pull_mode(usb & 0x3F, GPIO_PULLDOWN_ONLY);
+      gpio_set_direction(led & 0x3F, GPIO_MODE_INPUT);
       usleep(1000);
-      if (gpio_get_level(cbus & 0x3F) == ((cbus & 0x40) ? 0 : 1))
-         usb = 1;
+      if (gpio_get_level(usb & 0x3F) == ((usb & 0x40) ? 0 : 1))
+         usb_present = 1;
    }
+   if (charger)
+   {
+      gpio_reset_pin(charger & 0x3F);
+      gpio_set_pull_mode(charger & 0x3F, GPIO_PULLDOWN_ONLY);
+      gpio_set_direction(led & 0x3F, GPIO_MODE_INPUT);
+      usleep(1000);
+      if (gpio_get_level(charger & 0x3F) == ((charger & 0x40) ? 0 : 1))
+         charger_present = 1;
+   }
+   if (usb_present)
+      busy = esp_timer_get_time() + 60000000ULL;
    if (led)
    {
-      gpio_set_direction(led & 0x3F, GPIO_MODE_OUTPUT);
       gpio_set_level(led & 0x3F, (led & 0x40) ? 0 : 1); /* on */
+      gpio_set_direction(led & 0x3F, GPIO_MODE_OUTPUT);
+   }
+   if (rangergnd)
+   {
+      gpio_set_level(rangergnd & 0x3F, (rangergnd & 0x40) ? 1 : 0);     /* gnd */
+      gpio_set_direction(rangergnd & 0x3F, GPIO_MODE_OUTPUT);
+   }
+   if (rangerpwr)
+   {
+      gpio_set_level(rangerpwr & 0x3F, (rangerpwr & 0x40) ? 0 : 1);     /* pwr */
+      gpio_set_direction(rangerpwr & 0x3F, GPIO_MODE_OUTPUT);
+   }
+   if (rangersda && rangerscl)
+   {
+      ESP_LOGI(TAG, "Ranger init SCL=%d SDA=%d Address=%02X", rangerscl & 0x3F, rangersda & 0x3F, rangeraddress);
+      vl53l0x_t *v = vl53l0x_config(0, rangerscl & 0x3F, rangersda & 0x3F, -1, rangeraddress, 0);
+      if (!v)
+         ESP_LOGE(TAG, "Ranger config failed");
+      else
+      {
+         rangererr = vl53l0x_init(v);
+         if (rangererr)
+            ESP_LOGE(TAG, "Ranger error:%s", rangererr);
+         else
+	 {
+            range = vl53l0x_readRangeSingleMillimeters(v);
+	    ESP_LOGI(TAG,"Range=%d",range);
+	 }
+      }
    }
    if (!period)
       period = 60;              /* avoid divide by zero */
@@ -109,9 +157,9 @@ app_main()
    }
    if (led)
       gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0); /* Off */
-   struct timeval  tv;
+   struct timeval tv;
    gettimeofday(&tv, NULL);
-   uint64_t t=((period - 1) - (tv.tv_sec % period)) * 1000000ULL + 1000000ULL - tv.tv_usec;
+   uint64_t t = ((period - 1) - (tv.tv_sec % period)) * 1000000ULL + 1000000ULL - tv.tv_usec;
    revk_mqtt_close("Sleep");
    esp_wifi_stop();
    esp_sleep_config_gpio_isolate();
