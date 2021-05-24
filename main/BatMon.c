@@ -149,6 +149,12 @@ void app_main()
       ESP_LOGE(TAG, "No MQTT");
    else
    {
+      if (time(0) < 30)
+      {                         /* wait clock set */
+         ESP_LOGE(TAG, "Wait clock set");
+         while (time(0) < 10)
+            sleep(1);
+      }
       struct tm tm;
       time_t now = time(0);
       gmtime_r(&now, &tm);
@@ -165,12 +171,6 @@ void app_main()
       /* TODO bat level */
       p += snprintf(p, (int) (e - p), "}");
       revk_info(NULL, "%s", temp);
-   }
-   if (time(0) < 10)
-   {                            /* wait clock set */
-      ESP_LOGE(TAG, "Wait clock set");
-      while (time(0) < 10)
-         sleep(1);
    }
    if (busy)
    {
