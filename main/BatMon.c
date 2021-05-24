@@ -206,10 +206,9 @@ void app_main()
    esp_sleep_config_gpio_isolate();
    struct timeval tv;
    gettimeofday(&tv, NULL);
-   int64_t t = (next - tv.tv_sec - 1) * 1000000LL + 1000000LL - tv.tv_usec;
-   if (t < 10000000LL)
-      t = 10000000LL;
-   esp_deep_sleep(t);
+   if (next < tv.tv_sec + 1)
+      next = tv.tv_sec + 1;
+   esp_deep_sleep((next - tv.tv_sec - 1) * 1000000LL + 1000000LL - tv.tv_usec);
 
    /* Should not get here */
    ESP_LOGE(TAG, "Awake");
