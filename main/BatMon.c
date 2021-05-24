@@ -199,7 +199,7 @@ void app_main()
    {
       char reason[50];
       struct tm tm;
-      time_t now = tv.tv_sec + (t / 1000000ULL);
+      time_t now = tv.tv_sec + ((t + 999999ULL) / 1000000ULL);
       gmtime_r(&now, &tm);
       sprintf(reason, "Sleep until %04d-%02d-%02dT%02d:%02d:%02dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       revk_mqtt_close(reason);
