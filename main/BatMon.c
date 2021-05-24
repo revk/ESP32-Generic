@@ -80,19 +80,24 @@ void app_main()
    {
       gpio_reset_pin(usb & 0x3F);
       gpio_set_pull_mode(usb & 0x3F, GPIO_PULLDOWN_ONLY);
-      gpio_set_direction(led & 0x3F, GPIO_MODE_INPUT);
+      gpio_set_direction(usb & 0x3F, GPIO_MODE_INPUT);
       usleep(1000);
       if (gpio_get_level(usb & 0x3F) == ((usb & 0x40) ? 0 : 1))
       {
          ESP_LOGI(TAG, "USB found");
          usb_present = 1;
+         busy = esp_timer_get_time() + 60000000ULL;
+      } else
+      {                         // No USB Tx
+         gpio_reset_pin(1);
+         gpio_set_pull_mode(1, GPIO_PULLDOWN_ONLY);
       }
    }
    if (charger)
    {
       gpio_reset_pin(charger & 0x3F);
       gpio_set_pull_mode(charger & 0x3F, GPIO_PULLDOWN_ONLY);
-      gpio_set_direction(led & 0x3F, GPIO_MODE_INPUT);
+      gpio_set_direction(charger & 0x3F, GPIO_MODE_INPUT);
       usleep(1000);
       if (gpio_get_level(charger & 0x3F) == ((charger & 0x40) ? 0 : 1))
       {
@@ -100,8 +105,6 @@ void app_main()
          charger_present = 1;
       }
    }
-   if (usb_present)
-      busy = esp_timer_get_time() + 60000000ULL;
    if (led)
    {
       gpio_set_level(led & 0x3F, (led & 0x40) ? 0 : 1); /* on */
