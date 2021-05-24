@@ -77,6 +77,7 @@ void app_main()
       usleep(1000);
       if (gpio_get_level(usb & 0x3F) == ((usb & 0x40) ? 0 : 1))
       {
+         gpio_set_pull_mode(usb & 0x3F, GPIO_PULLUP_ONLY);
          ESP_LOGI(TAG, "USB found");
          usb_present = 1;
          busy = esp_timer_get_time() + 300000000ULL;
@@ -94,6 +95,7 @@ void app_main()
       usleep(1000);
       if (gpio_get_level(charger & 0x3F) == ((charger & 0x40) ? 0 : 1))
       {
+         gpio_set_pull_mode(charger & 0x3F, GPIO_PULLUP_ONLY);
          ESP_LOGI(TAG, "Charger found");
          charger_present = 1;
          // No USB Tx
