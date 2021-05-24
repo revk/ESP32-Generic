@@ -158,6 +158,7 @@ void app_main()
    }
    if (busy)
    {
+      revk_info(TAG, "Waiting %d", (busy - esp_timer_get_time()) / 1000000ULL);
       ESP_LOGE(TAG, "Waiting");
       while (busy > esp_timer_get_time())
       {
