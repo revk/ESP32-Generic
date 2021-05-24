@@ -13,7 +13,7 @@ update:
 
 # Program the FTDI
 ftdi: ftdizap/ftdizap
-	./ftdizap/ftdizap --serial="RevK" --description="BatMon" --cbus0-mode=17 --cbus1-mode=13 --invert-rts=1 --invert-dtr=1
+	./ftdizap/ftdizap --serial="RevK" --description="BatMon" --cbus0-mode=7 --cbus1-mode=13 --invert-rts=1 --invert-dtr=1
 
 ftdizap/ftdizap: ftdizap/ftdizap.c
 	make -C ftdizap
