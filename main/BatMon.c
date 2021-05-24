@@ -164,7 +164,7 @@ void app_main()
          p += snprintf(p, (int) (e - p), ",\"usb\":true");
       /* TODO bat level */
       p += snprintf(p, (int) (e - p), "}");
-      revk_info("batmon", "%s", temp);
+      revk_info(NULL, "%s", temp);
    }
    if (time(0) < 10)
    {                            /* wait clock set */
