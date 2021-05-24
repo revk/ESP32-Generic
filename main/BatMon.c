@@ -207,6 +207,8 @@ void app_main()
    revk_wifi_close();
    uart_wait_tx_done(0, 1000 / portTICK_PERIOD_MS);     // Debug done
    esp_sleep_config_gpio_isolate();
+   gettimeofday(&tv, NULL);
+   t = ((period - 1) - (tv.tv_sec % period)) * 1000000ULL + 1000000ULL - tv.tv_usec;
    esp_deep_sleep(t);
 
    /* Should not get here */
