@@ -105,22 +105,25 @@ void app_main()
    }
    if (led)
    {
+      gpio_reset_pin(led & 0x3F);
       gpio_set_level(led & 0x3F, (led & 0x40) ? 0 : 1); /* on */
       gpio_set_direction(led & 0x3F, GPIO_MODE_OUTPUT);
    }
    if (rangergnd)
    {
+      gpio_reset_pin(rangergnd & 0x3F);
       gpio_set_level(rangergnd & 0x3F, (rangergnd & 0x40) ? 1 : 0);     /* gnd */
       gpio_set_direction(rangergnd & 0x3F, GPIO_MODE_OUTPUT);
    }
    if (rangerpwr)
    {
+      gpio_reset_pin(rangerpwr & 0x3F);
       gpio_set_level(rangerpwr & 0x3F, (rangerpwr & 0x40) ? 0 : 1);     /* pwr */
       gpio_set_direction(rangerpwr & 0x3F, GPIO_MODE_OUTPUT);
    }
    if (rangersda && rangerscl)
    {
-      ESP_LOGI(TAG, "Ranger init SCL=%d SDA=%d Address=%02X", rangerscl & 0x3F, rangersda & 0x3F, rangeraddress);
+      ESP_LOGI(TAG, "Ranger init GND=%d PWR=%d SCL=%d SDA=%d Address=%02X", rangergnd & 0x3F, rangerpwr & 0x3F, rangerscl & 0x3F, rangersda & 0x3F, rangeraddress);
       vl53l0x_t *v = vl53l0x_config(0, rangerscl & 0x3F, rangersda & 0x3F, -1, rangeraddress, 0);
       if (!v)
          ESP_LOGE(TAG, "Ranger config failed");
@@ -148,6 +151,8 @@ void app_main()
          revk_info("usb", "1");
       if (charger_present)
          revk_info("charger", "1");
+      if(range)
+      revk_info("range","%d",range);
    }
    if (time(0) < 10)
    {                            /* wait clock set */
