@@ -51,7 +51,10 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
       return "";
    }
    if (!strcmp(tag, "sleep"))
+   {
       busy = 0;
+      return "";
+   }
    return NULL;
 }
 
