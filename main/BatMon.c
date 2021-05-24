@@ -193,7 +193,7 @@ void app_main()
    }
    if (led)
       gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0); /* Off */
-   time_t next = (time(0) + 5) / period * period;
+   time_t next = (time(0) + 5) / period * period + period;
    {
       char reason[50];
       struct tm tm;
@@ -207,8 +207,8 @@ void app_main()
    struct timeval tv;
    gettimeofday(&tv, NULL);
    int64_t t = (next - tv.tv_sec - 1) * 1000000ULL + 1000000ULL - tv.tv_usec;
-   if (t < 0)
-      t = 1;
+   if (t < 10)
+      t = 10;
    esp_deep_sleep(t);
 
    /* Should not get here */
