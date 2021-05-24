@@ -49,13 +49,6 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
       busy = esp_timer_get_time() + 60000000ULL;
       return "";
    }
-   if (!strcmp(tag, "connect"))
-   {                            /* report status */
-      if (usb_present)
-         revk_info("usb", "1");
-      if (charger_present)
-         revk_info("charger", "1");
-   }
    return NULL;
 }
 
@@ -86,7 +79,7 @@ void app_main()
       {
          ESP_LOGI(TAG, "USB found");
          usb_present = 1;
-         busy = esp_timer_get_time() + 60000000ULL;
+         busy = esp_timer_get_time() + 300000000ULL;
       } else
       {                         // No USB Tx
          gpio_reset_pin(1);
@@ -103,6 +96,10 @@ void app_main()
       {
          ESP_LOGI(TAG, "Charger found");
          charger_present = 1;
+         // No USB Tx
+         gpio_reset_pin(1);
+         gpio_set_pull_mode(1, GPIO_PULLDOWN_ONLY);
+         busy = 0;              // No point waiting, powered via USB port
       }
    }
    if (led)
@@ -145,6 +142,10 @@ void app_main()
          usleep(100000);
       else
          break;
+   if (usb_present)
+      revk_info("usb", "1");
+   if (charger_present)
+      revk_info("charger", "1");
    if (time(0) < 10)
    {                            /* wait clock set */
       ESP_LOGE(TAG, "Wait clock set");
