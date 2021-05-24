@@ -5,8 +5,10 @@ static const char TAG[] = "BatMon";
 
 #include "revk.h"
 #include "esp_sleep.h"
+#include "esp_task_wdt.h"
 #include "vl53l0x.h"
 #include <driver/gpio.h>
+#include <driver/uart.h>
 
 #define	settings		\
 	u32(period,36000)	\
@@ -141,9 +143,9 @@ void app_main()
    }
    if (!period)
       period = 60;              /* avoid divide by zero */
-   if (!revk_wait_wifi(10))
+   if (!revk_wait_wifi(30))
       ESP_LOGE(TAG, "No WiFi");
-   else if (!revk_wait_mqtt(10))
+   else if (!revk_wait_mqtt(2))
       ESP_LOGE(TAG, "No MQTT");
    else
    {
@@ -185,7 +187,8 @@ void app_main()
    gettimeofday(&tv, NULL);
    uint64_t t = ((period - 1) - (tv.tv_sec % period)) * 1000000ULL + 1000000ULL - tv.tv_usec;
    revk_mqtt_close("Sleep");
-   esp_wifi_stop();
+   revk_wifi_close();
+   uart_wait_tx_done(0, 1000 / portTICK_PERIOD_MS); // Debug done
    esp_sleep_config_gpio_isolate();
    esp_deep_sleep(t);
 
