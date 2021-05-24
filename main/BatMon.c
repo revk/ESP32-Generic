@@ -193,22 +193,22 @@ void app_main()
    }
    if (led)
       gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0); /* Off */
-   struct timeval tv;
-   gettimeofday(&tv, NULL);
-   uint64_t t = ((period - 1) - (tv.tv_sec % period)) * 1000000ULL + 1000000ULL - tv.tv_usec;
+   time_t next = (time(0) + 5) / period * period;
    {
       char reason[50];
       struct tm tm;
-      time_t now = tv.tv_sec + ((t + 999999ULL) / 1000000ULL);
-      gmtime_r(&now, &tm);
+      gmtime_r(&next, &tm);
       sprintf(reason, "Sleep until %04d-%02d-%02dT%02d:%02d:%02dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       revk_mqtt_close(reason);
    }
    revk_wifi_close();
    uart_wait_tx_done(0, 1000 / portTICK_PERIOD_MS);     // Debug done
    esp_sleep_config_gpio_isolate();
+   struct timeval tv;
    gettimeofday(&tv, NULL);
-   t = ((period - 1) - (tv.tv_sec % period)) * 1000000ULL + 1000000ULL - tv.tv_usec;
+   int64_t t = (next - tv.tv_sec - 1) * 1000000ULL + 1000000ULL - tv.tv_usec;
+   if (t < 0)
+      t = 1;
    esp_deep_sleep(t);
 
    /* Should not get here */
