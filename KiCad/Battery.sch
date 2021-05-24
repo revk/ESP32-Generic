@@ -662,9 +662,9 @@ $EndComp
 Text Notes 6050 6250 0    50   ~ 0
 Note that RTS and DTR need to be inverted in FT231X configuration
 Text GLabel 7800 5250 2    50   Input ~ 0
-VBUS_SENSE
+USB
 Text GLabel 3550 3250 2    50   Input ~ 0
-VBUS_SENSE
+USB
 $Comp
 L Device:LED D1
 U 1 1 60A3EE9D
@@ -866,7 +866,7 @@ F 3 "" H 10175 3025 50  0001 C CNN
 $EndComp
 Connection ~ 1600 1750
 Text GLabel 3550 3350 2    50   Input ~ 0
-BCD_CHARGER
+CHARGER
 Text GLabel 7800 5350 2    50   Input ~ 0
-BCD_CHARGER
+CHARGER
 $EndSCHEMATC
