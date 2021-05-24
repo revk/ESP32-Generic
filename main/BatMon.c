@@ -9,7 +9,7 @@ static const char TAG[] = "BatMon";
 #include <driver/gpio.h>
 
 #define	settings		\
-	u32(period,60)	\
+	u32(period,36000)	\
 	u32(awake,1)	\
 	io(usb)	\
 	io(charger)	\
@@ -34,8 +34,8 @@ settings
 #undef b
 #undef s
     uint64_t busy = 0;
-    char usb_present=0;
-    char charger_present=0;
+char usb_present = 0;
+char charger_present = 0;
 const char *rangererr = NULL;
 uint16_t range = 0;
 vl53l0x_t *v = NULL;
@@ -50,8 +50,11 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
       return "";
    }
    if (!strcmp(tag, "connect"))
-   {
-	   // TODO
+   {                            /* report status */
+      if (usb_present)
+         revk_info("usb", "1");
+      if (charger_present)
+         revk_info("charger", "1");
    }
    return NULL;
 }
@@ -80,7 +83,10 @@ void app_main()
       gpio_set_direction(led & 0x3F, GPIO_MODE_INPUT);
       usleep(1000);
       if (gpio_get_level(usb & 0x3F) == ((usb & 0x40) ? 0 : 1))
+      {
+         ESP_LOGI(TAG, "USB found");
          usb_present = 1;
+      }
    }
    if (charger)
    {
@@ -89,7 +95,10 @@ void app_main()
       gpio_set_direction(led & 0x3F, GPIO_MODE_INPUT);
       usleep(1000);
       if (gpio_get_level(charger & 0x3F) == ((charger & 0x40) ? 0 : 1))
+      {
+         ESP_LOGI(TAG, "Charger found");
          charger_present = 1;
+      }
    }
    if (usb_present)
       busy = esp_timer_get_time() + 60000000ULL;
@@ -120,10 +129,10 @@ void app_main()
          if (rangererr)
             ESP_LOGE(TAG, "Ranger error:%s", rangererr);
          else
-	 {
+         {
             range = vl53l0x_readRangeSingleMillimeters(v);
-	    ESP_LOGI(TAG,"Range=%d",range);
-	 }
+            ESP_LOGI(TAG, "Range=%d", range);
+         }
       }
    }
    if (!period)
