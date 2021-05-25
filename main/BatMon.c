@@ -222,7 +222,7 @@ void app_main()
    gettimeofday(&tv, NULL);
    if (next < tv.tv_sec + 1)
       next = tv.tv_sec + 1;
-   esp_deep_sleep(((uint64_t) next - tv.tv_sec - 1) * 1000000LL + 1000000LL - tv.tv_usec);
+   esp_deep_sleep(((uint64_t) next - tv.tv_sec - 1) * 1000000LL + 1000000LL - tv.tv_usec - 500000LL);
 
    /* Should not get here */
    ESP_LOGE(TAG, "Still awake!");
