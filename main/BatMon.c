@@ -216,7 +216,7 @@ void app_main()
       ESP_LOGI(TAG, "%s", reason);
    }
    if (usb_present && !charger_present)
-      sleep(2);
+      sleep(1);
    struct timeval tv;
    gettimeofday(&tv, NULL);
    if (next < tv.tv_sec + 1)
