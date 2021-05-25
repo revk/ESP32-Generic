@@ -87,7 +87,7 @@ void app_main()
          gpio_set_pull_mode(usb & 0x3F, GPIO_PULLUP_ONLY);
          ESP_LOGI(TAG, "USB found");
          usb_present = 1;
-         //busy = esp_timer_get_time() + 300000000ULL;
+         busy = esp_timer_get_time() + 300000000ULL;
       } else
       {                         // No USB Tx
          gpio_reset_pin(1);
