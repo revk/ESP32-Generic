@@ -44,7 +44,6 @@ vl53l0x_t *v = NULL;
 
 const char *app_command(const char *tag, unsigned int len, const unsigned char *value)
 {
-   ESP_LOGE(TAG, "%s", tag);
    if (!strcmp(tag, "upgrade") || !strcmp(tag, "wait"))
    {
       busy = esp_timer_get_time() + 60000000ULL;
@@ -148,9 +147,11 @@ void app_main()
    }
    if (!period)
       period = 60;              /* avoid divide by zero */
-   if (!revk_wait_wifi(30))
+   if (!revk_wait_wifi(10))
+   {
       ESP_LOGE(TAG, "No WiFi");
-   else if (!revk_wait_mqtt(2))
+      busy = esp_timer_get_time() + 300000000ULL;
+   } else if (!revk_wait_mqtt(2))
       ESP_LOGE(TAG, "No MQTT");
    else
    {
@@ -212,6 +213,7 @@ void app_main()
    }
    revk_wifi_close();
    esp_sleep_config_gpio_isolate();
+   ESP_LOGI(TAG, "Night");
    if (usb_present && !charger_present)
       sleep(2);
    struct timeval tv;
