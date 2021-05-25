@@ -73,7 +73,9 @@ void app_main()
 #undef u8
 #undef b
 #undef s
-       ESP_LOGE(TAG, "Start %ld", time(0) % period);
+       if (!period)
+      period = 60;              /* avoid divide by zero */
+   ESP_LOGI(TAG, "Start %ld", time(0) % period);
    if (usb)
    {
       gpio_reset_pin(usb & 0x3F);
@@ -85,7 +87,7 @@ void app_main()
          gpio_set_pull_mode(usb & 0x3F, GPIO_PULLUP_ONLY);
          ESP_LOGI(TAG, "USB found");
          usb_present = 1;
-         busy = esp_timer_get_time() + 300000000ULL;
+         //busy = esp_timer_get_time() + 300000000ULL;
       } else
       {                         // No USB Tx
          gpio_reset_pin(1);
@@ -145,8 +147,6 @@ void app_main()
          }
       }
    }
-   if (!period)
-      period = 60;              /* avoid divide by zero */
    if (!revk_wait_wifi(10))
    {
       ESP_LOGE(TAG, "No WiFi");
@@ -157,8 +157,8 @@ void app_main()
    {
       if (time(0) < 30)
       {                         /* wait clock set */
-         ESP_LOGE(TAG, "Wait clock set");
-         while (time(0) < 10)
+         ESP_LOGI(TAG, "Wait clock set");
+         while (time(0) < 30)
             sleep(1);
       }
       struct tm tm;
@@ -177,11 +177,12 @@ void app_main()
          p += snprintf(p, (int) (e - p), ",\"usb\":true");
       /* TODO bat level */
       p += snprintf(p, (int) (e - p), "}");
+      ESP_LOGI(TAG, "%s", temp);
       revk_info(NULL, "%s", temp);
    }
    if (!busy)
    {
-      ESP_LOGE(TAG, "Wait for %d", awake);      /* wait a bit */
+      ESP_LOGI(TAG, "Wait for %d", awake);      /* wait a bit */
       if (awake)
          sleep(awake);
       else
@@ -190,7 +191,7 @@ void app_main()
    if (busy)
    {
       revk_info(TAG, "Waiting %d", (int) ((busy - esp_timer_get_time()) / 1000000ULL));
-      ESP_LOGE(TAG, "Waiting %d", (int) ((busy - esp_timer_get_time()) / 1000000ULL));
+      ESP_LOGI(TAG, "Waiting %d", (int) ((busy - esp_timer_get_time()) / 1000000ULL));
       while (busy > esp_timer_get_time())
       {
          if (led)
@@ -223,7 +224,7 @@ void app_main()
    esp_deep_sleep(((uint64_t) next - tv.tv_sec - 1) * 1000000LL + 1000000LL - tv.tv_usec);
 
    /* Should not get here */
-   ESP_LOGE(TAG, "Awake");
+   ESP_LOGE(TAG, "Still awake!");
    while (1)
       sleep(1);
 }
