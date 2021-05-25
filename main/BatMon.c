@@ -206,15 +206,15 @@ void app_main()
       gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0); /* Off */
    time_t next = (time(0) + 5) / period * period + period;
    {
-      char reason[50];
+      char reason[100];
       struct tm tm;
       gmtime_r(&next, &tm);
-      sprintf(reason, "Sleep until %04d-%02d-%02dT%02d:%02d:%02dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+      sprintf(reason, "Sleep after %lldms until %04d-%02d-%02dT%02d:%02d:%02dZ", esp_timer_get_time() / 1000, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       revk_mqtt_close(reason);
+      revk_wifi_close();
+      esp_sleep_config_gpio_isolate();
+      ESP_LOGI(TAG, "%s", reason);
    }
-   revk_wifi_close();
-   esp_sleep_config_gpio_isolate();
-   ESP_LOGI(TAG, "Night");
    if (usb_present && !charger_present)
       sleep(2);
    struct timeval tv;
