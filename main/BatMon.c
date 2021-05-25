@@ -12,7 +12,7 @@ static const char TAG[] = "BatMon";
 
 #define	settings		\
 	u32(period,36000)	\
-	u32(awake,1)	\
+	u32(awake,0)	\
 	io(usb)	\
 	io(charger)	\
 	io(led)	\
@@ -166,7 +166,8 @@ void app_main()
       char temp[200],
       *p = temp,
           *e = temp + sizeof(temp) - 1;
-      p += snprintf(p, (int) (e - p), "{\"ts\":\"%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+      p += snprintf(p, (int) (e - p), "{\"id\":\"%s\"", revk_id);
+      p += snprintf(p, (int) (e - p), ",\"ts\":\"%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       if (range)
          p += snprintf(p, (int) (e - p), ",\"range\":%d", range);
       if (charger_present)
@@ -180,7 +181,10 @@ void app_main()
    if (!busy)
    {
       ESP_LOGE(TAG, "Wait for %d", awake);      /* wait a bit */
-      sleep(awake);
+      if (awake)
+         sleep(awake);
+      else
+         usleep(100000);
    }
    if (busy)
    {
