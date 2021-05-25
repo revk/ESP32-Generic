@@ -187,7 +187,7 @@ void app_main()
       if (awake)
          sleep(awake);
       else
-         usleep(10000);         /* just long enough */
+         usleep(50000);         /* just long enough ? */
    }
    if (busy)
    {
