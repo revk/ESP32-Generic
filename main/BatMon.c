@@ -89,7 +89,8 @@ void app_main()
          usb_present = 1;
          busy = esp_timer_get_time() + 300000000ULL;
       } else
-      {                         // No USB Tx
+      {
+         esp_log_level_set("*", ESP_LOG_NONE);  /* no debug */
          gpio_reset_pin(1);
          gpio_set_pull_mode(1, GPIO_PULLDOWN_ONLY);
       }
@@ -105,7 +106,7 @@ void app_main()
          gpio_set_pull_mode(charger & 0x3F, GPIO_PULLUP_ONLY);
          ESP_LOGI(TAG, "Charger found");
          charger_present = 1;
-         // No USB Tx
+         esp_log_level_set("*", ESP_LOG_NONE);  /* no debug */
          gpio_reset_pin(1);
          gpio_set_pull_mode(1, GPIO_PULLDOWN_ONLY);
          busy = 0;              // No point waiting, powered via USB port
@@ -186,7 +187,7 @@ void app_main()
       if (awake)
          sleep(awake);
       else
-         usleep(100000);
+         usleep(10000);         /* just long enough */
    }
    if (busy)
    {
