@@ -5,8 +5,8 @@ $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title "Generic ESP32 (battery operation)"
-Date "2021-05-22"
-Rev "2"
+Date "2021-05-25"
+Rev "3"
 Comp ""
 Comment1 "@TheRealRevK"
 Comment2 "www.me.uk"
@@ -550,7 +550,7 @@ U 1 1 609259A6
 P 6000 5100
 F 0 "C2" H 6115 5146 50  0000 L CNN
 F 1 "100nF" H 6115 5055 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder" H 6038 4950 50  0001 C CNN
+F 2 "RevK:C_0603" H 6038 4950 50  0001 C CNN
 F 3 "~" H 6000 5100 50  0001 C CNN
 	1    6000 5100
 	1    0    0    -1  
