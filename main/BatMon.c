@@ -9,6 +9,8 @@ static const char TAG[] = "BatMon";
 #include "vl53l0x.h"
 #include <driver/gpio.h>
 #include <driver/uart.h>
+#include "driver/adc.h"
+#include "esp_adc_cal.h"
 
 #define	settings		\
 	u32(period,36000)	\
@@ -16,6 +18,10 @@ static const char TAG[] = "BatMon";
 	io(usb)	\
 	io(charger)	\
 	io(led)	\
+	io(adcon)	\
+	u8(adc,5)		\
+	u32(adcr1,18000)	\
+	u32(adcr2,1000)	\
 	io(rangergnd)	\
 	io(rangerpwr)	\
 	io(rangerscl)	\
@@ -41,6 +47,7 @@ char charger_present = 0;
 const char *rangererr = NULL;
 uint16_t range = 0;
 vl53l0x_t *v = NULL;
+uint32_t voltage = 0;
 
 const char *app_command(const char *tag, unsigned int len, const unsigned char *value)
 {
@@ -112,6 +119,25 @@ void app_main()
          busy = 0;              // No point waiting, powered via USB port
       }
    }
+   if (adcon)
+   {
+      REVK_ERR_CHECK(gpio_reset_pin(adcon & 0x3F));
+      REVK_ERR_CHECK(gpio_set_level(adcon & 0x3F, (adcon & 0x40) ? 0 : 1));     /* on */
+      REVK_ERR_CHECK(gpio_set_direction(adcon & 0x3F, GPIO_MODE_OUTPUT));
+
+      esp_adc_cal_characteristics_t adc_chars = { 0 };
+      esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
+      REVK_ERR_CHECK(adc1_config_width(ADC_WIDTH_BIT_12));
+      REVK_ERR_CHECK(adc1_config_channel_atten(adc, ADC_ATTEN_DB_11));
+
+      voltage = 0;
+      REVK_ERR_CHECK(esp_adc_cal_get_voltage(adc, &adc_chars, &voltage));
+      if (adcr2)
+         voltage = voltage * (adcr1 + adcr2) / adcr2;
+
+      if (!usb_present)
+         gpio_set_level(adcon & 0x3F, (adcon & 0x40) ? 1 : 0);  /* off */
+   }
    if (led)
    {
       gpio_reset_pin(led & 0x3F);
@@ -172,6 +198,8 @@ void app_main()
       p += snprintf(p, (int) (e - p), ",\"ts\":\"%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       if (range)
          p += snprintf(p, (int) (e - p), ",\"range\":%d", range);
+      if (voltage)
+         p += snprintf(p, (int) (e - p), ",\"voltage\":%u.%03u", voltage / 1000, voltage % 1000);
       if (charger_present)
          p += snprintf(p, (int) (e - p), ",\"charger\":true");
       else if (usb_present)
