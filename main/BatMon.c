@@ -15,17 +15,17 @@ static const char TAG[] = "BatMon";
 #define	settings		\
 	u32(period,36000)	\
 	u32(awake,0)	\
-	io(usb)	\
-	io(charger)	\
-	io(led)	\
-	io(adcon)	\
+	io(usb,22)	\
+	io(charger,23)	\
+	io(led,25)	\
+	io(adcon,32)	\
 	u8(adc,5)		\
 	u32(adcr1,18000)	\
 	u32(adcr2,1000)	\
-	io(rangergnd)	\
-	io(rangerpwr)	\
-	io(rangerscl)	\
-	io(rangersda)	\
+	io(rangergnd,)	\
+	io(rangerpwr,)	\
+	io(rangerscl,)	\
+	io(rangersda,)	\
         u8(rangeraddress,0x29)  \
 
 #define u32(n,d)        uint32_t n;
@@ -33,7 +33,7 @@ static const char TAG[] = "BatMon";
 #define u8(n,d) uint8_t n;
 #define b(n) uint8_t n;
 #define s(n) char * n;
-#define io(n)           uint8_t n;
+#define io(n,d)           uint8_t n;
 settings
 #undef io
 #undef u32
@@ -67,7 +67,7 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
 void app_main()
 {
    revk_init(&app_command);
-#define io(n)           revk_register(#n,0,sizeof(n),&n,"-",SETTING_SET|SETTING_BITFIELD);
+#define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
 #define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
 #define s8(n,d) revk_register(#n,0,sizeof(n),&n,#d,SETTING_SIGNED);
