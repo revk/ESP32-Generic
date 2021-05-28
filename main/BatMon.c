@@ -17,7 +17,7 @@ static const char TAG[] = "BatMon";
 	u32(awake,0)	\
 	io(usb,22)	\
 	io(charger,23)	\
-	io(led,25)	\
+	io(led,-25)	\
 	io(adcon,32)	\
 	u8(adc,5)		\
 	u32(adcr1,18000)	\
