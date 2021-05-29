@@ -12,6 +12,12 @@ static const char TAG[] = "BatMon";
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
 
+#define	MAXGPIO	36
+static uint8_t input[MAXGPIO];
+static uint8_t output[MAXGPIO];
+static uint8_t power[MAXGPIO];  /* fixed outputs */
+int holding = 0;
+
 #define	settings		\
 	u32(period,3600)	\
 	u32(awake,0)	\
@@ -61,6 +67,22 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
       busy = 0;
       return "";
    }
+   if (!strncmp(tag, "output", 6))
+   {
+      int i = atoi(tag + 6);
+      if (i < 0 || i >= MAXGPIO)
+         return "Bad output number";
+      if (!output[i])
+         return "Output not configured";
+      int v = 0;
+      if (len && (*value == '1' || *value == 't' || *value == 'T' || *value == 'y' || *value == 'Y'))
+         v = 1;
+      int p = output[i] & 0x3F;
+      REVK_ERR_CHECK(gpio_hold_dis(p));
+      REVK_ERR_CHECK(gpio_set_level(p, ((output[i] & 0x40) ? 1 : 0) ^ v));
+      REVK_ERR_CHECK(gpio_hold_en(p));
+      return "";
+   }
    return NULL;
 }
 
@@ -81,7 +103,41 @@ void app_main()
 #undef u8
 #undef b
 #undef s
-       if (!period)
+       revk_register("input", MAXGPIO, sizeof(*input), &input, "-", SETTING_BITFIELD | SETTING_SET);
+   revk_register("output", MAXGPIO, sizeof(*output), &output, "-", SETTING_BITFIELD | SETTING_SET);
+   revk_register("power", MAXGPIO, sizeof(*power), &power, "-", SETTING_BITFIELD | SETTING_SET);
+   int i;
+   for (i = 0; i < MAXGPIO; i++)
+   {
+      if (input[i])
+      {
+         int p = input[i] & 0x3F;
+         REVK_ERR_CHECK(gpio_hold_dis(p));
+         REVK_ERR_CHECK(gpio_reset_pin(p));
+         REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_INPUT));
+      }
+      if (output[i])
+      {
+         int p = output[i] & 0x3F;
+         REVK_ERR_CHECK(gpio_reset_pin(p));
+         REVK_ERR_CHECK(gpio_set_level(p, (output[i] & 0x40) ? 1 : 0)); /* Off */
+         REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_OUTPUT));
+         REVK_ERR_CHECK(gpio_hold_en(p));
+         holding++;
+      }
+      if (power[i])
+      {
+         int p = power[i] & 0x3F;
+         REVK_ERR_CHECK(gpio_reset_pin(p));
+         REVK_ERR_CHECK(gpio_set_level(p, (power[i] & 0x40) ? 0 : 1));
+         REVK_ERR_CHECK(gpio_set_drive_capability(p, GPIO_DRIVE_CAP_3));
+         REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_OUTPUT));
+         REVK_ERR_CHECK(gpio_hold_en(p));
+         holding++;
+      }
+   }
+
+   if (!period)
       period = 60;              /* avoid divide by zero */
    ESP_LOGI(TAG, "Start %ld", now % period);
    if (usb)
@@ -192,7 +248,7 @@ void app_main()
       int64_t run = esp_timer_get_time();
       struct tm tm;
       gmtime_r(&now, &tm);
-      char temp[200],
+      char temp[1000],
       *p = temp,
           *e = temp + sizeof(temp) - 1;
       p += snprintf(p, (int) (e - p), "{\"id\":\"%s\"", revk_id);
@@ -206,6 +262,9 @@ void app_main()
          p += snprintf(p, (int) (e - p), ",\"charger\":true");
       else if (usb_present)
          p += snprintf(p, (int) (e - p), ",\"usb\":true");
+      for (i = 0; i < MAXGPIO; i++)
+         if (input[i])
+            p += snprintf(p, (int) (e - p), ",\"input%d\":%s", i, (gpio_get_level(input[i] & 0x3F) ^ ((input[i] ^ 0x40) ? 1 : 0)) ? "true" : "false");
       p += snprintf(p, (int) (e - p), "}");
       ESP_LOGI(TAG, "%s", temp);
       revk_info(NULL, "%s", temp);
@@ -242,6 +301,10 @@ void app_main()
       sprintf(reason, "Sleep after %lldms until %04d-%02d-%02dT%02d:%02d:%02dZ", esp_timer_get_time() / 1000, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       revk_mqtt_close(reason);
       revk_wifi_close();
+      if (holding)
+         gpio_deep_sleep_hold_en();
+      else
+         gpio_deep_sleep_hold_dis();
       esp_sleep_config_gpio_isolate();
       ESP_LOGI(TAG, "%s", reason);
    }
