@@ -13,7 +13,7 @@ static const char TAG[] = "BatMon";
 #include "esp_adc_cal.h"
 
 #define	settings		\
-	u32(period,36000)	\
+	u32(period,3600)	\
 	u32(awake,0)	\
 	io(usb,22)	\
 	io(charger,23)	\
@@ -188,6 +188,7 @@ void app_main()
          while (time(0) < 30)
             sleep(1);
       }
+      int64_t run = esp_timer_get_time();
       struct tm tm;
       time_t now = time(0);
       gmtime_r(&now, &tm);
@@ -196,6 +197,7 @@ void app_main()
           *e = temp + sizeof(temp) - 1;
       p += snprintf(p, (int) (e - p), "{\"id\":\"%s\"", revk_id);
       p += snprintf(p, (int) (e - p), ",\"ts\":\"%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+      p += snprintf(p, (int) (e - p), ",\"runtime\":%u.%03u", (int) run / 1000000, (int) run % 1000000);
       if (range)
          p += snprintf(p, (int) (e - p), ",\"range\":%d", range);
       if (voltage)
@@ -204,7 +206,6 @@ void app_main()
          p += snprintf(p, (int) (e - p), ",\"charger\":true");
       else if (usb_present)
          p += snprintf(p, (int) (e - p), ",\"usb\":true");
-      /* TODO bat level */
       p += snprintf(p, (int) (e - p), "}");
       ESP_LOGI(TAG, "%s", temp);
       revk_info(NULL, "%s", temp);
