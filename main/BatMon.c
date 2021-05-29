@@ -186,12 +186,17 @@ void app_main()
       esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
       REVK_ERR_CHECK(adc1_config_width(ADC_WIDTH_BIT_12));
       REVK_ERR_CHECK(adc1_config_channel_atten(adc, ADC_ATTEN_DB_11));
-
+#define TRIES 100
       voltage = 0;
-      REVK_ERR_CHECK(esp_adc_cal_get_voltage(adc, &adc_chars, &voltage));
-      if (adcr2)
-         voltage = voltage * (adcr1 + adcr2) / adcr2;
-
+      for (int try = 0; try < TRIES; try++)
+      {
+         uint32_t v = 0;
+         REVK_ERR_CHECK(esp_adc_cal_get_voltage(adc, &adc_chars, &v));
+         if (adcr2)
+            v = v * (adcr1 + adcr2) / adcr2;
+         voltage += v;
+      }
+      voltage /= TRIES;
       if (!usb_present)
          gpio_set_level(adcon & 0x3F, (adcon & 0x40) ? 1 : 0);  /* off */
    }
