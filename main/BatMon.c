@@ -80,9 +80,10 @@ void app_main()
 #undef u8
 #undef b
 #undef s
-       if (!period)
+       time_t now = time(0);
+   if (!period)
       period = 60;              /* avoid divide by zero */
-   ESP_LOGI(TAG, "Start %ld", time(0) % period);
+   ESP_LOGI(TAG, "Start %ld", now % period);
    if (usb)
    {
       gpio_reset_pin(usb & 0x3F);
@@ -182,15 +183,14 @@ void app_main()
       ESP_LOGE(TAG, "No MQTT");
    else
    {
-      if (time(0) < 30)
+      if (now < 30)
       {                         /* wait clock set */
          ESP_LOGI(TAG, "Wait clock set");
-         while (time(0) < 30)
+         while ((now = time(0)) < 30)
             sleep(1);
       }
       int64_t run = esp_timer_get_time();
       struct tm tm;
-      time_t now = time(0);
       gmtime_r(&now, &tm);
       char temp[200],
       *p = temp,
@@ -251,7 +251,7 @@ void app_main()
    gettimeofday(&tv, NULL);
    if (next < tv.tv_sec + 1)
       next = tv.tv_sec + 1;
-   esp_deep_sleep(((uint64_t) next - tv.tv_sec - 1) * 1000000LL + 1000000LL - tv.tv_usec - 750000LL);
+   esp_deep_sleep(((uint64_t) next - tv.tv_sec - 1) * 1000000LL + 1000000LL - tv.tv_usec);
 
    /* Should not get here */
    ESP_LOGE(TAG, "Still awake!");
