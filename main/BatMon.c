@@ -66,6 +66,7 @@ const char *app_command(const char *tag, unsigned int len, const unsigned char *
 
 void app_main()
 {
+   time_t now = time(0);
    revk_init(&app_command);
 #define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
@@ -80,8 +81,7 @@ void app_main()
 #undef u8
 #undef b
 #undef s
-       time_t now = time(0);
-   if (!period)
+       if (!period)
       period = 60;              /* avoid divide by zero */
    ESP_LOGI(TAG, "Start %ld", now % period);
    if (usb)
