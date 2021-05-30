@@ -148,7 +148,7 @@ void app_main()
    }
    if (!period)
       period = 60;              /* avoid divide by zero */
-   if (esp_reset_reason() == ESP_RST_DEEPSLEEP && awake < 60)
+   if (esp_reset_reason() != ESP_RST_DEEPSLEEP && awake < 60)
       awake = 60;               // Power up
    ESP_LOGI(TAG, "Start %ld", now % period);
    if (usb)
@@ -162,7 +162,8 @@ void app_main()
          gpio_set_pull_mode(usb & 0x3F, GPIO_PULLUP_ONLY);
          ESP_LOGI(TAG, "USB found");
          usb_present = 1;
-         busy = esp_timer_get_time() + 300000000ULL;
+         if (awake < 60)
+            awake = 60;
       } else
       {
          esp_log_level_set("*", ESP_LOG_NONE);  /* no debug */
@@ -250,7 +251,8 @@ void app_main()
    if (!revk_wait_wifi(10))
    {
       ESP_LOGE(TAG, "No WiFi");
-      busy = esp_timer_get_time() + 300000000ULL;
+      if (awake < 60)
+         awake = 60;
    } else if (!revk_wait_mqtt(2))
       ESP_LOGE(TAG, "No MQTT");
    else
