@@ -18,6 +18,9 @@ static const char TAG[] = "BatMon";
 #ifndef	CONFIG_LWIP_DHCP_RESTORE_LAST_IP
 #warning CONFIG_LWIP_DHCP_RESTORE_LAST_IP may improve speed
 #endif
+#ifndef	CONFIG_BOOTLOADER_SKIP_VALIDATE_IN_DEEP_SLEEP
+#warning CONFIG_BOOTLOADER_SKIP_VALIDATE_IN_DEEP_SLEEP may speed boot
+#endif
 
 #define	MAXGPIO	36
 static uint8_t input[MAXGPIO];
