@@ -146,9 +146,10 @@ void app_main()
          holding++;
       }
    }
-
    if (!period)
       period = 60;              /* avoid divide by zero */
+   if (esp_reset_reason() == ESP_RST_DEEPSLEEP && awake < 60)
+      awake = 60;               // Power up
    ESP_LOGI(TAG, "Start %ld", now % period);
    if (usb)
    {
