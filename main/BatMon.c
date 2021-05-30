@@ -1,6 +1,13 @@
 /* BatMon app */
 /* Copyright ©2019 - 21 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0 */
 
+#ifdef	LWIP_DHCP_DOES_ARP_CHECK
+#warn	LWIP_DHCP_DOES_ARP_CHECK means DHCP is slow
+#endif
+#ifndef	CONFIG_LWIP_DHCP_RESTORE_LAST_IP
+#warn	CONFIG_LWIP_DHCP_RESTORE_LAST_IP may improve speed
+#endif
+
 static const char TAG[] = "BatMon";
 
 #include "revk.h"
