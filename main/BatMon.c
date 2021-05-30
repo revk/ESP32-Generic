@@ -260,6 +260,8 @@ void app_main()
       int64_t run = esp_timer_get_time();
       struct tm tm;
       gmtime_r(&now, &tm);
+      if (!tm.tm_hour && !tm.tm_min && awake < 10)
+         awake = 10;            /* allow clock to set */
       char temp[1000],
       *p = temp,
           *e = temp + sizeof(temp) - 1;
