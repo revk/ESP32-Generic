@@ -267,7 +267,7 @@ void app_main()
           *e = temp + sizeof(temp) - 1;
       p += snprintf(p, (int) (e - p), "{\"id\":\"%s\"", revk_id);
       p += snprintf(p, (int) (e - p), ",\"ts\":\"%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-      p += snprintf(p, (int) (e - p), ",\"runtime\":%u.%03u", (int) run / 1000000, (int) run % 1000000);
+      p += snprintf(p, (int) (e - p), ",\"runtime\":%u.%06u", (int) run / 1000000, (int) run % 1000000);
       if (range)
          p += snprintf(p, (int) (e - p), ",\"range\":%d", range);
       if (voltage)
