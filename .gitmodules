@@ -14,3 +14,4 @@
 [submodule "components/ESP32-VL53L1X"]
 	path = components/ESP32-VL53L1X
 	url = https://github.com/revk/ESP32-VL53L1X
+	branch = main

@@ -6,6 +6,7 @@ static const char TAG[] = "BatMon";
 #include "revk.h"
 #include "esp_sleep.h"
 #include "esp_task_wdt.h"
+#include "vl53l0x.h"
 #include "vl53l1x.h"
 #include <driver/gpio.h>
 #include <driver/uart.h>
@@ -38,6 +39,7 @@ int holding = 0;
 	u8(adc,5)		\
 	u32(adcr1,18000)	\
 	u32(adcr2,1000)	\
+	b(ranger0x)	\
 	io(rangergnd,)	\
 	io(rangerpwr,)	\
 	io(rangerscl,)	\
@@ -62,7 +64,6 @@ char usb_present = 0;
 char charger_present = 0;
 const char *rangererr = NULL;
 uint16_t range = 0;
-vl53l1x_t *v = NULL;
 uint32_t voltage = 0;
 
 const char *app_command(const char *tag, unsigned int len, const unsigned char *value)
@@ -233,18 +234,37 @@ void app_main()
    if (rangersda && rangerscl)
    {
       ESP_LOGI(TAG, "Ranger init GND=%d PWR=%d SCL=%d SDA=%d Address=%02X", rangergnd & 0x3F, rangerpwr & 0x3F, rangerscl & 0x3F, rangersda & 0x3F, rangeraddress);
-      vl53l1x_t *v = vl53l1x_config(0, rangerscl & 0x3F, rangersda & 0x3F, -1, rangeraddress, 0);
-      if (!v)
-         ESP_LOGE(TAG, "Ranger config failed");
-      else
+      if (ranger0x)
       {
-         rangererr = vl53l1x_init(v);
-         if (rangererr)
-            ESP_LOGE(TAG, "Ranger error:%s", rangererr);
+         vl53l0x_t *v = vl53l0x_config(0, rangerscl & 0x3F, rangersda & 0x3F, -1, rangeraddress, 0);
+         if (!v)
+            ESP_LOGE(TAG, "Ranger config failed");
          else
          {
-            range = vl53l1x_readSingle(v,true);
-            ESP_LOGI(TAG, "Range=%d", range);
+            rangererr = vl53l0x_init(v);
+            if (rangererr)
+               ESP_LOGE(TAG, "Ranger error:%s", rangererr);
+            else
+            {
+               range = vl53l0x_readRangeSingleMillimeters(v);
+               ESP_LOGI(TAG, "Range=%d", range);
+            }
+         }
+      } else
+      {                         /* Try 1X */
+         vl53l1x_t *v = vl53l1x_config(0, rangerscl & 0x3F, rangersda & 0x3F, -1, rangeraddress, 0);
+         if (!v)
+            ESP_LOGE(TAG, "Ranger config failed");
+         else
+         {
+            rangererr = vl53l1x_init(v);
+            if (rangererr)
+               ESP_LOGE(TAG, "Ranger error:%s", rangererr);
+            else
+            {
+               range = vl53l1x_readSingle(v, true);
+               ESP_LOGI(TAG, "Range=%d", range);
+            }
          }
       }
    }
