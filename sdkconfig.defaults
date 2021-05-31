@@ -83,7 +83,7 @@ CONFIG_SECURE_BOOT_SIGNING_KEY="secure_boot_signing_key.pem"
 #
 # Serial flasher config
 #
-CONFIG_ESPTOOLPY_PORT="/dev/cu.usbserial-AM00LQDF"
+CONFIG_ESPTOOLPY_PORT="/dev/cu.usbserial-RevK"
 CONFIG_ESPTOOLPY_BAUD_115200B=y
 # CONFIG_ESPTOOLPY_BAUD_230400B is not set
 # CONFIG_ESPTOOLPY_BAUD_921600B is not set
