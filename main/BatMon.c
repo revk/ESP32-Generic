@@ -4,6 +4,7 @@
 static const char TAG[] = "BatMon";
 
 #include "revk.h"
+#include "jo.h"
 #include "esp_sleep.h"
 #include "esp_task_wdt.h"
 #include "vl53l0x.h"
@@ -288,26 +289,29 @@ void app_main()
       gmtime_r(&now, &tm);
       if (!tm.tm_hour && !tm.tm_min && awake < 10)
          awake = 10;            /* allow clock to set */
-      char temp[1000],
-      *p = temp,
-          *e = temp + sizeof(temp) - 1;
-      p += snprintf(p, (int) (e - p), "{\"id\":\"%s\"", revk_id);
-      p += snprintf(p, (int) (e - p), ",\"ts\":\"%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-      p += snprintf(p, (int) (e - p), ",\"runtime\":%u.%06u", (int) run / 1000000, (int) run % 1000000);
+      jo_t j = jo_create_alloc();
+      jo_object(j, NULL);
+      jo_string(j, "id", revk_id);
+      jo_stringf(j, "%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+      jo_litf(j, "runtime", "%u.%06u", (int) run / 1000000, (int) run % 1000000);
       if (range)
-         p += snprintf(p, (int) (e - p), ",\"range\":%d", range);
+         jo_litf(j, "range", "%d", range);
       if (voltage)
-         p += snprintf(p, (int) (e - p), ",\"voltage\":%u.%03u", voltage / 1000, voltage % 1000);
+         jo_litf(j, "voltage", "%u.%03u", voltage / 1000, voltage % 1000);
       if (charger_present)
-         p += snprintf(p, (int) (e - p), ",\"charger\":true");
+         jo_bool(j, "charger", 1);
       else if (usb_present)
-         p += snprintf(p, (int) (e - p), ",\"usb\":true");
-      for (i = 0; i < MAXGPIO; i++)
-         if (input[i])
-            p += snprintf(p, (int) (e - p), ",\"input%d\":%s", i, (gpio_get_level(input[i] & 0x3F) ^ ((input[i] ^ 0x40) ? 1 : 0)) ? "true" : "false");
-      p += snprintf(p, (int) (e - p), "}");
-      ESP_LOGI(TAG, "%s", temp);
-      revk_info(NULL, "%s", temp);
+         jo_bool(j, "usb", 1);
+
+      for (i = 0; i < MAXGPIO && !input[i]; i++);
+      if (i < MAXGPIO)
+      {
+         jo_array(j, "input");
+         for (i = 0; i < MAXGPIO; i++)
+            jo_bool(j, NULL, (gpio_get_level(input[i] & 0x3F) ^ ((input[i] ^ 0x40) ? 1 : 0)));
+         jo_close(j);
+      }
+      revk_info(NULL, "%s", jo_result_free(&j) ? : "");
    }
    if (!busy)
    {
