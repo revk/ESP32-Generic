@@ -292,7 +292,7 @@ void app_main()
       jo_t j = jo_create_alloc();
       jo_object(j, NULL);
       jo_string(j, "id", revk_id);
-      jo_stringf(j, "%04d-%02d-%02dT%02d:%02d:%02dZ\"", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
+      jo_stringf(j, "ts", "%04d-%02d-%02dT%02d:%02d:%02dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       jo_litf(j, "runtime", "%u.%06u", (int) run / 1000000, (int) run % 1000000);
       if (range)
          jo_litf(j, "range", "%d", range);
