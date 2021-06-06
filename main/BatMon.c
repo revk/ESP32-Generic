@@ -4,7 +4,6 @@
 static const char TAG[] = "BatMon";
 
 #include "revk.h"
-#include "jo.h"
 #include "esp_sleep.h"
 #include "esp_task_wdt.h"
 #include "vl53l0x.h"
