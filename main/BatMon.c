@@ -310,7 +310,7 @@ void app_main()
             jo_bool(j, NULL, (gpio_get_level(input[i] & 0x3F) ^ ((input[i] ^ 0x40) ? 1 : 0)));
          jo_close(j);
       }
-      revk_info(NULL, "%s", jo_result_free(&j) ? : "");
+      revk_infoj(NULL, &j);
    }
    if (!busy)
    {
