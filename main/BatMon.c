@@ -22,6 +22,9 @@ static const char TAG[] = "BatMon";
 #ifndef	CONFIG_BOOTLOADER_SKIP_VALIDATE_IN_DEEP_SLEEP
 #warning CONFIG_BOOTLOADER_SKIP_VALIDATE_IN_DEEP_SLEEP may speed boot
 #endif
+#if	CONFIG_BOOTLOADER_LOG_LEVEL > 0
+#warning CONFIG_BOOTLOADER_LOG_LEVEL recommended to be no output
+#endif
 
 #define	MAXGPIO	36
 static uint8_t input[MAXGPIO];
