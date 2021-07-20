@@ -3,7 +3,7 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := BatMon
+PROJECT_NAME := Generic
 
 include $(IDF_PATH)/make/project.mk
 
@@ -13,7 +13,7 @@ update:
 
 # Program the FTDI
 ftdi: ftdizap/ftdizap
-	./ftdizap/ftdizap --serial="RevK" --description="BatMon" --cbus0-mode=7 --cbus1-mode=13 --invert-rts=1 --invert-dtr=1
+	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13 --invert-rts=1 --invert-dtr=1
 
 ftdizap/ftdizap: ftdizap/ftdizap.c
 	make -C ftdizap
@@ -21,17 +21,17 @@ ftdizap/ftdizap: ftdizap/ftdizap.c
 PCBCase/case: PCBCase/case.c
 	make -C PCBCase
 
-scad: KiCad/Battery.scad KiCad/Battery-nohole.scad
-stl: KiCad/Battery.stl KiCad/Battery-nohole.stl
+scad: KiCad/Generic.scad KiCad/Generic-nohole.scad
+stl: KiCad/Generic.stl KiCad/Generic-nohole.stl
 
 %.stl: %.scad
 	echo "Making $@"
 	/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD $< -o $@
 	echo "Made $@"
 
-KiCad/Battery.scad: KiCad/Battery.kicad_pcb PCBCase/case Makefile
+KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=4.9
 
-KiCad/Battery-nohole.scad: KiCad/Battery.kicad_pcb PCBCase/case Makefile
+KiCad/Generic-nohole.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=4.9 --ignore=J3
 
