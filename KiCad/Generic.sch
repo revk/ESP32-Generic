@@ -21,6 +21,9 @@ F 0 "J2" H 6232 2467 50  0000 C CNN
 F 1 "USB-C" H 6232 2376 50  0000 C CNN
 F 2 "RevK:USC16-TR-Round" H 6275 1600 50  0001 C CNN
 F 3 "https://www.usb.org/sites/default/files/documents/usb_type-c.zip" H 6275 1600 50  0001 C CNN
+F 4 "Valcon" H 6125 1600 50  0001 C CNN "Manufacturer"
+F 5 "CSP-USC16-TR" H 6125 1600 50  0001 C CNN "Part No"
+F 6 "https://www.toby.co.uk/signal-to-board-connectors/usb-connectors/csp-usc16-tr-valcon-usb-type-c-surface-mount-pcb-socket/" H 6125 1600 50  0001 C CNN "Order URL"
 	1    6125 1600
 	1    0    0    -1  
 $EndComp
@@ -144,7 +147,10 @@ P 2425 6000
 F 0 "J1" H 2533 6381 50  0000 C CNN
 F 1 "Connector" H 2533 6290 50  0000 C CNN
 F 2 "RevK:Molex_MiniSPOX_H6RA_0.1" H 2425 6000 50  0001 C CNN
-F 3 "~" H 2425 6000 50  0001 C CNN
+F 3 "https://www.mouser.co.uk/datasheet/2/276/0022057065_PCB_HEADERS-158483.pdf" H 2425 6000 50  0001 C CNN
+F 4 "Molex" H 2425 6000 50  0001 C CNN "Manufacturer"
+F 5 "0022057065" H 2425 6000 50  0001 C CNN "Part No"
+F 6 "Not fitted" H 2425 6000 50  0001 C CNN "Notes"
 	1    2425 6000
 	1    0    0    -1  
 $EndComp
@@ -176,6 +182,7 @@ F 0 "R2" H 3325 5350 50  0000 R CNN
 F 1 "NF" V 3275 5600 50  0000 R CNN
 F 2 "RevK:Pad_1206_0805_NF" V 3205 5550 50  0001 C CNN
 F 3 "~" H 3275 5550 50  0001 C CNN
+F 4 "Not fitted" H 3275 5550 50  0001 C CNN "Notes"
 	1    3275 5550
 	1    0    0    -1  
 $EndComp
@@ -187,6 +194,7 @@ F 0 "R3" H 3325 5350 50  0000 L CNN
 F 1 "NF" V 3375 5500 50  0000 L CNN
 F 2 "RevK:Pad_1206_0805_NF" V 3305 5550 50  0001 C CNN
 F 3 "~" H 3375 5550 50  0001 C CNN
+F 4 "Not fitted" H 3375 5550 50  0001 C CNN "Notes"
 	1    3375 5550
 	1    0    0    -1  
 $EndComp
@@ -198,6 +206,7 @@ F 0 "R4" H 3425 5350 50  0000 L CNN
 F 1 "NF" V 3475 5500 50  0000 L CNN
 F 2 "RevK:Pad_1206_0805_NF" V 3405 5550 50  0001 C CNN
 F 3 "~" H 3475 5550 50  0001 C CNN
+F 4 "Not fitted" H 3475 5550 50  0001 C CNN "Notes"
 	1    3475 5550
 	1    0    0    -1  
 $EndComp
@@ -209,6 +218,7 @@ F 0 "R5" H 3525 5350 50  0000 L CNN
 F 1 "NF" V 3575 5500 50  0000 L CNN
 F 2 "RevK:Pad_1206_0805_NF" V 3505 5550 50  0001 C CNN
 F 3 "~" H 3575 5550 50  0001 C CNN
+F 4 "Not fitted" H 3575 5550 50  0001 C CNN "Notes"
 	1    3575 5550
 	1    0    0    -1  
 $EndComp
@@ -220,6 +230,7 @@ F 0 "R6" H 3625 5350 50  0000 L CNN
 F 1 "NF" V 3675 5500 50  0000 L CNN
 F 2 "RevK:Pad_1206_0805_NF" V 3605 5550 50  0001 C CNN
 F 3 "~" H 3675 5550 50  0001 C CNN
+F 4 "Not fitted" H 3675 5550 50  0001 C CNN "Notes"
 	1    3675 5550
 	1    0    0    -1  
 $EndComp
@@ -313,6 +324,7 @@ F 0 "J3" H 9375 1000 50  0000 R CNN
 F 1 "DC" H 9500 900 50  0000 R CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 9325 900 50  0001 C CNN
 F 3 "~" H 9325 900 50  0001 C CNN
+F 4 "Not fitted" H 9325 900 50  0001 C CNN "Notes"
 	1    9325 900 
 	1    0    0    -1  
 $EndComp
@@ -322,9 +334,10 @@ L Device:R R7
 U 1 1 60D24A3F
 P 4025 6300
 F 0 "R7" V 4125 6300 50  0000 C CNN
-F 1 "0R" V 4025 6300 50  0000 C CNN
+F 1 "NF" V 4025 6300 50  0000 C CNN
 F 2 "RevK:Pad_1206_0805_NF" V 3955 6300 50  0001 C CNN
 F 3 "~" H 4025 6300 50  0001 C CNN
+F 4 "Not fitted" V 4025 6300 50  0001 C CNN "Notes"
 	1    4025 6300
 	0    1    1    0   
 $EndComp
@@ -336,6 +349,7 @@ F 0 "C1" H 2925 5650 50  0000 L CNN
 F 1 "NF" H 2875 5750 50  0000 L CNN
 F 2 "RevK:Pad_1206_0805_NF" H 2963 5600 50  0001 C CNN
 F 3 "~" H 2925 5750 50  0001 C CNN
+F 4 "Not fitted" H 2925 5750 50  0001 C CNN "Notes"
 	1    2925 5750
 	1    0    0    -1  
 $EndComp
@@ -363,6 +377,8 @@ F 0 "U2" H 6725 5731 50  0000 C CNN
 F 1 "FT231XQ" H 6725 5640 50  0000 C CNN
 F 2 "RevK:QFN-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm" H 8075 3850 50  0001 C CNN
 F 3 "https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT231X.pdf" H 6725 4650 50  0001 C CNN
+F 4 "FTDI" H 6725 4650 50  0001 C CNN "Manufacturer"
+F 5 "FT231XQ" H 6725 4650 50  0001 C CNN "Part No"
 	1    6725 4650
 	1    0    0    -1  
 $EndComp
@@ -438,7 +454,8 @@ P 9175 1300
 F 0 "Reg1" H 9753 1201 50  0000 L CNN
 F 1 "Regulator" H 9753 1110 50  0000 L CNN
 F 2 "RevK:RegulatorBlock" H 9625 1400 50  0001 C CNN
-F 3 "https://www.pololu.com/product/2842/resources" H 9625 1400 50  0001 C CNN
+F 3 "lmr16006yddcr" H 9625 1400 50  0001 C CNN
+F 4 "This is a composite part - LMR16006, 0.1uF 0603, 2.2uf 0805, 10uf 0805, Diode, 6.8uH" H 9175 1300 50  0001 C CNN "Notes"
 	1    9175 1300
 	1    0    0    -1  
 $EndComp
@@ -505,6 +522,9 @@ F 0 "U1" H 2575 4231 50  0000 C CNN
 F 1 "ESP32-WROOM-32" H 2575 4140 50  0000 C CNN
 F 2 "RevK:ESP32-WROOM-32" H 2575 1150 50  0001 C CNN
 F 3 "https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf" H 2275 2700 50  0001 C CNN
+F 4 "Espressif" H 2575 2650 50  0001 C CNN "Manufacturer"
+F 5 "ESP32-WROOM-32" H 2575 2650 50  0001 C CNN "Part No"
+F 6 "Can be -32D, -32E, etc, must have built in antenna. Select models with 16MB (128Mb) flash fitted" H 2575 2650 50  0001 C CNN "Notes"
 	1    2575 2650
 	1    0    0    -1  
 $EndComp
@@ -679,7 +699,9 @@ P 1175 1650
 F 0 "Q1" H 1316 1696 50  0000 L CNN
 F 1 "RN1701" H 1316 1605 50  0000 L CNN
 F 2 "RevK:USV-5" H 1175 1650 50  0001 C CNN
-F 3 "~" H 1175 1650 50  0001 C CNN
+F 3 "https://www.mouser.co.uk/datasheet/2/408/RN1701_datasheet_en_20191003-1627196.pdf" H 1175 1650 50  0001 C CNN
+F 4 "Toshiba" H 1175 1650 50  0001 C CNN "Manufacturer"
+F 5 "RN1701" H 1175 1650 50  0001 C CNN "Part No"
 	1    1175 1650
 	1    0    0    -1  
 $EndComp
@@ -690,7 +712,9 @@ P 4025 2400
 F 0 "Q1" H 4166 2446 50  0000 L CNN
 F 1 "RN1701" H 4166 2355 50  0000 L CNN
 F 2 "RevK:USV-5" H 4025 2400 50  0001 C CNN
-F 3 "~" H 4025 2400 50  0001 C CNN
+F 3 "https://www.mouser.co.uk/datasheet/2/408/RN1701_datasheet_en_20191003-1627196.pdf" H 4025 2400 50  0001 C CNN
+F 4 "Toshiba" H 4025 2400 50  0001 C CNN "Manufacturer"
+F 5 "RN1701" H 4025 2400 50  0001 C CNN "Part No"
 	2    4025 2400
 	-1   0    0    -1  
 $EndComp
@@ -818,7 +842,9 @@ P 9075 2700
 F 0 "U3" H 9180 2746 50  0000 L CNN
 F 1 "NX6020CAKS" H 9180 2655 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-363_SC-70-6" H 9025 2125 50  0001 C CNN
-F 3 "" H 9025 2125 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/NX6020CAKS.pdf" H 9025 2125 50  0001 C CNN
+F 4 "NX6020CAKS" H 9075 2700 50  0001 C CNN "Part No"
+F 5 "Nexperia" H 9075 2700 50  0001 C CNN "Manufacturer"
 	1    9075 2700
 	1    0    0    -1  
 $EndComp
@@ -830,7 +856,7 @@ P 9650 2500
 F 0 "U3" H 9755 2454 50  0000 L CNN
 F 1 "NX6020CAKS" H 9755 2545 50  0000 L CNN
 F 2 "Package_TO_SOT_SMD:SOT-363_SC-70-6" H 9600 1925 50  0001 C CNN
-F 3 "" H 9600 1925 50  0001 C CNN
+F 3 "https://assets.nexperia.com/documents/data-sheet/NX6020CAKS.pdf" H 9600 1925 50  0001 C CNN
 	2    9650 2500
 	1    0    0    1   
 $EndComp
@@ -846,7 +872,9 @@ P 4550 3950
 F 0 "D1" H 4550 4447 50  0000 C CNN
 F 1 "RGB" H 4550 4356 50  0000 C CNN
 F 2 "RevK:LED-RGB-1.6x1.6" H 4550 3900 50  0001 C CNN
-F 3 "~" H 4550 3900 50  0001 C CNN
+F 3 "https://www.mouser.co.uk/datasheet/2/216/APTF1616LSEEZGKQBKC-786442.pdf" H 4550 3900 50  0001 C CNN
+F 4 "Kingbright" H 4550 3950 50  0001 C CNN "Manufacturer"
+F 5 "APTF1616LSEEZGKQBKC" H 4550 3950 50  0001 C CNN "Part No"
 	1    4550 3950
 	1    0    0    -1  
 $EndComp
@@ -866,7 +894,7 @@ L Device:R R10
 U 1 1 60CFBFAF
 P 4200 3950
 F 0 "R10" V 4275 3950 50  0000 C CNN
-F 1 "1K" V 4200 3950 50  0000 C CNN
+F 1 "2K" V 4200 3950 50  0000 C CNN
 F 2 "RevK:R_0603" V 4130 3950 50  0001 C CNN
 F 3 "~" H 4200 3950 50  0001 C CNN
 	1    4200 3950
@@ -890,6 +918,8 @@ F 0 "D3" H 9425 4217 50  0000 C CNN
 F 1 "BAV99S" H 9425 4126 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-363_SC-70-6" H 9425 3500 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/BAV99_SER.pdf" H 9425 4000 50  0001 C CNN
+F 4 "Nexperia" H 9425 4000 50  0001 C CNN "Manufacturer"
+F 5 "BAV99S" H 9425 4000 50  0001 C CNN "Part No"
 	1    9425 4000
 	1    0    0    -1  
 $EndComp
@@ -925,6 +955,8 @@ F 0 "D3" H 9425 4817 50  0000 C CNN
 F 1 "BAV99S" H 9425 4726 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-363_SC-70-6" H 9425 4100 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/BAV99_SER.pdf" H 9425 4600 50  0001 C CNN
+F 4 "Nexperia" H 9425 4600 50  0001 C CNN "Manufacturer"
+F 5 "BAV99S" H 9425 4600 50  0001 C CNN "Part No"
 	2    9425 4600
 	1    0    0    -1  
 $EndComp
@@ -960,6 +992,8 @@ F 0 "D4" H 9425 5442 50  0000 C CNN
 F 1 "BAV99S" H 9425 5351 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-363_SC-70-6" H 9425 4725 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/BAV99_SER.pdf" H 9425 5225 50  0001 C CNN
+F 4 "Nexperia" H 9425 5225 50  0001 C CNN "Manufacturer"
+F 5 "BAV99S" H 9425 5225 50  0001 C CNN "Part No"
 	1    9425 5225
 	1    0    0    -1  
 $EndComp
@@ -995,6 +1029,8 @@ F 0 "D4" H 9425 6092 50  0000 C CNN
 F 1 "BAV99S" H 9425 6001 50  0000 C CNN
 F 2 "Package_TO_SOT_SMD:SOT-363_SC-70-6" H 9425 5375 50  0001 C CNN
 F 3 "https://assets.nexperia.com/documents/data-sheet/BAV99_SER.pdf" H 9425 5875 50  0001 C CNN
+F 4 "Nexperia" H 9425 5875 50  0001 C CNN "Manufacturer"
+F 5 "BAV99S" H 9425 5875 50  0001 C CNN "Part No"
 	2    9425 5875
 	1    0    0    -1  
 $EndComp
