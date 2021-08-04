@@ -74,8 +74,7 @@ app_callback(int client, const char *prefix, const char *target, const char *suf
 {
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
       return NULL;
-   //Not for us
-      or not a command from main MQTT
+   /* Not for us or not a command from main MQTT */
          char            value[100];
    int             len = 0;
    if (j)
