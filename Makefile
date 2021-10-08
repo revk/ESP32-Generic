@@ -5,7 +5,24 @@
 
 PROJECT_NAME := Generic
 
-include $(IDF_PATH)/make/project.mk
+all:
+	idf.py build
+
+flash:
+	idf.py flash
+
+monitor:
+	idf.py monitor
+
+clean:
+	idf.py clean
+
+menuconfig:
+	idf.py menuconfig
+
+pull:
+	git pull
+	git submodule update --recursive
 
 update:
 	git submodule update --init --recursive --remote
