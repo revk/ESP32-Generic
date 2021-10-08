@@ -1,8 +1,8 @@
-# ESP32-BatMon
+# ESP32-Generic board
 
-Simple battery based monitoring app with PCB deisgn.
+Simple generic ESP32 based PCB deisgn, ideally suited for battery use.
 
-This PCB design has a 6 pin connector (SPOX or 0.1" header) for 5 GPIO pins, USB-C for power and debug/serial, ADC connection to DC supply via potential divide and switched via a FET for low power working, LED. Can be powered by DC contacts or via 6 pin connector (4V-40V) or via USB. Works with esptool for flashing and debug via USB. GPIO pins with optional pull up or similar components.
+This PCB design has a 6 pin connector (SPOX or 0.1" header) for 5 GPIO pins, USB-C for power and debug/serial, ADC connection to DC supply via potential divide and switched via a FET for low power working, LED. Can be powered by DC contacts or via 6 pin connector (4V-40V) or via USB. Works with esptool for flashing and debug via USB. GPIO pins with optional pull up or similar components. Includes RGB LED.
 
 Typical use is with VL53L1X for ranging with PP3 9V battery.
 

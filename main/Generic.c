@@ -73,9 +73,15 @@ const char *app_callback(int client, const char *prefix, const char *target, con
 {
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
       return NULL;
+<<<<<<< HEAD
    // Not for us or not a command from main MQTT
    char value[100];
    int len = 0;
+=======
+   /* Not for us or not a command from main MQTT */
+         char            value[100];
+   int             len = 0;
+>>>>>>> e2989e303deba6df6c8e625299c5efaf23741c14
    if (j)
    {
       len = jo_strncpy(j, value, sizeof(value));
