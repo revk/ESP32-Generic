@@ -312,13 +312,13 @@ Text GLabel 2425 4850 0    50   Input ~ 0
 G
 Text GLabel 2425 5050 0    50   Input ~ 0
 B
-Text GLabel 3175 3150 2    50   Output ~ 0
+Text GLabel 3175 3250 2    50   Output ~ 0
 G
 Connection ~ 2575 1250
 NoConn ~ -7400 375 
-Text GLabel 3175 3550 2    50   Output ~ 0
+Text GLabel 3175 3150 2    50   Output ~ 0
 B
-Text GLabel 3175 3450 2    50   Output ~ 0
+Text GLabel 3175 3550 2    50   Output ~ 0
 R
 $Comp
 L RevK:LMR16006YQ3 U4
@@ -484,7 +484,7 @@ U 1 1 618CE7F2
 P 10225 6825
 F 0 "U3" H 10225 6700 50  0001 C CNN
 F 1 "QR" H 10225 6700 50  0001 C CNN
-F 2 "RevK:QR-GENERIC" H 10200 6800 50  0001 C CNN
+F 2 "RevK:QR-HA" H 10200 6800 50  0001 C CNN
 F 3 "" H 10200 6800 50  0001 C CNN
 	1    10225 6825
 	1    0    0    -1  
@@ -515,9 +515,9 @@ Wire Wire Line
 	4025 3125 4400 3125
 NoConn ~ 7225 4925
 NoConn ~ 3175 2550
-Wire Wire Line
-	3175 3250 4025 3250
-Wire Wire Line
-	4025 3125 4025 3250
 NoConn ~ 3175 2750
+Wire Wire Line
+	3175 3450 4025 3450
+Wire Wire Line
+	4025 3450 4025 3125
 $EndSCHEMATC
