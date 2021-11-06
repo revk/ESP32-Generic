@@ -10,7 +10,7 @@ Typical use is with VL53L1X for ranging with PP3 9V battery.
 
 # ESP32-Generic board (USB-A)
 
-A very simple board with no GPIO, designed to fit a USB-A socket, incldues RGB LED and a button only.
+A very simple board with no GPIO, designed to fit a USB-A socket, incldues RGB LED and a button only. Works with esptool for flashing and debug via USB.
 
 ![USBA](https://user-images.githubusercontent.com/996983/140615566-fc0d410a-a81b-4b3e-9b71-35afe68315ae.png)
 
