@@ -48,8 +48,6 @@ F 3 "" H 3575 1250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2575 1250 2575 1350
-Wire Wire Line
 	5425 4525 5425 3925
 Wire Wire Line
 	5425 3925 5825 3925
@@ -59,13 +57,13 @@ Wire Wire Line
 	5825 3925 5825 3325
 Wire Wire Line
 	6625 3625 6625 3325
-NoConn ~ 3175 2850
+NoConn ~ 3175 3150
 Wire Wire Line
 	2575 1250 3575 1250
 NoConn ~ 1975 1750
 Text GLabel 3175 1450 2    50   Input ~ 0
 GPIO0
-NoConn ~ 3175 3050
+NoConn ~ 3175 3550
 NoConn ~ 3175 2450
 $Comp
 L Interface_USB:FT231XQ U2
@@ -312,13 +310,12 @@ Text GLabel 2425 4850 0    50   Input ~ 0
 G
 Text GLabel 2425 5050 0    50   Input ~ 0
 B
-Text GLabel 3175 3250 2    50   Output ~ 0
+Text GLabel 3175 2850 2    50   Output ~ 0
 G
-Connection ~ 2575 1250
 NoConn ~ -7400 375 
-Text GLabel 3175 3150 2    50   Output ~ 0
+Text GLabel 3175 2950 2    50   Output ~ 0
 B
-Text GLabel 3175 3550 2    50   Output ~ 0
+Text GLabel 3175 3050 2    50   Output ~ 0
 R
 $Comp
 L RevK:LMR16006YQ3 U4
@@ -402,9 +399,9 @@ NoConn ~ 3175 2050
 NoConn ~ 3175 2150
 NoConn ~ 3175 2250
 NoConn ~ 3175 2350
-NoConn ~ 3175 2925
-NoConn ~ 3175 3350
-NoConn ~ 3175 3650
+NoConn ~ 3175 3250
+NoConn ~ 3175 3450
+NoConn ~ 3175 2650
 NoConn ~ 3175 3750
 $Comp
 L Connector:USB_A J1
@@ -465,7 +462,7 @@ F 3 "" H 5850 1475 50  0001 C CNN
 	1    5850 1475
 	0    1    1    0   
 $EndComp
-Text GLabel 3175 2650 2    50   Input ~ 0
+Text GLabel 3175 3650 2    50   Input ~ 0
 CHARGER
 $Comp
 L RevK:AJK Logo1
@@ -517,7 +514,8 @@ NoConn ~ 7225 4925
 NoConn ~ 3175 2550
 NoConn ~ 3175 2750
 Wire Wire Line
-	3175 3450 4025 3450
+	3175 3350 4025 3350
 Wire Wire Line
-	4025 3450 4025 3125
+	4025 3350 4025 3125
+NoConn ~ 3175 1650
 $EndSCHEMATC
