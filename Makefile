@@ -24,10 +24,6 @@ pull:
 	git pull
 	git submodule update --recursive
 
-pull:
-	git pull
-	git submodule update --recursive
-
 update:
 	git submodule update --init --recursive --remote
 	git commit -a -m "Library update"
