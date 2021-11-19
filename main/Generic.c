@@ -35,14 +35,16 @@ static const char TAG[] = "Generic";
 #define port_mask(p) ((p)&63)
 static uint8_t input[MAXGPIO];  // Input GPIOs
 static uint8_t output[MAXGPIO]; // Output GPIOs
-static uint32_t outputpulse[MAXGPIO];   // Output pulse time (ms)
+static uint32_t outputmark[MAXGPIO];    // Output mark time (ms)
+static uint32_t outputspace[MAXGPIO];   // Output mark time (ms)
 static uint8_t power[MAXGPIO];  // Fixed output GPIOs 
 int holding = 0;
 
 // Dynamic
 static uint64_t volatile outputbits = 0;        // Requested output
 static uint64_t volatile outputraw = 0; // Current output
-static uint32_t outputremaining[MAXGPIO] = { }; // Output pulse time (ms) remaining
+static uint32_t outputremaining[MAXGPIO] = { }; // Output remaining time (ms)
+static uint32_t outputcount[MAXGPIO] = { };     // Output count
 
 #define	settings		\
 	u32(period,0)	\
@@ -106,7 +108,7 @@ void output_task(void *arg)
          {
             int p = port_mask(output[i]);
             if (outputremaining[i] && !--outputremaining[i])
-               outputbits ^= (1ULL << i);       // pulse timeout
+               outputbits ^= (1ULL << i);       // timeout
             if ((outputbits ^ outputraw) & (1ULL << i))
             {                   // Change output
                outputraw ^= (1ULL << i);
@@ -114,9 +116,11 @@ void output_task(void *arg)
                REVK_ERR_CHECK(gpio_set_level(p, ((output[i] & PORT_INV) ? 1 : 0) ^ ((outputbits >> i) & 1)));
                REVK_ERR_CHECK(gpio_hold_en(p));
                if (outputbits & (1ULL << i))
-                  outputremaining[i] = outputpulse[i];  // Pulse width
-               else
+                  outputremaining[i] = outputmark[i];   // Time
+               else if (!outputcount[i] || !--outputcount[i])
                   outputremaining[i] = 0;
+               else
+                  outputremaining[i] = outputspace[i];  // Time
             }
          }
    }
@@ -155,10 +159,18 @@ const char *app_callback(int client, const char *prefix, const char *target, con
          return "Bad output number";
       if (!output[i])
          return "Output not configured";
-      if (len && (*value == '1' || *value == 't' || *value == 'T' || *value == 'y' || *value == 'Y'))
+      int c = atoi(value);
+      if (!c && (*value == 't' || *value == 'y'))
+         c = 1;
+      if (c)
+      {
+         outputcount[i] = c;
          outputbits |= (1ULL << i);     // On
-      else
+      } else
+      {
+         outputcount[i] = 0;
          outputbits &= ~(1ULL << i);    // Off
+      }
       return "";
    }
    return NULL;
@@ -171,7 +183,8 @@ void app_main()
    revk_register("input", MAXGPIO, sizeof(*input), &input, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
    revk_register("output", MAXGPIO, sizeof(*output), &output, BITFIELDS, SETTING_BITFIELD | SETTING_SET | SETTING_SECRET);
    revk_register("outputgpio", MAXGPIO, sizeof(*output), &output, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
-   revk_register("outputpulse", MAXGPIO, sizeof(*outputpulse), &outputpulse, NULL, SETTING_LIVE);
+   revk_register("outputmark", MAXGPIO, sizeof(*outputmark), &outputmark, NULL, SETTING_LIVE);
+   revk_register("outputspace", MAXGPIO, sizeof(*outputspace), &outputspace, NULL, SETTING_LIVE);
    revk_register("power", MAXGPIO, sizeof(*power), &power, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
 #define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
