@@ -25,6 +25,9 @@ static const char TAG[] = "Generic";
 #if	CONFIG_BOOTLOADER_LOG_LEVEL > 0
 #warning CONFIG_BOOTLOADER_LOG_LEVEL recommended to be no output
 #endif
+#ifndef	CONFIG_FREERTOS_UNICORE
+#error Make this single core
+#endif
 
 #define	MAXGPIO	36
 static uint8_t input[MAXGPIO];
@@ -33,7 +36,7 @@ static uint8_t power[MAXGPIO];  /* fixed outputs */
 int holding = 0;
 
 #define	settings		\
-	u32(period,3600)	\
+	u32(period,0)	\
 	u32(awake,0)	\
 	io(usb,22)	\
 	io(charger,23)	\
@@ -164,12 +167,10 @@ void app_main()
          holding++;
       }
    }
-   if (!period)
-      period = 60;              /* avoid divide by zero */
    if (esp_reset_reason() != ESP_RST_DEEPSLEEP && awake < 60)
       awake = 60;
-   //Power up
-   ESP_LOGI(TAG, "Start %ld", now % period);
+   if (period)
+      ESP_LOGI(TAG, "Start %ld", now % period);
    if (usb)
    {
       gpio_reset_pin(usb & 0x3F);
@@ -183,7 +184,7 @@ void app_main()
          usb_present = 1;
          if (awake < 60)
             awake = 60;
-      } else
+      } else if(period)
       {
          esp_log_level_set("*", ESP_LOG_NONE);  /* no debug */
          gpio_reset_pin(1);
@@ -205,7 +206,7 @@ void app_main()
          gpio_reset_pin(1);
          gpio_set_pull_mode(1, GPIO_PULLDOWN_ONLY);
          busy = 0;
-         //No point waiting, powered via USB port
+         // No point waiting, powered via USB port
       }
    }
    if (adcon)
@@ -354,6 +355,16 @@ void app_main()
    }
    if (led)
       gpio_set_level(led & 0x3F, (led & 0x40) ? 1 : 0); /* Off */
+
+   if (!period)
+   {                            // We run forever, not sleeping
+      ESP_LOGE(TAG, "Idle");
+      while (1)
+      {
+         sleep(1);
+      }
+   }
+
    time_t next = (time(0) + 5) / period * period + period;
    {
       char reason[100];
