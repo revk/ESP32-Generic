@@ -87,7 +87,7 @@ void input_task(void *arg)
    arg = arg;
    while (1)
    {
-      usleep(1000LL - esp_timer_get_time() % 1000LL);
+      usleep(1000LL);
       for (int i = 0; i < MAXGPIO; i++)
          if (input[i])
          {
@@ -100,7 +100,7 @@ void output_task(void *arg)
    arg = arg;
    while (1)
    {
-      usleep(1000LL - esp_timer_get_time() % 1000LL);
+      usleep(1000LL);
       for (int i = 0; i < MAXGPIO; i++)
          if (output[i])
          {
