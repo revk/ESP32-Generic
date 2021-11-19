@@ -72,6 +72,26 @@ const char *rangererr = NULL;
 uint16_t range = 0;
 uint32_t voltage = 0;
 
+
+void inputtask(void*arg)
+{
+	arg=arg;
+	while(1)
+	{
+		sleep(1);
+	}
+}
+
+void outputtask(void*arg)
+{
+	arg=arg;
+	while(1)
+	{
+		sleep(1);
+	}
+}
+
+
 const char *app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
@@ -288,6 +308,8 @@ void app_main()
          }
       }
    }
+   revk_task(TAG,inputtask,0);
+   revk_task(TAG,outputtask,0);
    if (!revk_wait_wifi(10))
    {
       ESP_LOGE(TAG, "No WiFi");
