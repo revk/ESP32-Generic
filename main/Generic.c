@@ -200,35 +200,37 @@ void app_main()
 #undef b
 #undef s
        revk_start();
-   int i;
-   for (i = 0; i < MAXGPIO; i++)
    {
-      if (input[i])
+    gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
+      for (int i = 0; i < MAXGPIO; i++)
       {
-         int p = port_mask(input[i]);
-         REVK_ERR_CHECK(gpio_hold_dis(p));
-         REVK_ERR_CHECK(gpio_reset_pin(p));
-         REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_INPUT));
+         if (input[i])
+         {
+            int p = port_mask(input[i]);
+            REVK_ERR_CHECK(gpio_hold_dis(p));
+            REVK_ERR_CHECK(gpio_reset_pin(p));
+            REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_INPUT));
+         }
+         if (output[i])
+         {
+            int p = port_mask(output[i]);
+            c.pin_bit_mask |= (1ULL << p);
+            REVK_ERR_CHECK(gpio_set_level(p, (output[i] & PORT_INV) ? 1 : 0));
+            holding++;
+         }
+         if (power[i])
+         {
+            int p = port_mask(power[i]);
+            c.pin_bit_mask |= (1ULL << p);
+            REVK_ERR_CHECK(gpio_hold_dis(p));
+            REVK_ERR_CHECK(gpio_set_level(p, (power[i] & PORT_INV) ? 0 : 1));
+            REVK_ERR_CHECK(gpio_set_drive_capability(p, GPIO_DRIVE_CAP_3));
+
+            holding++;
+         }
       }
-      if (output[i])
-      {
-         int p = port_mask(output[i]);
-         REVK_ERR_CHECK(gpio_reset_pin(p));
-         REVK_ERR_CHECK(gpio_set_level(p, (output[i] & PORT_INV) ? 1 : 0));     /* Off */
-         REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_OUTPUT));
-         REVK_ERR_CHECK(gpio_hold_en(p));
-         holding++;
-      }
-      if (power[i])
-      {
-         int p = port_mask(power[i]);
-         REVK_ERR_CHECK(gpio_reset_pin(p));
-         REVK_ERR_CHECK(gpio_set_level(p, (power[i] & PORT_INV) ? 0 : 1));
-         REVK_ERR_CHECK(gpio_set_drive_capability(p, GPIO_DRIVE_CAP_3));
-         REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_OUTPUT));
-         REVK_ERR_CHECK(gpio_hold_en(p));
-         holding++;
-      }
+      if (c.pin_bit_mask)
+         REVK_ERR_CHECK(gpio_config(&c));
    }
    if (esp_reset_reason() != ESP_RST_DEEPSLEEP && awake < 60)
       awake = 60;
@@ -388,7 +390,7 @@ void app_main()
          jo_bool(j, "charger", 1);
       else if (usb_present)
          jo_bool(j, "usb", 1);
-
+      int i;
       for (i = 0; i < MAXGPIO && !input[i]; i++);
       if (i < MAXGPIO)
       {
