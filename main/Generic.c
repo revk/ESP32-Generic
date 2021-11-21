@@ -164,8 +164,11 @@ const char *app_callback(int client, const char *prefix, const char *target, con
          c = 1;
       if (c)
       {
-         outputcount[i] = c;
-         outputbits |= (1ULL << i);     // On
+         if (!outputcount[i])
+         {
+            outputcount[i] = c;
+            outputbits |= (1ULL << i);  // On
+         }
       } else
       {
          outputcount[i] = 0;
