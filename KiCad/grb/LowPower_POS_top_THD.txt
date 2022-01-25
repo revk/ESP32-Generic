@@ -1,4 +1,4 @@
-### Module positions - created on 2022-01-25 10:27
+### Module positions - created on 2022-01-25 10:29
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
@@ -6,5 +6,6 @@
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
 J3            DC                  PinHeader_1x02_P2.54mm_Vert.. 134.0000   -125.8000  134.0000   -125.8000   180.0    top       THD
+Q1            RN1701              USV-5                         120.2000   -108.4000  119.2500   -107.7500   -90.0    top       THD
 D1            RGB                 LED-RGB-1.6x1.6               119.2000   -99.7000   120.0750   -100.2000     0.0    top       THD
 ## End
