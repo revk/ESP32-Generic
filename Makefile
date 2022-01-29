@@ -46,8 +46,8 @@ ftdizap/ftdizap: ftdizap/ftdizap.c
 PCBCase/case: PCBCase/case.c
 	make -C PCBCase
 
-scad: KiCad/Generic.scad KiCad/Generic-nohole.scad
-stl: KiCad/Generic.stl KiCad/Generic-nohole.stl
+scad: KiCad/Generic.scad KiCad/Generic-nohole.scad KiCad/LowPower.scad KiCad/LowPower-nohole.scad
+stl: KiCad/Generic.stl KiCad/Generic-nohole.stl KiCad/LowPower.stl KiCad/LowPower-nohole.stl
 
 %.stl: %.scad
 	echo "Making $@"
@@ -58,5 +58,11 @@ KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=4.9
 
 KiCad/Generic-nohole.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
+	PCBCase/case -o $@ $< --edge=2 --base=4.9 --ignore=J3
+
+KiCad/LowPower.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
+	PCBCase/case -o $@ $< --edge=2 --base=4.9
+
+KiCad/LowPower-nohole.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=4.9 --ignore=J3
 

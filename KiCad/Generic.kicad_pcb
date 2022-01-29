@@ -437,7 +437,7 @@
       (options (clearance outline) (anchor rect))
       (primitives
     (gr_arc (start 2.89 -3.045) (mid 0 -0.155) (end -2.89 -3.045) (width 0.25))
-    (gr_arc (start 4.294753 -3.49127) (mid -0.016568 -1.026234) (end -4.311371 -3.519937) (width 0.25))
+    (gr_arc (start 4.294753 -3.49127) (mid -0.007887 -1.026213) (end -4.302688 -3.504904) (width 0.25))
     (gr_arc (start -3.2 -2.485) (mid -4.015 -3.3) (end -3.2 -4.115) (width 0.25))
     (gr_arc (start 3.2 -4.115) (mid 4.015 -3.3) (end 3.2 -2.485) (width 0.25))
     (gr_arc (start -4.32 0.635) (mid -0.000001 -1.154403) (end 4.319999 0.634999) (width 0.25))
@@ -2136,7 +2136,7 @@
   (gr_text "27" (at 122.9 120.98 -90) (layer "F.Fab") (tstamp 81a8578d-4991-432e-90c5-863c1508a25f)
     (effects (font (size 1 1) (thickness 0.15)))
   )
-  (gr_text "5: CHARGER\n17: USB\n22: ADCON\n26: ADC\n33: R\n32: G\n25: B" (at 137.3 104.5) (layer "F.Fab") (tstamp a3425917-a21e-4245-a985-ab4010fbb495)
+  (gr_text "5: CHARGER\n17: USB\n33: R\n32: G\n25: B\nP1: GND\nP2: 13\nP3: 15\nP4: 2\nP5: 27\nP6: 4" (at 137.3 106.75) (layer "F.Fab") (tstamp a3425917-a21e-4245-a985-ab4010fbb495)
     (effects (font (size 1 1) (thickness 0.15)) (justify left))
   )
   (gr_text "4" (at 119.6 120.98 -90) (layer "F.Fab") (tstamp e12c0ccb-fcea-4a8b-916b-ad9f925d6730)
