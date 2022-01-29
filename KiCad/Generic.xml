@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic.kicad_sch</source>
-    <date>Tuesday, 25 January 2022 at 10:28:00</date>
+    <date>Saturday, 29 January 2022 at 16:51:32</date>
     <tool>Eeschema (6.0.1-0)</tool>
     <textvar name="DATE">2022-01-25</textvar>
     <sheet number="1" name="/" tstamps="/">
@@ -333,7 +333,7 @@
       <tstamps>00000000-0000-0000-0000-000060d24a3f</tstamps>
     </comp>
     <comp ref="R8">
-      <value>732R</value>
+      <value>680R</value>
       <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
@@ -351,7 +351,7 @@
       <tstamps>00000000-0000-0000-0000-000060cfbfaf</tstamps>
     </comp>
     <comp ref="R10">
-      <value>324R</value>
+      <value>220R</value>
       <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
