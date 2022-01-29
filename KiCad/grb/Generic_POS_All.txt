@@ -1,10 +1,11 @@
-### Module positions - created on 2022-01-29 11:22
+### Module positions - created on 2022-01-29 13:40
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
 ## Side : ALL
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
+D1            RGB                 LED-RGB-1.6x1.6               119.2000   -99.7000   120.0750   -100.2000     0.0    top       SMD
 R2            NF                  Pad_1206_0805_NF              130.4700   -124.3500  130.4700   -125.8125    90.0    top       SMD
 R3            NF                  Pad_1206_0805_NF              127.9700   -124.3500  127.9700   -125.2625    90.0    top       SMD
 R4            NF                  Pad_1206_0805_NF              125.4700   -124.3500  125.4700   -125.2625    90.0    top       SMD
@@ -24,7 +25,6 @@ D3            BAV99S              SOT-363_SC-70-6               128.4500   -117.
 R11           5K1                 R_0603                        128.1000   -114.4000  128.1000   -113.5750   -90.0    top       SMD
 R13           27R                 R_0603                        126.9000   -114.4000  126.9000   -115.2250    90.0    top       SMD
 R14           27R                 R_0603                        125.7000   -114.4000  125.7000   -113.5750   -90.0    top       SMD
-D1            RGB                 LED-RGB-1.6x1.6               119.2000   -99.7000   120.0750   -100.2000     0.0    top       THD
 R8            732R                R_0603                        119.2000   -101.2000  118.3750   -101.2000     0.0    top       SMD
 R9            2K                  R_0603                        119.2000   -103.6000  118.3750   -103.6000     0.0    top       SMD
 C5            10nF                C_0603                        123.7000   -109.3000  122.9250   -109.3000     0.0    top       SMD
@@ -42,12 +42,12 @@ U4            LMR16006+FB         RegulatorBlockFB              130.0600   -101.
 J1            Connector           Molex_MiniSPOX_H6RA_0.1       126.7200   -120.5000  133.0450   -120.5000   180.0    bottom    THD
 U1            ESP32-WROOM-32      ESP32-WROOM-32                126.7000   -108.1500  135.2000   -99.8950    180.0    bottom    SMD
 ## End
-## 198 SMD pads
-## 12 TH pads
+## 202 SMD pads
+## 8 TH pads
 ## 0 Virtual pads
-## 2 Top TH modules
+## 1 Top TH modules
 ## 1 Bot TH modules
-## 31 Top SMD modules
+## 32 Top SMD modules
 ## 1 Bot SMD modules
 ## 1 Top Virtual modules
 ## 0 Bot Virtual modules

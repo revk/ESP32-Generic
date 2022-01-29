@@ -1,10 +1,11 @@
-### Module positions - created on 2022-01-29 11:22
+### Module positions - created on 2022-01-29 13:40
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
 ## Side : top
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
+D1            RGB                 LED-RGB-1.6x1.6               119.2000   -99.7000   120.0750   -100.2000     0.0    top       SMD
 R2            NF                  Pad_1206_0805_NF              130.4700   -124.3500  130.4700   -125.8125    90.0    top       SMD
 R3            NF                  Pad_1206_0805_NF              127.9700   -124.3500  127.9700   -125.2625    90.0    top       SMD
 R4            NF                  Pad_1206_0805_NF              125.4700   -124.3500  125.4700   -125.2625    90.0    top       SMD
