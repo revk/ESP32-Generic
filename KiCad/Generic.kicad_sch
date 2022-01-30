@@ -3087,7 +3087,7 @@
     (uuid 00000000-0000-0000-0000-000060d24a3c)
     (property "Reference" "J1" (id 0) (at 64.3382 142.7226 0))
     (property "Value" "Connector" (id 1) (at 64.3382 145.034 0))
-    (property "Footprint" "RevK:Molex_MiniSPOX_H6RA_0.1" (id 2) (at 61.595 152.4 0)
+    (property "Footprint" "RevK:Molex_MiniSPOX_H6RA" (id 2) (at 61.595 152.4 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 61.595 152.4 0)
@@ -3730,7 +3730,7 @@
       (reference "D5") (unit 1) (value "Schottky") (footprint "RevK:Hidden")
     )
     (path "/00000000-0000-0000-0000-000060d24a3c"
-      (reference "J1") (unit 1) (value "Connector") (footprint "RevK:Molex_MiniSPOX_H6RA_0.1")
+      (reference "J1") (unit 1) (value "Connector") (footprint "RevK:Molex_MiniSPOX_H6RA")
     )
     (path "/00000000-0000-0000-0000-000060d24a36"
       (reference "J2") (unit 1) (value "USB-C") (footprint "RevK:USC16-TR-Round")

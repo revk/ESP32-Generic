@@ -1,10 +1,11 @@
-### Module positions - created on 2022-01-30 09:38
+### Module positions - created on 2022-01-30 09:57
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
 ## Side : ALL
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
+J1            Connector           Molex_MiniSPOX_H6RA           126.7200   -120.5000  132.9700   -120.5000   180.0    bottom    THD
 R1            NF                  Pad_1206_0805_Open            130.4700   -124.3500  130.4700   -125.8125    90.0    top       VIRTUAL
 R2            NF                  Pad_1206_0805_Open            127.9700   -124.3500  127.9700   -125.2625    90.0    top       VIRTUAL
 R3            NF                  Pad_1206_0805_Open            125.4700   -124.3500  125.4700   -125.8125    90.0    top       VIRTUAL
@@ -36,10 +37,9 @@ D5            Schottky            Hidden                        132.3400   -104.
 L1            6.8uH               Hidden                        133.9600   -101.7500  0.0000     0.0000        0.0    top       SMD
 C6            0.1uF               Hidden                        127.9600   -102.0000  0.0000     0.0000      -90.0    top       SMD
 R15           3M 1% or NF         R_0603                        124.4000   -99.6000   123.5750   -99.6000      0.0    top       SMD
-Logo1         AJK                 AJK                           125.4000   -103.3000  0.0000     0.0000        0.0    top       VIRTUAL
+Logo1         AJK                 AJK                           125.3000   -103.3000  0.0000     0.0000        0.0    top       VIRTUAL
 R14           10M 1% or 0R        R_0603                        127.1000   -99.6000   127.9250   -99.6000    180.0    top       SMD
 U3            LMR16006+FB         RegulatorBlockFB              130.0600   -101.7500  129.1100   -103.1000     0.0    top       SMD
-J1            Connector           Molex_MiniSPOX_H6RA_0.1       126.7200   -120.5000  133.0450   -120.5000   180.0    bottom    THD
 U1            ESP32-WROOM-32      ESP32-WROOM-32                126.7000   -108.1500  135.2000   -99.8950    180.0    bottom    SMD
 ## End
 ## 174 SMD pads

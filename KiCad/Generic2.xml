@@ -2,15 +2,15 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic2.kicad_sch</source>
-    <date>Sunday, 30 January 2022 at 07:56:32</date>
+    <date>Sunday, 30 January 2022 at 10:42:04</date>
     <tool>Eeschema (6.0.1-0)</tool>
-    <textvar name="DATE">2022-01-25</textvar>
+    <textvar name="DATE">2022-01-30</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Larger generic ESP32 module</title>
         <company/>
         <rev>1</rev>
-        <date>2022-01-25</date>
+        <date>2022-01-30</date>
         <source>Generic2.kicad_sch</source>
         <comment number="1" value="@TheRealRevK"/>
         <comment number="2" value="www.me.uk"/>
@@ -695,6 +695,14 @@
         <pin num="38" name="GND" type="passive"/>
         <pin num="39" name="GND" type="passive"/>
       </pins>
+    </libpart>
+    <libpart lib="RevK" part="AJK">
+      <fields>
+        <field name="Reference">Logo</field>
+        <field name="Value">AJK</field>
+        <field name="Footprint">RevK:AJK</field>
+        <field name="Note">Non part, PCB printed</field>
+      </fields>
     </libpart>
     <libpart lib="RevK" part="Hidden">
       <fields>

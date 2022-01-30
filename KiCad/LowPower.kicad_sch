@@ -3459,7 +3459,7 @@
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000060a436c8)
     (property "Reference" "R10" (id 0) (at 106.68 107.315 90))
-    (property "Value" "324R" (id 1) (at 106.68 105.41 90))
+    (property "Value" "330R" (id 1) (at 106.68 105.41 90))
     (property "Footprint" "RevK:R_0603" (id 2) (at 106.68 103.632 90)
       (effects (font (size 1.27 1.27)) hide)
     )
@@ -3680,7 +3680,7 @@
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000060cf9e4d)
     (property "Reference" "R8" (id 0) (at 106.68 97.155 90))
-    (property "Value" "732R" (id 1) (at 106.68 95.25 90))
+    (property "Value" "680R" (id 1) (at 106.68 95.25 90))
     (property "Footprint" "RevK:R_0603" (id 2) (at 106.68 93.472 90)
       (effects (font (size 1.27 1.27)) hide)
     )
@@ -3857,7 +3857,7 @@
     (uuid 00000000-0000-0000-0000-000060d24a3c)
     (property "Reference" "J1" (id 0) (at 64.3382 142.7226 0))
     (property "Value" "Connector" (id 1) (at 64.3382 145.034 0))
-    (property "Footprint" "RevK:Molex_MiniSPOX_H6RA_0.1" (id 2) (at 61.595 152.4 0)
+    (property "Footprint" "RevK:Molex_MiniSPOX_H6RA" (id 2) (at 61.595 152.4 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 61.595 152.4 0)
@@ -4492,7 +4492,7 @@
       (reference "D5") (unit 1) (value "Schottky") (footprint "RevK:Hidden")
     )
     (path "/00000000-0000-0000-0000-000060d24a3c"
-      (reference "J1") (unit 1) (value "Connector") (footprint "RevK:Molex_MiniSPOX_H6RA_0.1")
+      (reference "J1") (unit 1) (value "Connector") (footprint "RevK:Molex_MiniSPOX_H6RA")
     )
     (path "/00000000-0000-0000-0000-000060d24a36"
       (reference "J2") (unit 1) (value "USB-C") (footprint "RevK:USC16-TR-Round")
@@ -4531,13 +4531,13 @@
       (reference "R7") (unit 1) (value "NF") (footprint "RevK:Pad_1206_0805_Open")
     )
     (path "/00000000-0000-0000-0000-000060cf9e4d"
-      (reference "R8") (unit 1) (value "732R") (footprint "RevK:R_0603")
+      (reference "R8") (unit 1) (value "680R") (footprint "RevK:R_0603")
     )
     (path "/00000000-0000-0000-0000-000060cfbfaf"
       (reference "R9") (unit 1) (value "2K") (footprint "RevK:R_0603")
     )
     (path "/00000000-0000-0000-0000-000060a436c8"
-      (reference "R10") (unit 1) (value "324R") (footprint "RevK:R_0603")
+      (reference "R10") (unit 1) (value "330R") (footprint "RevK:R_0603")
     )
     (path "/00000000-0000-0000-0000-00006043a8ad"
       (reference "R11") (unit 1) (value "5K1") (footprint "RevK:R_0603")

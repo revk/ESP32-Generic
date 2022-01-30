@@ -1,4 +1,4 @@
-### Module positions - created on 2022-01-30 09:38
+### Module positions - created on 2022-01-30 09:57
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
@@ -12,5 +12,5 @@ R4            NF                  Pad_1206_0805_Open            122.9700   -124.
 R5            NF                  Pad_1206_0805_Open            119.7000   -124.3500  119.7000   -125.8125    90.0    top       VIRTUAL
 C1            NF                  Pad_1206_0805_Open            135.0000   -119.1000  135.0000   -120.0125    90.0    top       VIRTUAL
 R6            NF                  Pad_1206_0805_Open            120.0500   -117.8000  119.1375   -117.8000     0.0    top       VIRTUAL
-Logo1         AJK                 AJK                           125.4000   -103.3000  0.0000     0.0000        0.0    top       VIRTUAL
+Logo1         AJK                 AJK                           125.3000   -103.3000  0.0000     0.0000        0.0    top       VIRTUAL
 ## End
