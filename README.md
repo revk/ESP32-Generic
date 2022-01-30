@@ -1,17 +1,35 @@
-# ESP32-Generic board (USB-C)
+# ESP32-Generic
 
-Simple generic ESP32 based PCB deisgn, ideally suited for battery use.
+Software and hardware for generic ESP32 usage. Software based on ESP32-RevK library.
 
-This PCB design has a 6 pin connector (SPOX or 0.1" header) for 5 GPIO pins, USB-C for power and debug/serial, ADC connection to DC supply via potential divide and switched via a FET for low power working, LED. Can be powered by DC contacts or via 6 pin connector (4V-40V) or via USB. Works with esptool for flashing and debug via USB. GPIO pins with optional pull up or similar components. Includes RGB LED.
+# Hardware
 
-Typical use is with VL53L1X for ranging with PP3 9V battery.
+Various KiCad designs, with 3D printed case designs.
 
-![Battery](https://user-images.githubusercontent.com/996983/119488601-a9e11300-bd52-11eb-8f39-9f28214a056b.png)
+- All feature USB-C connection for power and also debug/serial.
+- All allow external DC supply 4V to 60V.
+- All feature an RGB LED
 
-# ESP32-Generic board (USB-A)
+## ESP32-Generic
 
-A very simple board with no GPIO, designed to fit a USB-A socket, incldues RGB LED and a button only. Works with esptool for flashing and debug via USB.
+Small PCB with 6 pin connector (5 GPIO+GND) - can use SPOX 2.5mm or 0.1" header.
+
+![Generic](https://user-images.githubusercontent.com/996983/151692417-bf97f5b4-017b-4074-9edc-952c1f0526cb.png)
+
+## ESP32-Generic2
+
+Small PCB with 16 pins (2x8) which are all connected to GPIO but default pin 1 linked to GND (can be cut).
+
+![Generic2a](https://user-images.githubusercontent.com/996983/151692421-359f2ba7-d9bb-447f-9a19-a2da2b949f7f.png)
+
+## ESP32-LowPower
+
+Same as ESP32-Generic but with power control - FET switched potential divide for ADC reading battery supply.
+
+## ESP32-USBA
+
+Simple PCB designed for direct plug in to USB-A socket
 
 ![USBA](https://user-images.githubusercontent.com/996983/140615566-fc0d410a-a81b-4b3e-9b71-35afe68315ae.png)
 
-Copyright © 2019-21 Adrian Kennard, Andrews & Arnold Ltd. See LICENCE file for details. GPL 3.0
+Copyright © 2019-22 Adrian Kennard, Andrews & Arnold Ltd. See LICENCE file for details. GPL 3.0
