@@ -6,12 +6,13 @@ Software and hardware for generic ESP32 usage. Software based on ESP32-RevK libr
 
 Various KiCad designs, with 3D printed case designs.
 
-- All feature USB-C connection for power and also debug/serial.
-- All allow external DC supply 4V to 60V.
-- All feature an RGB LED.
+- USB-C connection for power and also debug/serial.
+- Alternative external DC supply 4V to 60V (safe to connect at same time as USB-C)
+- On board RGB LED.
 
 ## ESP32-Generic
 
+- Very small size (29mm x 19mm PCB, plus antenna on ESP32)
 - 6 pin connector (SPOX 2.5mm or 0.1"), which are GND and 5xGPIO
 - Pads to allow linking one pin to DC supply (and not linking to GPIO)
 - Pads to allow linking other pins to 3.3V, e.g. pull ups, or to power somethign external
@@ -21,7 +22,7 @@ Various KiCad designs, with 3D printed case designs.
 
 ## ESP32-Generic2
 
-- Larger PCB
+- Larger PCB (35.5mm x 22.5mm)
 - Two 8 pin connectors (SPOX 2.5mm or 0.1"), which are all connected to GPIO
 - Pad (pre-bridged) linking one pin on each side to GND, can be cut
 - Pad allowing one pin to link to DC supply (need to cut the series pad to disconnect from GPIO)
