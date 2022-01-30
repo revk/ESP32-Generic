@@ -1,4 +1,4 @@
-### Module positions - created on 2022-01-30 07:56
+### Module positions - created on 2022-01-30 08:15
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 22.600mm, Pcb Width 35.600mm [based on Edge bounding box]
@@ -28,10 +28,10 @@ D6            Schottky            Hidden                        153.3200   -92.3
 L1            6.8uH               Hidden                        150.1500   -90.7000   0.0000     0.0000       90.0    top       SMD
 C5            0.1uF               Hidden                        150.4000   -96.7000   0.0000     0.0000        0.0    top       SMD
 D8            BAV99S              SOT-363_SC-70-6               162.2500   -102.5000  161.6000   -103.4500    90.0    top       SMD
-R9            3M 1% or NF         R_0603                        153.2000   -98.4000   154.0250   -98.4000    180.0    top       SMD
+R9            3M 1% or NF         R_0603                        150.0000   -97.7000   150.8250   -97.7000    180.0    top       SMD
 D9            BAV99S              SOT-363_SC-70-6               162.2500   -107.0000  161.6000   -107.9500    90.0    top       SMD
 D7            BAV99S              SOT-363_SC-70-6               162.2500   -98.2500   161.6000   -99.2000     90.0    top       SMD
-R8            10M 1% or 0R        R_0603                        153.2000   -97.2000   154.0250   -97.2000    180.0    top       SMD
+R8            10M 1% or 0R        R_0603                        146.2000   -91.6000   146.2000   -90.7750    -90.0    top       SMD
 D5            BAV99S              SOT-363_SC-70-6               133.2500   -90.5000   133.9000   -89.5500    -90.0    top       SMD
 U3            LMR16006+FB         RegulatorBlockFB              149.7400   -94.2900   151.0900   -95.2400     90.0    top       SMD
 ## End

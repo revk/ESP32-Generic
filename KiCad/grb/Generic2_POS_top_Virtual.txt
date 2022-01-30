@@ -1,16 +1,17 @@
-### Module positions - created on 2022-01-30 07:56
+### Module positions - created on 2022-01-30 08:15
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 22.600mm, Pcb Width 35.600mm [based on Edge bounding box]
 ## Side : top
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-JP8           L1                  Pad_1206_0805_Bridged         162.2500   -90.0000   161.3375   -90.0000      0.0    top       VIRTUAL
-JP7           L2                  Pad_1206_0805_Open            162.2500   -92.5000   161.3375   -92.5000      0.0    top       VIRTUAL
-JP6           L2                  Pad_1206_0805_Bridged         156.6000   -91.2625   156.6000   -90.3500    -90.0    top       VIRTUAL
-JP5           L3                  Pad_1206_0805_Open            162.2500   -95.0000   161.3375   -95.0000      0.0    top       VIRTUAL
 JP4           L1                  Pad_1206_0805_Bridged         133.2500   -107.5000  134.1625   -107.5000   180.0    top       VIRTUAL
-JP3           L2                  Pad_1206_0805_Open            133.2500   -105.2500  134.1625   -105.2500   180.0    top       VIRTUAL
+JP6           L2                  Pad_1206_0805_Bridged         156.6000   -91.2625   156.6000   -90.3500    -90.0    top       VIRTUAL
 JP2           L2                  Pad_1206_0805_Bridged         139.2000   -106.3500  139.2000   -105.4375   -90.0    top       VIRTUAL
-JP1           L3                  Pad_1206_0805_Open            133.2500   -102.6000  134.1625   -102.6000   180.0    top       VIRTUAL
+JP8           L1                  Pad_1206_0805_Bridged         162.2500   -90.0000   161.3375   -90.0000      0.0    top       VIRTUAL
+JP3           L2                  Pad_1206_0805_Open            133.2500   -105.0000  134.7125   -105.0000   180.0    top       VIRTUAL
+REF**         AJK                 AJK                           154.4000   -98.1000   0.0000     0.0000       90.0    top       VIRTUAL
+JP1           L3                  Pad_1206_0805_Open            133.2500   -102.6000  134.7125   -102.6000   180.0    top       VIRTUAL
+JP5           L3                  Pad_1206_0805_Open            162.2500   -95.0000   160.7875   -95.0000      0.0    top       VIRTUAL
+JP7           L2                  Pad_1206_0805_Open            162.2500   -92.5000   160.7875   -92.5000      0.0    top       VIRTUAL
 ## End
