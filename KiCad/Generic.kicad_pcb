@@ -87,7 +87,7 @@
     )
   )
 
-  (property "DATE" "2022-01-25")
+  (property "DATE" "2022-01-30")
 
   (net 0 "")
   (net 1 "D+")
@@ -2165,6 +2165,9 @@
     (effects (font (size 0.5 0.5) (thickness 0.08)))
   )
   (gr_text "13" (at 130.5 121.8) (layer "F.SilkS") (tstamp 615edaec-cbf7-49f7-b663-16c945294fff)
+    (effects (font (size 0.5 0.5) (thickness 0.08)))
+  )
+  (gr_text "RGB: 32/25/33" (at 121.5 101.9 90) (layer "F.SilkS") (tstamp 65ceed9f-12e5-414e-81de-3fe6801fb4ff)
     (effects (font (size 0.5 0.5) (thickness 0.08)))
   )
   (gr_text "4" (at 120.25 121.75) (layer "F.SilkS") (tstamp 74b4bc2b-6fd1-4944-93b1-54d0f94622c2)
