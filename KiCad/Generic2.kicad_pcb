@@ -2196,7 +2196,7 @@
     (property "Sheetname" "")
     (path "/00000000-0000-0000-0000-00006043326c")
     (attr smd)
-    (fp_text reference "U1" (at -10.61 -8.43 90) (layer "B.SilkS")
+    (fp_text reference "U1" (at -10.61 -8.43 90) (layer "B.SilkS") hide
       (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
       (tstamp b6a178bd-1224-437d-8875-bd6ea53e0c83)
     )
