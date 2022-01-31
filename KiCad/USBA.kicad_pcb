@@ -586,14 +586,14 @@
 
   (footprint "RevK:Hidden" (layer "F.Cu")
     (tedit 61CEB0DC) (tstamp 00000000-0000-0000-0000-000061274b21)
-    (at 122.76 102.15 -90)
+    (at 122.76 102.4 -90)
     (property "Note" "X7R or X5R 0603")
     (property "Part No" "")
     (property "Sheetfile" "USBA.kicad_sch")
     (property "Sheetname" "")
     (path "/00000000-0000-0000-0000-0000610f9b88")
     (attr smd)
-    (fp_text reference "C2" (at -1.65 -0.04 180) (layer "F.SilkS") hide
+    (fp_text reference "C2" (at -1.65 -0.04) (layer "F.SilkS") hide
       (effects (font (size 0.5 0.5) (thickness 0.08)))
       (tstamp da1d1260-ef40-47ef-94ff-d551df2641b2)
     )
