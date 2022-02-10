@@ -49,11 +49,10 @@ static uint32_t outputcount[MAXGPIO] = { };     // Output count
 #define	settings		\
 	u32(period,0)	\
 	u32(awake,0)	\
-	io(usb,22)	\
-	io(charger,23)	\
-	io(led,-25)	\
-	io(adcon,32)	\
-	u8(adc,5)		\
+	io(usb,)	\
+	io(charger,)	\
+	io(adcon,)	\
+	u8(adc,)		\
 	u32(adcr1,18000)	\
 	u32(adcr2,1000)	\
 	b(ranger0x)	\
@@ -304,12 +303,6 @@ void app_main()
       if (!usb_present)
          gpio_set_level(port_mask(adcon), (adcon & PORT_INV) ? 1 : 0);  /* off */
    }
-   if (led)
-   {
-      gpio_reset_pin(port_mask(led));
-      gpio_set_level(port_mask(led), (led & PORT_INV) ? 0 : 1); /* on */
-      gpio_set_direction(port_mask(led), GPIO_MODE_OUTPUT);
-   }
    if (rangergnd)
    {
       gpio_reset_pin(port_mask(rangergnd));
@@ -423,17 +416,8 @@ void app_main()
    {
       ESP_LOGI(TAG, "Waiting %d", (int) ((busy - esp_timer_get_time()) / 1000000ULL));
       while (busy > esp_timer_get_time())
-      {
-         if (led)
-            gpio_set_level(port_mask(led), (led & PORT_INV) ? 0 : 1);   /* on */
-         usleep(500000);
-         if (led)
-            gpio_set_level(port_mask(led), (led & PORT_INV) ? 1 : 0);   /* Off */
-         usleep(500000);
-      }
+         sleep(1);
    }
-   if (led)
-      gpio_set_level(port_mask(led), (led & PORT_INV) ? 1 : 0); /* Off */
 
    time_t next = (time(0) + 5) / period * period + period;
    {
