@@ -38,6 +38,9 @@ zap:    bootmode flash
 
 # Program the FTDI
 ftdi: ftdizap/ftdizap
+	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13
+
+ftdi-invert: ftdizap/ftdizap
 	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13 --invert-rts=1 --invert-dtr=1
 
 ftdizap/ftdizap: ftdizap/ftdizap.c
