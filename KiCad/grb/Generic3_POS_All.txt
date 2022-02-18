@@ -1,11 +1,10 @@
-### Module positions - created on 2022-02-18 12:15
+### Module positions - created on 2022-02-18 13:02
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 21.600mm, Pcb Width 35.100mm [based on Edge bounding box]
 ## Side : ALL
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-U4            QR                  QR-GENERIC                    140.2000   -61.8000   0.0000     0.0000      180.0    bottom    VIRTUAL
 C1            47pF                C_0603                        147.8000   -58.7000   147.8000   -59.4750     90.0    top       SMD
 U3            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 152.1750   -65.1500   153.1750   -63.2125    -90.0    top       SMD
 R3            220R                R_0603                        141.0500   -56.8500   140.2250   -56.8500      0.0    top       SMD
@@ -37,6 +36,7 @@ JP1           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -71.2
 D1            BAV99S              SOT-363_SC-70-6               148.2500   -72.5000   149.2000   -71.8500    180.0    bottom    SMD
 D3            BAV99S              SOT-363_SC-70-6               158.2500   -72.5000   159.2000   -71.8500    180.0    bottom    SMD
 D2            BAV99S              SOT-363_SC-70-6               153.2500   -72.5000   154.2000   -71.8500    180.0    bottom    SMD
+U4            QR                  QR-GENERIC                    140.2000   -61.8000   0.0000     0.0000      180.0    bottom    VIRTUAL
 D5            BAV99S              SOT-363_SC-70-6               168.2500   -72.5000   169.2000   -71.8500    180.0    bottom    SMD
 JP2           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -74.0250   139.0875   -74.0250      0.0    bottom    VIRTUAL
 Logo1         AJK                 AJK                           167.5500   -60.1000   0.0000     0.0000      -90.0    bottom    VIRTUAL
