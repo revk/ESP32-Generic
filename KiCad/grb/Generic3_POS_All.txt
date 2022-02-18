@@ -1,29 +1,34 @@
-### Module positions - created on 2022-02-18 10:53
+### Module positions - created on 2022-02-18 11:32
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 21.600mm, Pcb Width 35.100mm [based on Edge bounding box]
 ## Side : ALL
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
+C3            10nF                C_0603                        141.0000   -67.2000   140.2250   -67.2000      0.0    top       SMD
+C1            47pF                C_0603                        147.8000   -58.7000   147.8000   -59.4750     90.0    top       SMD
 U3            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 152.1750   -65.1500   153.1750   -63.2125    -90.0    top       SMD
 R3            220R                R_0603                        141.0500   -56.8500   140.2250   -56.8500      0.0    top       SMD
 D7            D                   D_1206_3216Metric             146.5000   -66.6000   147.9000   -66.6000    180.0    top       SMD
-C2            0.1uF               Hidden                        153.9500   -45.3500   0.0000     0.0000        0.0    top       SMD
-C1            100nF               C_0603                        157.2000   -63.2000   156.4250   -63.2000      0.0    top       SMD
+C5            0.1uF               Hidden                        150.3000   -57.5500   0.0000     0.0000       90.0    top       SMD
+C4            100nF               C_0603                        157.2000   -63.2000   156.4250   -63.2000      0.0    top       SMD
 U2            LMR16006+FB         RegulatorBlockFB              152.4000   -57.3000   151.4500   -58.6500      0.0    top       SMD
 J3            USB-C               USC16-TR-Round                136.9500   -61.8500   0.0000     0.0000      -90.0    top       SMD
 R2            2K                  R_0603                        143.9000   -56.1000   143.0750   -56.1000      0.0    top       SMD
-D8            Schottky            Hidden                        151.8300   -45.3500   0.0000     0.0000        0.0    top       SMD
+C2            47pF                C_0603                        149.0000   -58.7000   149.0000   -59.4750     90.0    top       SMD
+D8            Schottky            Hidden                        154.6800   -60.4700   0.0000     0.0000        0.0    top       SMD
 J1            DC                  Molex_MiniSPOX_H2RA           140.6500   -69.1500   139.4000   -69.1500      0.0    top       THD
-R7            3M 1% or NF         R_0603                        148.3000   -54.9000   147.4750   -54.9000      0.0    top       SMD
-L1            6.8uH               Hidden                        149.7100   -45.3500   0.0000     0.0000        0.0    top       SMD
+R9            3M 1% or NF         R_0603                        148.3000   -54.9000   147.4750   -54.9000      0.0    top       SMD
+L1            6.8uH               Hidden                        156.3000   -57.3000   0.0000     0.0000      -90.0    top       SMD
 R4            5K1                 R_0603                        145.1000   -59.4000   145.1000   -60.2250     90.0    top       SMD
+R7            27R                 R_0603                        149.0000   -61.3900   149.0000   -60.5650    -90.0    top       SMD
 U1            ESP32-PICO-MINI-02  ESP32-PICO-MINI-02            166.3568   -60.8500   170.3568   -54.9500    -90.0    top       SMD
 J2            I/O                 Molex_MiniSPOX_H10RA          158.2500   -69.1500   147.0000   -69.1500      0.0    top       THD
-C3            2.2uF               Hidden                        151.3850   -51.8000   0.0000     0.0000        0.0    top       SMD
+C6            2.2uF               Hidden                        151.5500   -60.8500   0.0000     0.0000       90.0    top       SMD
 D6            RGB                 LED-RGB-1.6x1.6               138.5500   -55.4000   137.6750   -54.9000    180.0    top       SMD
-R6            10M 1% or 0R        R_0603                        148.3000   -56.1000   147.4750   -56.1000      0.0    top       SMD
-C4            10uF                Hidden                        147.5900   -44.4400   0.0000     0.0000        0.0    top       SMD
+R8            10M 1% or 0R        R_0603                        148.3000   -56.1000   147.4750   -56.1000      0.0    top       SMD
+R6            27R                 R_0603                        147.8000   -61.4000   147.8000   -60.5750    -90.0    top       SMD
+C7            10uF                Hidden                        157.8000   -60.8500   0.0000     0.0000       90.0    top       SMD
 R5            5K1                 R_0603                        145.1000   -64.3000   145.1000   -65.1250     90.0    top       SMD
 R1            680R                R_0603                        143.9000   -54.9000   143.0750   -54.9000      0.0    top       SMD
 D4            BAV99S              SOT-363_SC-70-6               163.2500   -72.5000   164.2000   -71.8500    180.0    bottom    SMD
@@ -35,12 +40,12 @@ D5            BAV99S              SOT-363_SC-70-6               168.2500   -72.5
 JP2           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -74.0250   139.0875   -74.0250      0.0    bottom    VIRTUAL
 Logo1         AJK                 AJK                           140.5000   -61.5250   0.0000     0.0000      180.0    bottom    VIRTUAL
 ## End
-## 203 SMD pads
+## 213 SMD pads
 ## 12 TH pads
 ## 8 Virtual pads
 ## 2 Top TH modules
 ## 0 Bot TH modules
-## 19 Top SMD modules
+## 24 Top SMD modules
 ## 5 Bot SMD modules
 ## 0 Top Virtual modules
 ## 3 Bot Virtual modules
