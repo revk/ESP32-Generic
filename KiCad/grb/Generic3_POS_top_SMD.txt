@@ -1,14 +1,14 @@
-### Module positions - created on 2022-02-18 11:32
+### Module positions - created on 2022-02-18 12:15
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 21.600mm, Pcb Width 35.100mm [based on Edge bounding box]
 ## Side : top
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-C3            10nF                C_0603                        141.0000   -67.2000   140.2250   -67.2000      0.0    top       SMD
 C1            47pF                C_0603                        147.8000   -58.7000   147.8000   -59.4750     90.0    top       SMD
 U3            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 152.1750   -65.1500   153.1750   -63.2125    -90.0    top       SMD
 R3            220R                R_0603                        141.0500   -56.8500   140.2250   -56.8500      0.0    top       SMD
+C3            10nF                C_0603                        141.0000   -67.2000   140.2250   -67.2000      0.0    top       SMD
 D7            D                   D_1206_3216Metric             146.5000   -66.6000   147.9000   -66.6000    180.0    top       SMD
 C5            0.1uF               Hidden                        150.3000   -57.5500   0.0000     0.0000       90.0    top       SMD
 C4            100nF               C_0603                        157.2000   -63.2000   156.4250   -63.2000      0.0    top       SMD
