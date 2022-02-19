@@ -1,4 +1,4 @@
-### Module positions - created on 2022-02-18 13:25
+### Module positions - created on 2022-02-19 14:40
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 21.600mm, Pcb Width 35.100mm [based on Edge bounding box]
@@ -32,7 +32,7 @@ C7            10uF                Hidden                        157.8000   -60.8
 R5            5K1                 R_0603                        145.1000   -64.3000   145.1000   -65.1250     90.0    top       SMD
 R1            680R                R_0603                        143.9000   -54.9000   143.0750   -54.9000      0.0    top       SMD
 D4            BAV99S              SOT-363_SC-70-6               163.2500   -72.5000   164.2000   -71.8500    180.0    bottom    SMD
-JP1           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -71.2500   139.6375   -71.2500      0.0    bottom    VIRTUAL
+JP1           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -71.2500   139.0875   -71.2500      0.0    bottom    VIRTUAL
 D1            BAV99S              SOT-363_SC-70-6               148.2500   -72.5000   149.2000   -71.8500    180.0    bottom    SMD
 D3            BAV99S              SOT-363_SC-70-6               158.2500   -72.5000   159.2000   -71.8500    180.0    bottom    SMD
 D2            BAV99S              SOT-363_SC-70-6               153.2500   -72.5000   154.2000   -71.8500    180.0    bottom    SMD
