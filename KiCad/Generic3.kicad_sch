@@ -2605,8 +2605,8 @@
   (symbol (lib_id "Interface_USB:FT231XQ") (at 210.185 125.095 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000060849d1e)
-    (property "Reference" "U2" (id 0) (at 210.185 97.6376 0))
-    (property "Value" "FT231XQ" (id 1) (at 210.185 99.949 0))
+    (property "Reference" "U2" (id 0) (at 196.85 146.685 0))
+    (property "Value" "FT231XQ" (id 1) (at 206.375 132.08 0))
     (property "Footprint" "Package_DFN_QFN:QFN-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm" (id 2) (at 244.475 145.415 0)
       (effects (font (size 1.27 1.27)) hide)
     )
@@ -3204,6 +3204,22 @@
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 2241c7d6-5dca-4e54-ac67-8ce4d117a2dc))
+  )
+
+  (symbol (lib_id "power:+3.3V") (at 207.645 102.235 0) (unit 1)
+    (in_bom yes) (on_board yes)
+    (uuid 206e2d47-6ee1-4a37-ba8c-0b5ca978f401)
+    (property "Reference" "#PWR0101" (id 0) (at 207.645 106.045 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3.3V" (id 1) (at 208.026 97.8408 0))
+    (property "Footprint" "" (id 2) (at 207.645 102.235 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (id 3) (at 207.645 102.235 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 13419ce1-1a08-4a95-8429-2f526559fd9c))
   )
 
   (symbol (lib_id "Connector_Generic:Conn_01x10") (at 55.88 157.48 0) (mirror y) (unit 1)
@@ -4251,6 +4267,9 @@
     )
     (path "/3b88bb35-a58c-4d46-ab6f-8f3fa123a0dc"
       (reference "#PWR042") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/206e2d47-6ee1-4a37-ba8c-0b5ca978f401"
+      (reference "#PWR0101") (unit 1) (value "+3.3V") (footprint "")
     )
     (path "/9c4b6535-4ff7-4315-8d63-45066a0edbfb"
       (reference "C1") (unit 1) (value "47pF") (footprint "RevK:C_0603")

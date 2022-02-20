@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic.kicad_sch</source>
-    <date>Sunday, 20 February 2022 at 09:37:14</date>
+    <date>Sunday, 20 February 2022 at 12:22:56</date>
     <tool>Eeschema (6.0.2-0)</tool>
     <textvar name="DATE">2022-02-19</textvar>
     <sheet number="1" name="/" tstamps="/">
@@ -353,19 +353,11 @@
       <value>ESP32-WROOM-32</value>
       <footprint>RF_Module:ESP32-WROOM-32</footprint>
       <datasheet>https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf</datasheet>
-      <fields>
-        <field name="Manufacturer">Espressif</field>
-        <field name="Notes">Can be -32D, -32E, etc, must have built in antenna. Select models with 16MB (128Mb) flash fitted</field>
-        <field name="Part No">ESP32-WROOM-32</field>
-      </fields>
-      <libsource lib="RF_Module" part="ESP32-WROOM-32" description="RF Module, ESP32-D0WDQ6 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 2.7-3.6V, onboard antenna, SMD"/>
-      <property name="Manufacturer" value="Espressif"/>
-      <property name="Part No" value="ESP32-WROOM-32"/>
-      <property name="Notes" value="Can be -32D, -32E, etc, must have built in antenna. Select models with 16MB (128Mb) flash fitted"/>
+      <libsource lib="RevK" part="ESP32-WROOM-32" description="RF Module, ESP32-D0WDQ6 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 2.7-3.6V, onboard antenna, SMD"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="Generic.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-00006043326c</tstamps>
+      <tstamps>d3737146-f8f2-4cf9-a53d-a4805b531c09</tstamps>
     </comp>
     <comp ref="U2">
       <value>FT231XQ</value>
@@ -579,7 +571,15 @@
         <pin num="21" name="GND" type="power_in"/>
       </pins>
     </libpart>
-    <libpart lib="RF_Module" part="ESP32-WROOM-32">
+    <libpart lib="RevK" part="AJK">
+      <fields>
+        <field name="Reference">Logo</field>
+        <field name="Value">AJK</field>
+        <field name="Footprint">RevK:AJK</field>
+        <field name="Note">Non part, PCB printed</field>
+      </fields>
+    </libpart>
+    <libpart lib="RevK" part="ESP32-WROOM-32">
       <description>RF Module, ESP32-D0WDQ6 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 2.7-3.6V, onboard antenna, SMD</description>
       <docs>https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf</docs>
       <footprints>
@@ -632,14 +632,6 @@
         <pin num="38" name="GND" type="passive"/>
         <pin num="39" name="GND" type="passive"/>
       </pins>
-    </libpart>
-    <libpart lib="RevK" part="AJK">
-      <fields>
-        <field name="Reference">Logo</field>
-        <field name="Value">AJK</field>
-        <field name="Footprint">RevK:AJK</field>
-        <field name="Note">Non part, PCB printed</field>
-      </fields>
     </libpart>
     <libpart lib="RevK" part="Hidden">
       <fields>
@@ -694,9 +686,6 @@
     <library logical="Interface_USB">
       <uri>/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols//Interface_USB.kicad_sym</uri>
     </library>
-    <library logical="RF_Module">
-      <uri>/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols//RF_Module.kicad_sym</uri>
-    </library>
     <library logical="RevK">
       <uri>/Users/adrian/Documents/KiCad/6.0/symbols/RevK.kicad_sym</uri>
     </library>
@@ -723,7 +712,7 @@
       <node ref="U1" pin="9" pinfunction="IO33" pintype="bidirectional"/>
     </net>
     <net code="3" name="CHARGER">
-      <node ref="U1" pin="29" pinfunction="IO5" pintype="bidirectional"/>
+      <node ref="U1" pin="30" pinfunction="IO18" pintype="bidirectional"/>
       <node ref="U2" pin="14" pinfunction="CBUS1" pintype="bidirectional"/>
     </net>
     <net code="4" name="D+">
@@ -807,7 +796,7 @@
     <net code="14" name="IO3">
       <node ref="D4" pin="6" pinfunction="K3A4" pintype="passive"/>
       <node ref="J1" pin="4" pinfunction="Pin_4" pintype="passive"/>
-      <node ref="U1" pin="24" pinfunction="IO2" pintype="bidirectional"/>
+      <node ref="U1" pin="26" pinfunction="IO4" pintype="bidirectional"/>
     </net>
     <net code="15" name="IO4">
       <node ref="D4" pin="3" pinfunction="K1A2" pintype="passive"/>
@@ -815,7 +804,7 @@
       <node ref="U1" pin="12" pinfunction="IO27" pintype="bidirectional"/>
     </net>
     <net code="16" name="IO5">
-      <node ref="U1" pin="26" pinfunction="IO4" pintype="bidirectional"/>
+      <node ref="U1" pin="27" pinfunction="IO16" pintype="bidirectional"/>
     </net>
     <net code="17" name="Net-(C3-Pad1)">
       <node ref="C3" pin="1" pintype="passive"/>
@@ -931,11 +920,11 @@
     <net code="46" name="unconnected-(U1-Pad22)">
       <node ref="U1" pin="22" pinfunction="SDI/SD1" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="47" name="unconnected-(U1-Pad27)">
-      <node ref="U1" pin="27" pinfunction="IO16" pintype="bidirectional+no_connect"/>
+    <net code="47" name="unconnected-(U1-Pad24)">
+      <node ref="U1" pin="24" pinfunction="IO2" pintype="bidirectional+no_connect"/>
     </net>
-    <net code="48" name="unconnected-(U1-Pad30)">
-      <node ref="U1" pin="30" pinfunction="IO18" pintype="bidirectional+no_connect"/>
+    <net code="48" name="unconnected-(U1-Pad29)">
+      <node ref="U1" pin="29" pinfunction="IO5" pintype="bidirectional+no_connect"/>
     </net>
     <net code="49" name="unconnected-(U1-Pad31)">
       <node ref="U1" pin="31" pinfunction="IO19" pintype="bidirectional+no_connect"/>

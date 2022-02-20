@@ -1,18 +1,15 @@
-### Module positions - created on 2022-02-20 09:37
+### Module positions - created on 2022-02-20 12:24
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
 ## Side : top
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-R16           10k                 R_0603                        120.0000   -107.4000  120.0000   -108.2250    90.0    top       SMD
-R15           4k7                 R_0603                        121.2000   -107.4000  121.2000   -106.5750   -90.0    top       SMD
-R1            10k                 R_0603                        118.7000   -105.4000  119.5250   -105.4000   180.0    top       SMD
 J2            USB-C               USC16-TR-Round                136.2450   -111.1000  0.0000     0.0000       90.0    top       SMD
-U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.7000   -112.7000  121.7000   -114.6000    90.0    top       SMD
+U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.7000   -112.3000  121.7000   -114.2000    90.0    top       SMD
 R10           220R                R_0603                        119.2000   -102.4000  118.3750   -102.4000     0.0    top       SMD
 D2            D                   D_1206_3216Metric             125.3000   -107.6000  126.7000   -107.6000   180.0    top       SMD
-C2            100nF               C_0603                        119.6000   -115.3000  119.0520   -114.7520   -45.0    top       SMD
+C2            100nF               C_0603                        118.7000   -106.6000  117.9250   -106.6000     0.0    top       SMD
 R12           5K1                 R_0603                        128.1000   -108.5000  128.1000   -107.6750   -90.0    top       SMD
 D4            BAV99S              SOT-363_SC-70-6               124.2000   -117.8000  123.2500   -117.1500     0.0    top       SMD
 D3            BAV99S              SOT-363_SC-70-6               128.4500   -117.8000  127.5000   -117.1500     0.0    top       SMD
@@ -30,7 +27,10 @@ C8            10uF                Hidden                        135.4600   -105.
 D5            Schottky            Hidden                        132.3400   -104.9200  0.0000     0.0000        0.0    top       SMD
 L1            6.8uH               Hidden                        133.9600   -101.7500  0.0000     0.0000        0.0    top       SMD
 C6            0.1uF               Hidden                        127.9600   -102.0000  0.0000     0.0000      -90.0    top       SMD
+R15           4k7                 R_0603                        121.8000   -107.4000  121.8000   -106.5750   -90.0    top       SMD
+R1            10k                 R_0603                        118.7000   -105.4000  119.5250   -105.4000   180.0    top       SMD
 R18           3M 1% or NF         R_0603                        124.4000   -99.6000   123.5750   -99.6000      0.0    top       SMD
 R17           10M 1% or 0R        R_0603                        127.1000   -99.6000   127.9250   -99.6000    180.0    top       SMD
+R16           10k                 R_0603                        120.6000   -107.4000  120.6000   -108.2250    90.0    top       SMD
 U3            LMR16006+FB         RegulatorBlockFB              130.0600   -101.7500  129.1100   -103.1000     0.0    top       SMD
 ## End

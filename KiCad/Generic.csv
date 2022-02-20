@@ -1,5 +1,5 @@
 "Source:","/Users/adrian/git/ESP32-Generic/KiCad/Generic.kicad_sch"
-"Date:","Sunday, 20 February 2022 at 09:37:14"
+"Date:","Sunday, 20 February 2022 at 12:22:56"
 "Tool:","Eeschema (6.0.2-0)"
 "Generator:","/Applications/KiCad/KiCad.app/Contents/SharedSupport/plugins/bom_csv_grouped_by_value.py"
 "Component Count:","31"
@@ -35,7 +35,7 @@
 "","","R16","10k","Device:R","RevK:R_0603","~","","","","",""
 "","","R17","10M 1% or 0R","Device:R","RevK:R_0603","~","","","","",""
 "","","R18","3M 1% or NF","Device:R","RevK:R_0603","~","","","","",""
-"","","U1","ESP32-WROOM-32","RF_Module:ESP32-WROOM-32","RF_Module:ESP32-WROOM-32","https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf","Espressif","","Can be -32D, -32E, etc, must have built in antenna. Select models with 16MB (128Mb) flash fitted","","ESP32-WROOM-32"
+"","","U1","ESP32-WROOM-32","RevK:ESP32-WROOM-32","RF_Module:ESP32-WROOM-32","https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf","","","","",""
 "","","U2","FT231XQ","Interface_USB:FT231XQ","RevK:QFN-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm","https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT231X.pdf","FTDI","","","","FT231XQ"
 "","","U3","LMR16006+FB","RevK:LMR16006+FB","RevK:RegulatorBlockFB","","TI","","","","LMR16006YQ3"
 
@@ -67,6 +67,6 @@
 "21","1","R15","4k7","Device:R","RevK:R_0603","~","","","","",""
 "22","1","R17","10M 1% or 0R","Device:R","RevK:R_0603","~","","","","",""
 "23","1","R18","3M 1% or NF","Device:R","RevK:R_0603","~","","","","",""
-"24","1","U1","ESP32-WROOM-32","RF_Module:ESP32-WROOM-32","RF_Module:ESP32-WROOM-32","https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf","Espressif","","Can be -32D, -32E, etc, must have built in antenna. Select models with 16MB (128Mb) flash fitted","","ESP32-WROOM-32"
+"24","1","U1","ESP32-WROOM-32","RevK:ESP32-WROOM-32","RF_Module:ESP32-WROOM-32","https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf","","","","",""
 "25","1","U2","FT231XQ","Interface_USB:FT231XQ","RevK:QFN-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm","https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT231X.pdf","FTDI","","","","FT231XQ"
 "26","1","U3","LMR16006+FB","RevK:LMR16006+FB","RevK:RegulatorBlockFB","","TI","","","","LMR16006YQ3"
