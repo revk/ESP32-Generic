@@ -10,6 +10,13 @@ Various KiCad designs, with 3D printed case designs.
 - Alternative external DC supply 4V to 60V (safe to connect at same time as USB-C)
 - On board RGB LED.
 
+## ESP01 Style ESP32 board
+
+- Even smaller than ESP01 (13.2mm x 23.4mm including antenna)
+- Same pin out (though RST is just a GPIO on this)
+
+![Generic01](https://user-images.githubusercontent.com/996983/154910368-08a94680-f98b-4543-9405-6571c8da761c.png)
+
 ## ESP32-Generic
 
 - Very small size (29mm x 19mm PCB, plus antenna)
