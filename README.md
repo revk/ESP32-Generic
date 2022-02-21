@@ -6,14 +6,11 @@ Software and hardware for generic ESP32 usage. Software based on ESP32-RevK libr
 
 Various KiCad designs, with 3D printed case designs.
 
-- USB-C connection for power and also debug/serial.
-- Alternative external DC supply 4V to 60V (safe to connect at same time as USB-C)
-- On board RGB LED.
-
 ## ESP01 Style ESP32 board
 
 - Even smaller than ESP01 (13.2mm x 23.4mm including antenna)
 - Same pin out (though RST is just a GPIO on this)
+- No USB or voltage regulator - works from 3.3V and needs programming via Tx/Rx/GPIO0 pins, just like ESP01
 
 ![Generic01](https://user-images.githubusercontent.com/996983/154910368-08a94680-f98b-4543-9405-6571c8da761c.png)
 
@@ -25,6 +22,9 @@ Various KiCad designs, with 3D printed case designs.
 - Pads to allow linking one pin to DC supply (and not linking to GPIO)
 - Pads to allow linking other pins to 3.3V, e.g. pull ups, or to power somethign external
 - Pad to allow linking one pin to GND, e.g. capacitor
+- USB-C connection for power and also debug/serial.
+- Alternative external DC supply 4V to 60V (safe to connect at same time as USB-C)
+- On board RGB LED.
 
 ![Generic](https://user-images.githubusercontent.com/996983/151692417-bf97f5b4-017b-4074-9edc-952c1f0526cb.png)
 
@@ -46,8 +46,21 @@ Various KiCad designs, with 3D printed case designs.
 - 2 pin connector for DC (SPOX 2.5mm or 0.1")
 - 10 pin GPIO connector (SPOX 2.5mm or 0.1")
 - Pads to allow a GPIO to be tied to GND and one to be tied to 3.3V to power a separate device if needed
+- USB-C connection for power and also debug/serial.
+- Alternative external DC supply 4V to 60V (safe to connect at same time as USB-C)
+- On board RGB LED.
 
 ![a](https://user-images.githubusercontent.com/996983/154688606-ff696f24-0eac-4adf-965b-7ab453dbc4a4.png)
+
+## ESP32-Generic4
+
+- Tiny board! (13.2mm x 19.5mm, plus antenna)
+- 4 pin (SPOX or 0.1" header) with GND, DC, Tx, Rx.
+- Addition 4 pin 0.1", so can be used as a 2x4 0.1" with four extra GPIO pins
+- DC is 4V to 60V
+- No USB, has pads exposing GPIO0 for manually forcing poot mode when programming via Tx/Rx
+
+![Generic4](https://user-images.githubusercontent.com/996983/154917667-2e30deec-6bde-491c-99ea-74a2845b2fc7.png)
 
 ## ESP32-LowPower
 
@@ -56,6 +69,9 @@ Same as ESP32-Generic but for low power battery working.
 - FET switched potential divide for ADC reading battery supply.
 - Can work with USB chip disabled (power via DC connector instead)
 - Approx 35uA on 9V battery in sleep mode
+- USB-C connection for power and also debug/serial.
+- Alternative external DC supply 4V to 60V (safe to connect at same time as USB-C)
+- On board RGB LED.
 
 ## ESP32-USBA
 
