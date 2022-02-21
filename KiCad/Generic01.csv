@@ -1,0 +1,19 @@
+"Source:","/Users/adrian/git/ESP32-Generic/KiCad/Generic01.kicad_sch"
+"Date:","Monday, 21 February 2022 at 07:41:22"
+"Tool:","Eeschema (6.0.2-0)"
+"Generator:","/Applications/KiCad/KiCad.app/Contents/SharedSupport/plugins/bom_csv_grouped_by_value.py"
+"Component Count:","2"
+
+"Individual Components:"
+
+"Item","Qty","Reference(s)","Value","LibPart","Footprint","Datasheet","MANUFACTURER","MAXIMUM_PACKAGE_HEIGHT","Note","PARTREV","STANDARD"
+"","","J1","Header","Connector_Generic:Conn_02x04_Odd_Even","Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical","~","","","","",""
+"","","U1","ESP32-PICO-MINI-02","RevK:ESP32-PICO-MINI-02","RevK:ESP32-PICO-MINI-02","","Espressif","2.55mm","","v1.0","Manufacturer Recommendations"
+
+
+
+"Collated Components:"
+
+"Item","Qty","Reference(s)","Value","LibPart","Footprint","Datasheet","MANUFACTURER","MAXIMUM_PACKAGE_HEIGHT","Note","PARTREV","STANDARD"
+"1","1","J1","Header","Connector_Generic:Conn_02x04_Odd_Even","Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical","~","","","","",""
+"2","1","U1","ESP32-PICO-MINI-02","RevK:ESP32-PICO-MINI-02","RevK:ESP32-PICO-MINI-02","","Espressif","2.55mm","","v1.0","Manufacturer Recommendations"
