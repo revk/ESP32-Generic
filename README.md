@@ -56,11 +56,11 @@ Various KiCad designs, with 3D printed case designs.
 
 - Tiny board! (13.2mm x 19.5mm, plus antenna)
 - 4 pin (SPOX or 0.1" header) with GND, DC, Tx, Rx.
-- Addition 4 pin 0.1", so can be used as a 2x4 0.1" with four extra GPIO pins
+- Addition 8 pins 0.1", so can be used as a 3x4 0.1" for a total of 10 GPIO (including GPIO0).
 - DC is 4V to 60V
-- No USB, has pads exposing GPIO0 for manually forcing poot mode when programming via Tx/Rx
+- No USB, GPIO0 is included (next to GND) for manually forcing boot mode when programming via Tx/Rx
 
-![Generic4](https://user-images.githubusercontent.com/996983/154917667-2e30deec-6bde-491c-99ea-74a2845b2fc7.png)
+![Generic4](https://user-images.githubusercontent.com/996983/155281079-e3d44414-4403-4cc3-a2bb-2a8ebe38c4e4.png)
 
 ## ESP32-LowPower
 
