@@ -60,7 +60,7 @@ Various KiCad designs, with 3D printed case designs.
 - DC is 4V to 60V
 - No USB, GPIO0 is included (next to GND) for manually forcing boot mode when programming via Tx/Rx
 
-![Generic4](https://user-images.githubusercontent.com/996983/155281079-e3d44414-4403-4cc3-a2bb-2a8ebe38c4e4.png)
+![Generic4 08 06 08](https://user-images.githubusercontent.com/996983/155281305-d2112d6c-50db-490e-927d-93f38d10a1f5.png)
 
 ## ESP32-LowPower
 
