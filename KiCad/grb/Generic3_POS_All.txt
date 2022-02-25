@@ -1,4 +1,4 @@
-### Module positions - created on 2022-02-24 08:14
+### Module positions - created on 2022-02-25 13:47
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 21.600mm, Pcb Width 35.100mm [based on Edge bounding box]
@@ -34,13 +34,13 @@ R7            27R                 R_0603                        147.7500   -61.2
 C7            10uF                Hidden                        157.8000   -60.8500   0.0000     0.0000       90.0    top       SMD
 R6            5K1                 R_0603                        145.1000   -64.3000   145.1000   -65.1250     90.0    top       SMD
 R2            680R                R_0603                        143.9000   -54.9000   143.0750   -54.9000      0.0    top       SMD
-D4            BAV99S              SOT-363_SC-70-6               163.2500   -72.5000   164.2000   -71.8500    180.0    bottom    SMD
+D4            BAV99S              SOT-363_SC-70-6               163.2500   -72.7000   164.2000   -72.0500    180.0    bottom    SMD
 JP1           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -71.2500   139.6375   -71.2500      0.0    bottom    VIRTUAL
-D1            BAV99S              SOT-363_SC-70-6               148.2500   -72.5000   149.2000   -71.8500    180.0    bottom    SMD
-D3            BAV99S              SOT-363_SC-70-6               158.2500   -72.5000   159.2000   -71.8500    180.0    bottom    SMD
-D2            BAV99S              SOT-363_SC-70-6               153.2500   -72.5000   154.2000   -71.8500    180.0    bottom    SMD
+D1            BAV99S              SOT-363_SC-70-6               148.2500   -72.7000   149.2000   -72.0500    180.0    bottom    SMD
+D3            BAV99S              SOT-363_SC-70-6               158.2500   -72.7000   159.2000   -72.0500    180.0    bottom    SMD
+D2            BAV99S              SOT-363_SC-70-6               153.2500   -72.7000   154.2000   -72.0500    180.0    bottom    SMD
 U4            QR                  QR-GENERIC                    140.2000   -61.8000   0.0000     0.0000      -90.0    bottom    VIRTUAL
-D5            BAV99S              SOT-363_SC-70-6               168.2500   -72.5000   169.2000   -71.8500    180.0    bottom    SMD
+D5            BAV99S              SOT-363_SC-70-6               168.2500   -72.7500   169.2000   -72.1000    180.0    bottom    SMD
 JP2           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -74.0250   139.0875   -74.0250      0.0    bottom    VIRTUAL
 Logo1         AJK                 AJK                           167.1250   -59.8500   0.0000     0.0000      -90.0    bottom    VIRTUAL
 ## End
