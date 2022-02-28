@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic01.kicad_sch</source>
-    <date>Monday, 21 February 2022 at 07:41:22</date>
+    <date>Wednesday, 23 February 2022 at 18:51:45</date>
     <tool>Eeschema (6.0.2-0)</tool>
     <textvar name="DATE">2022-02-21</textvar>
     <sheet number="1" name="/" tstamps="/">
@@ -62,19 +62,20 @@
         <fp>Connector*:*_2x??_*</fp>
       </footprints>
       <fields>
-        <field name="Reference">J</field>
-        <field name="Value">Conn_02x04_Odd_Even</field>
+        <field name="Reference">J1</field>
+        <field name="Value">Header</field>
+        <field name="Footprint">Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical</field>
         <field name="Datasheet">~</field>
       </fields>
       <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="1" name="Pin_1" type="power_out"/>
         <pin num="2" name="Pin_2" type="passive"/>
         <pin num="3" name="Pin_3" type="passive"/>
         <pin num="4" name="Pin_4" type="passive"/>
         <pin num="5" name="Pin_5" type="passive"/>
         <pin num="6" name="Pin_6" type="passive"/>
         <pin num="7" name="Pin_7" type="passive"/>
-        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="8" name="Pin_8" type="power_out"/>
       </pins>
     </libpart>
     <libpart lib="RevK" part="AJK">
@@ -149,14 +150,6 @@
         <pin num="51" name="GND" type="power_in"/>
         <pin num="52" name="GND" type="power_in"/>
         <pin num="53" name="GND" type="power_in"/>
-        <pin num="54" name="GND" type="power_in"/>
-        <pin num="55" name="GND" type="power_in"/>
-        <pin num="56" name="GND" type="power_in"/>
-        <pin num="57" name="GND" type="power_in"/>
-        <pin num="58" name="GND" type="power_in"/>
-        <pin num="59" name="GND" type="power_in"/>
-        <pin num="60" name="GND" type="power_in"/>
-        <pin num="61" name="GND" type="power_in"/>
       </pins>
     </libpart>
   </libparts>
@@ -174,7 +167,7 @@
       <node ref="U1" pin="8" pinfunction="EN" pintype="input"/>
     </net>
     <net code="2" name="GND">
-      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="power_out"/>
       <node ref="U1" pin="1" pinfunction="GND" pintype="power_in"/>
       <node ref="U1" pin="11" pinfunction="GND" pintype="power_in"/>
       <node ref="U1" pin="14" pinfunction="GND" pintype="power_in"/>
@@ -197,14 +190,6 @@
       <node ref="U1" pin="51" pinfunction="GND" pintype="power_in"/>
       <node ref="U1" pin="52" pinfunction="GND" pintype="power_in"/>
       <node ref="U1" pin="53" pinfunction="GND" pintype="power_in"/>
-      <node ref="U1" pin="54" pinfunction="GND" pintype="power_in"/>
-      <node ref="U1" pin="55" pinfunction="GND" pintype="power_in"/>
-      <node ref="U1" pin="56" pinfunction="GND" pintype="power_in"/>
-      <node ref="U1" pin="57" pinfunction="GND" pintype="power_in"/>
-      <node ref="U1" pin="58" pinfunction="GND" pintype="power_in"/>
-      <node ref="U1" pin="59" pinfunction="GND" pintype="power_in"/>
-      <node ref="U1" pin="60" pinfunction="GND" pintype="power_in"/>
-      <node ref="U1" pin="61" pinfunction="GND" pintype="power_in"/>
     </net>
     <net code="3" name="GPIO0">
       <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
@@ -227,7 +212,7 @@
       <node ref="U1" pin="31" pinfunction="TXD0" pintype="bidirectional"/>
     </net>
     <net code="8" name="VCC">
-      <node ref="J1" pin="8" pinfunction="Pin_8" pintype="passive"/>
+      <node ref="J1" pin="8" pinfunction="Pin_8" pintype="power_out"/>
       <node ref="U1" pin="3" pinfunction="3V3" pintype="power_in"/>
     </net>
     <net code="9" name="unconnected-(U1-Pad4)">
