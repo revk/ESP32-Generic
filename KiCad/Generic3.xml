@@ -2,15 +2,15 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic3.kicad_sch</source>
-    <date>Thursday, 24 February 2022 at 08:15:16</date>
+    <date>Tuesday, 01 March 2022 at 16:43:19</date>
     <tool>Eeschema (6.0.2-0)</tool>
-    <textvar name="DATE">2022-02-24</textvar>
+    <textvar name="DATE">2022-02-25</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Generic ESP32-PICO-MINI module</title>
         <company/>
         <rev>1</rev>
-        <date>2022-02-24</date>
+        <date>2022-02-25</date>
         <source>Generic3.kicad_sch</source>
         <comment number="1" value="@TheRealRevK"/>
         <comment number="2" value="www.me.uk"/>
@@ -229,24 +229,6 @@
       <property name="Sheetfile" value="Generic3.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>00000000-0000-0000-0000-000060d24a36</tstamps>
-    </comp>
-    <comp ref="JP1">
-      <value>Jumper_2_Open</value>
-      <footprint>RevK:Pad_1206_0805_Open</footprint>
-      <libsource lib="Jumper" part="Jumper_2_Open" description="Jumper, 2-pole, open"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="Generic3.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>bfb7ec98-c160-41a4-adca-c13c4c1663f3</tstamps>
-    </comp>
-    <comp ref="JP2">
-      <value>Jumper_2_Open</value>
-      <footprint>RevK:Pad_1206_0805_Open</footprint>
-      <libsource lib="Jumper" part="Jumper_2_Open" description="Jumper, 2-pole, open"/>
-      <property name="Sheetname" value=""/>
-      <property name="Sheetfile" value="Generic3.kicad_sch"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamps>9a6578dd-408a-4256-926c-64a64aa14dc5</tstamps>
     </comp>
     <comp ref="L1">
       <value>6.8uH</value>
@@ -774,7 +756,6 @@
       <node ref="D5" pin="2" pinfunction="K2" pintype="passive"/>
       <node ref="D5" pin="5" pinfunction="K4" pintype="passive"/>
       <node ref="D6" pin="1" pinfunction="A" pintype="passive"/>
-      <node ref="JP2" pin="1" pinfunction="A" pintype="passive"/>
       <node ref="R1" pin="1" pintype="passive"/>
       <node ref="R9" pin="1" pintype="passive"/>
       <node ref="U1" pin="3" pinfunction="3V3" pintype="power_in"/>
@@ -836,7 +817,6 @@
       <node ref="J3" pin="B1" pinfunction="GND" pintype="passive"/>
       <node ref="J3" pin="B12" pinfunction="GND" pintype="passive"/>
       <node ref="J3" pin="S1" pinfunction="SHIELD" pintype="passive"/>
-      <node ref="JP1" pin="1" pinfunction="A" pintype="passive"/>
       <node ref="R10" pin="1" pintype="passive"/>
       <node ref="R12" pin="2" pintype="passive"/>
       <node ref="R5" pin="2" pintype="passive"/>
@@ -883,13 +863,11 @@
     <net code="12" name="IO1">
       <node ref="D1" pin="6" pinfunction="K3A4" pintype="passive"/>
       <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="JP1" pin="2" pinfunction="B" pintype="passive"/>
       <node ref="U1" pin="35" pinfunction="IO21" pintype="bidirectional"/>
     </net>
     <net code="13" name="IO2">
       <node ref="D1" pin="3" pinfunction="K1A2" pintype="passive"/>
       <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive"/>
-      <node ref="JP2" pin="2" pinfunction="B" pintype="passive"/>
       <node ref="U1" pin="34" pinfunction="IO22" pintype="bidirectional"/>
     </net>
     <net code="14" name="IO3">

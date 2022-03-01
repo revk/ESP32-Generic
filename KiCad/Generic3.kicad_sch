@@ -3695,7 +3695,7 @@
   )
 
   (symbol (lib_id "Jumper:Jumper_2_Open") (at 59.055 130.175 0) (unit 1)
-    (in_bom yes) (on_board yes) (fields_autoplaced)
+    (in_bom no) (on_board yes) (fields_autoplaced)
     (uuid 9a6578dd-408a-4256-926c-64a64aa14dc5)
     (property "Reference" "JP2" (id 0) (at 59.055 124.8242 0))
     (property "Value" "Jumper_2_Open" (id 1) (at 59.055 127.3611 0))
@@ -3824,7 +3824,7 @@
   )
 
   (symbol (lib_id "Jumper:Jumper_2_Open") (at 59.055 122.555 0) (unit 1)
-    (in_bom yes) (on_board yes) (fields_autoplaced)
+    (in_bom no) (on_board yes) (fields_autoplaced)
     (uuid bfb7ec98-c160-41a4-adca-c13c4c1663f3)
     (property "Reference" "JP1" (id 0) (at 59.055 117.2042 0))
     (property "Value" "Jumper_2_Open" (id 1) (at 59.055 119.7411 0))

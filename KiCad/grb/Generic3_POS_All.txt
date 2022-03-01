@@ -1,4 +1,4 @@
-### Module positions - created on 2022-02-25 13:47
+### Module positions - created on 2022-03-01 16:43
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 21.600mm, Pcb Width 35.100mm [based on Edge bounding box]
@@ -42,7 +42,7 @@ D2            BAV99S              SOT-363_SC-70-6               153.2500   -72.7
 U4            QR                  QR-GENERIC                    140.2000   -61.8000   0.0000     0.0000      -90.0    bottom    VIRTUAL
 D5            BAV99S              SOT-363_SC-70-6               168.2500   -72.7500   169.2000   -72.1000    180.0    bottom    SMD
 JP2           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -74.0250   139.0875   -74.0250      0.0    bottom    VIRTUAL
-Logo1         AJK                 AJK                           167.1250   -59.8500   0.0000     0.0000      -90.0    bottom    VIRTUAL
+Logo1         AJK                 AJK                           167.0000   -60.0000   0.0000     0.0000      -90.0    bottom    VIRTUAL
 ## End
 ## 219 SMD pads
 ## 12 TH pads
