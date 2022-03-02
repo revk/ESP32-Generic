@@ -1,7 +1,7 @@
 (kicad_pcb (version 20211014) (generator pcbnew)
 
   (general
-    (thickness 1.6)
+    (thickness 0.8)
   )
 
   (paper "A4")
@@ -42,7 +42,7 @@
       (layer "F.Paste" (type "Top Solder Paste"))
       (layer "F.Mask" (type "Top Solder Mask") (thickness 0.01))
       (layer "F.Cu" (type "copper") (thickness 0.035))
-      (layer "dielectric 1" (type "core") (thickness 1.51) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
+      (layer "dielectric 1" (type "core") (thickness 0.71) (material "FR4") (epsilon_r 4.5) (loss_tangent 0.02))
       (layer "B.Cu" (type "copper") (thickness 0.035))
       (layer "B.Mask" (type "Bottom Solder Mask") (thickness 0.01))
       (layer "B.Paste" (type "Bottom Solder Paste"))
@@ -491,7 +491,7 @@
       (options (clearance outline) (anchor rect))
       (primitives
     (gr_arc (start 2.89 -3.045) (mid 0 -0.155) (end -2.89 -3.045) (width 0.25))
-    (gr_arc (start 4.294753 -3.49127) (mid -0.016568 -1.026234) (end -4.311371 -3.519937) (width 0.25))
+    (gr_arc (start 4.294753 -3.49127) (mid -0.012228 -1.026222) (end -4.307036 -3.512417) (width 0.25))
     (gr_arc (start -3.2 -2.485) (mid -4.015 -3.3) (end -3.2 -4.115) (width 0.25))
     (gr_arc (start 3.2 -4.115) (mid 4.015 -3.3) (end 3.2 -2.485) (width 0.25))
     (gr_arc (start -4.32 0.635) (mid -0.000001 -1.154403) (end 4.319999 0.634999) (width 0.25))
