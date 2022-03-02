@@ -42,7 +42,7 @@ Various KiCad designs, with 3D printed case designs.
 ## ESP32-Generic3
 
 - Larger PCB (35mm x 21.5mm, plus antenna)
-- ESP32-NANO-PICO based design
+- ESP32-PICO-MINI based design
 - 2 pin connector for DC (SPOX 2.5mm or 0.1")
 - 10 pin GPIO connector (SPOX 2.5mm or 0.1")
 - Pads to allow a GPIO to be tied to GND and one to be tied to 3.3V to power a separate device if needed
