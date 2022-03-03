@@ -65,23 +65,23 @@ stl: KiCad/Generic.stl KiCad/Generic-nohole.stl KiCad/LowPower.stl KiCad/LowPowe
 	echo "Made $@"
 
 KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=4.9
+	PCBCase/case -o $@ $< --edge=2 --base=3.5
 
 KiCad/Generic2.scad: KiCad/Generic2.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=4.9
+	PCBCase/case -o $@ $< --edge=2 --base=3.5
 
 KiCad/Generic3.scad: KiCad/Generic3.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=4.9
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic4.scad: KiCad/Generic4.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=4.9
+	PCBCase/case -o $@ $< --edge=2 --base=3.5
 
 KiCad/Generic-nohole.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=4.9 --ignore=J3
+	PCBCase/case -o $@ $< --edge=2 --base=3.5 --ignore=J3
 
 KiCad/LowPower.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=4.9
+	PCBCase/case -o $@ $< --edge=2 --base=3.5
 
 KiCad/LowPower-nohole.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=4.9 --ignore=J3
+	PCBCase/case -o $@ $< --edge=2 --base=3.5 --ignore=J3
 
