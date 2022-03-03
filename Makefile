@@ -56,8 +56,8 @@ ftdizap/ftdizap: ftdizap/ftdizap.c
 PCBCase/case: PCBCase/case.c
 	make -C PCBCase
 
-scad: KiCad/Generic.scad KiCad/Generic-nohole.scad KiCad/LowPower.scad KiCad/LowPower-nohole.scad
-stl: KiCad/Generic.stl KiCad/Generic-nohole.stl KiCad/LowPower.stl KiCad/LowPower-nohole.stl
+scad: KiCad/Generic.scad KiCad/Generic-nohole.scad KiCad/LowPower.scad KiCad/LowPower-nohole.scad KiCad/Generic2.scad KiCad/Generic3.scad KiCad/Generic4.scad
+stl: KiCad/Generic.stl KiCad/Generic-nohole.stl KiCad/LowPower.stl KiCad/LowPower-nohole.stl KiCad/Generic2.stl KiCad/Generic3.stl KiCad/Generic4.stl
 
 %.stl: %.scad
 	echo "Making $@"
@@ -65,6 +65,15 @@ stl: KiCad/Generic.stl KiCad/Generic-nohole.stl KiCad/LowPower.stl KiCad/LowPowe
 	echo "Made $@"
 
 KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
+	PCBCase/case -o $@ $< --edge=2 --base=4.9
+
+KiCad/Generic2.scad: KiCad/Generic2.kicad_pcb PCBCase/case Makefile
+	PCBCase/case -o $@ $< --edge=2 --base=4.9
+
+KiCad/Generic3.scad: KiCad/Generic3.kicad_pcb PCBCase/case Makefile
+	PCBCase/case -o $@ $< --edge=2 --base=4.9
+
+KiCad/Generic4.scad: KiCad/Generic4.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=4.9
 
 KiCad/Generic-nohole.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
