@@ -1,4 +1,4 @@
-### Module positions - created on 2022-02-23 18:54
+### Module positions - created on 2022-03-03 14:21
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 19.600mm, Pcb Width 13.300mm [based on Edge bounding box]
@@ -8,21 +8,25 @@
 U1            ESP32-PICO-MINI-02  ESP32-PICO-MINI-02            100.0000   -44.1932   94.1000    -40.1932      0.0    top       SMD
 J2            SPOX                Molex_MiniSPOX_H4RA           100.0000   -51.4400   96.2500    -51.4400      0.0    top       THD
 C3            10uF                Hidden                        96.0000    -45.6500   0.0000     0.0000      -90.0    bottom    SMD
-D1            Schottky            Hidden                        99.1200    -45.2700   0.0000     0.0000        0.0    bottom    SMD
+R2            2K                  R_0603                        104.7500   -44.8500   105.5750   -44.8500    180.0    bottom    SMD
+D2            Schottky            Hidden                        99.1200    -45.2700   0.0000     0.0000        0.0    bottom    SMD
 C1            0.1uF               Hidden                        103.5000   -42.3500   0.0000     0.0000      -90.0    bottom    SMD
-R2            3M 1% or NF         R_0603                        105.9000   -40.2000   105.9000   -39.3750    -90.0    bottom    SMD
+R5            3M 1% or NF         R_0603                        102.2500   -39.5000   101.4250   -39.5000      0.0    bottom    SMD
 J1            I/O                 PinHeader_2x04_P2.54mm_Vert.. 96.1900    -53.9800   96.1900    -53.9800    -90.0    bottom    VIRTUAL
+R1            680R                R_0603                        104.7500   -46.1000   105.5750   -46.1000    180.0    bottom    SMD
+R3            220R                R_0603                        104.8000   -48.9000   105.6250   -48.9000    180.0    bottom    SMD
 C2            2.2uF               Hidden                        102.2500   -45.6500   0.0000     0.0000      -90.0    bottom    SMD
-U2            LMR16006+FB         RegulatorBlockFB              101.4000   -42.1000   102.3500   -43.4500    180.0    bottom    SMD
+D1            RGB                 LED-RGB-1.6x1.6               105.2000   -42.7000   104.7000   -41.8250     90.0    bottom    SMD
+U2            LMR16006+FB         RegulatorBlockFB              100.2000   -42.2500   101.1500   -43.6000    180.0    bottom    SMD
 L1            6.8uH               Hidden                        97.5000    -42.1000   0.0000     0.0000        0.0    bottom    SMD
-R1            10M 1% or 0R        R_0603                        104.7000   -40.2000   104.7000   -39.3750    -90.0    bottom    SMD
+R4            10M 1% or 0R        R_0603                        105.0000   -39.5000   105.8250   -39.5000    180.0    bottom    SMD
 ## End
-## 94 SMD pads
+## 104 SMD pads
 ## 4 TH pads
 ## 8 Virtual pads
 ## 1 Top TH modules
 ## 0 Bot TH modules
 ## 1 Top SMD modules
-## 8 Bot SMD modules
+## 12 Bot SMD modules
 ## 0 Top Virtual modules
 ## 1 Bot Virtual modules
