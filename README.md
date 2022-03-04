@@ -54,13 +54,24 @@ Various KiCad designs, with 3D printed case designs.
 
 ## ESP32-Generic4
 
-- Tiny board! (13.2mm x 19.5mm, plus antenna)
-- 4 pin (SPOX or 0.1" header) with GND, DC, Tx, Rx.
-- Addition 8 pins 0.1", so can be used as a 3x4 0.1" for a total of 10 GPIO (including GPIO0).
-- DC is 4V to 60V
-- No USB, GPIO0 is included (next to GND) for manually forcing boot mode when programming via Tx/Rx
+General purpose small board for use from DC supply not USB
 
-![Generic4 08 06 08](https://user-images.githubusercontent.com/996983/155281305-d2112d6c-50db-490e-927d-93f38d10a1f5.png)
+- Tiny board! (13.2mm x 19.5mm, plus antenna)
+- Designed to work with simple 4 pin SPOX (GND, DC, 2xGPIO), or additional 0.1" headers making total of 10 GPIO (including GPIO0)
+- Note the first 5 0.1" pins are GND, GPIO0, 3.3V, Rx (to module), Tx (from module) so match a Shelly 1, and so can work with Shelly Tasmotizer board.
+- DC is 4V to 60V
+
+![Generic4](https://user-images.githubusercontent.com/996983/156793334-af8823f4-5f7b-4e12-9b53-bcdea048fd54.png)
+
+## ESP32-Generic5
+
+General purpose small board for use from USB, including passing 5V to connected device (Display, LED strip, etc, etc).
+
+- Tiny board (12.5mm x 21mm, with antenna on side)
+- USB connection
+- 4 pin SPOX connector can be all GPIO, but links for one pin to GND, and link to change second pin to 5V DC
+
+![Generic5](https://user-images.githubusercontent.com/996983/156793863-f028c9df-fdc0-407b-a6b5-f752a6766258.png)
 
 ## ESP32-LowPower
 
