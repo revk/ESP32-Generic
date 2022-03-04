@@ -348,7 +348,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "Generic3.kicad_pro",
+    "filename": "Generic5.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -432,6 +432,6 @@
     ]
   ],
   "text_variables": {
-    "DATE": "2022-02-25"
+    "DATE": "2022-03-04"
   }
 }
