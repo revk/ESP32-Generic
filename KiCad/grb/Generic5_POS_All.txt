@@ -1,4 +1,4 @@
-### Module positions - created on 2022-03-04 12:29
+### Module positions - created on 2022-03-04 13:01
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 31.100mm, Pcb Width 12.600mm [based on Edge bounding box]
@@ -18,7 +18,7 @@ C1            100nF               C_0603                        158.5000   -36.0
 D2            Schottky            Hidden                        152.3300   -47.0200   0.0000     0.0000      -90.0    bottom    SMD
 C2            0.1uF               Hidden                        155.2500   -51.4000   0.0000     0.0000      180.0    bottom    SMD
 C4            10uF                Hidden                        151.9500   -43.9000   0.0000     0.0000      180.0    bottom    SMD
-R1            10k                 R_0603                        158.2500   -32.7500   159.0750   -32.7500    180.0    bottom    SMD
+R1            10k                 R_0603                        158.5000   -32.7500   159.3250   -32.7500    180.0    bottom    SMD
 R9            10M 1% or 0R        R_0603                        159.2500   -39.7500   159.2500   -38.9250    -90.0    bottom    SMD
 R3            2K                  R_0603                        153.0000   -23.6000   152.1750   -23.6000      0.0    bottom    SMD
 JP1           Jumper_2_Open       Pad_1206_0805_Open            157.5000   -24.2500   157.5000   -22.7875    -90.0    bottom    VIRTUAL
