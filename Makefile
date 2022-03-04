@@ -42,7 +42,10 @@ zap:    bootmode flash
 
 # Program the FTDI
 ftdi3: ftdizap/ftdizap
-	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13 --cbus2-mode=17 --self-powered=1
+	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13 --cbus3-mode=17 --self-powered=1
+
+ftdi5: ftdizap/ftdizap
+	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13 --cbus3-mode=17 --self-powered=1
 
 ftdi: ftdizap/ftdizap
 	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13
@@ -77,7 +80,7 @@ KiCad/Generic4.scad: KiCad/Generic4.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=3.5
 
 KiCad/Generic5.scad: KiCad/Generic5.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=2
+	PCBCase/case -o $@ $< --edge=2 --base=3.5
 
 KiCad/LowPower.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=3.5
