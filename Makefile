@@ -42,10 +42,10 @@ zap:    bootmode flash
 
 # Program the FTDI
 ftdi3: ftdizap/ftdizap
-	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13 --cbus3-mode=17 --self-powered=1
+	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13 --cbus2-mode=17 --self-powered=1
 
 ftdi5: ftdizap/ftdizap
-	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13 --cbus3-mode=17 --self-powered=1
+	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus2-mode=17 --self-powered=1
 
 ftdi: ftdizap/ftdizap
 	./ftdizap/ftdizap --serial="RevK" --description="Generic" --cbus0-mode=7 --cbus1-mode=13
