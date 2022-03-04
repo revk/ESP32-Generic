@@ -1,12 +1,10 @@
-### Module positions - created on 2022-03-04 11:33
+### Module positions - created on 2022-03-04 12:29
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 31.100mm, Pcb Width 12.600mm [based on Edge bounding box]
 ## Side : ALL
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-JP2           Jumper_2_Open       Pad_1206_0805_Open            153.7500   -25.6000   152.8375   -25.6000      0.0    bottom    VIRTUAL
-JP1           Jumper_2_Open       Pad_1206_0805_Open            157.5000   -24.2500   157.5000   -23.3375    -90.0    bottom    VIRTUAL
 U1            ESP32-PICO-MINI-02  ESP32-PICO-MINI-02            154.3500   -35.5500   150.3500   -41.4500     90.0    top       SMD
 J2            USB-C               USC16-TR-Round                154.2500   -51.3500   0.0000     0.0000        0.0    top       SMD
 J1            Conn_01x04          Molex_MiniSPOX_H4RA           153.7500   -27.6000   157.5000   -27.6000    180.0    top       THD
@@ -23,6 +21,7 @@ C4            10uF                Hidden                        151.9500   -43.9
 R1            10k                 R_0603                        158.2500   -32.7500   159.0750   -32.7500    180.0    bottom    SMD
 R9            10M 1% or 0R        R_0603                        159.2500   -39.7500   159.2500   -38.9250    -90.0    bottom    SMD
 R3            2K                  R_0603                        153.0000   -23.6000   152.1750   -23.6000      0.0    bottom    SMD
+JP1           Jumper_2_Open       Pad_1206_0805_Open            157.5000   -24.2500   157.5000   -22.7875    -90.0    bottom    VIRTUAL
 R8            27R                 R_0603                        154.7500   -39.7500   154.7500   -40.5750     90.0    bottom    SMD
 R12           10k                 R_0603                        149.2500   -36.9250   149.2500   -37.7500     90.0    bottom    SMD
 R5            5K1                 R_0603                        150.5000   -39.7500   150.5000   -40.5750     90.0    bottom    SMD
@@ -30,6 +29,7 @@ L1            6.8uH               Hidden                        155.5000   -45.4
 R2            680R                R_0603                        153.0000   -22.4000   152.1750   -22.4000      0.0    bottom    SMD
 U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 154.5000   -34.5000   156.5506   -35.1364    135.0    bottom    SMD
 R6            5K1                 R_0603                        156.7500   -39.7500   156.7500   -38.9250    -90.0    bottom    SMD
+JP2           Jumper_2_Open       Pad_1206_0805_Open            153.7500   -25.6000   152.8375   -25.6000      0.0    bottom    VIRTUAL
 D1            RGB                 LED-RGB-1.6x1.6               150.2500   -22.7500   149.7500   -21.8750     90.0    bottom    SMD
 ## End
 ## 181 SMD pads
