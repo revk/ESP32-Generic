@@ -1,14 +1,15 @@
-### Module positions - created on 2022-03-05 10:51
+### Module positions - created on 2022-03-05 11:13
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 21.600mm, Pcb Width 35.100mm [based on Edge bounding box]
 ## Side : ALL
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
+Q1            PMF170XP,115        SOT-323_SC-70                 159.7500   -57.7500   160.4000   -56.7500    -90.0    top       SMD
 C1            47pF                C_0603                        148.7500   -58.5500   148.7500   -59.3250     90.0    top       SMD
 R4            220R                R_0603                        141.0500   -56.8500   140.2250   -56.8500      0.0    top       SMD
 C4            10nF                C_0603                        141.0000   -67.2000   140.2250   -67.2000      0.0    top       SMD
-R1            10k                 R_0603                        159.6500   -60.6500   159.6500   -59.8250    -90.0    top       SMD
+R1            10k                 R_0603                        159.5000   -61.0000   159.5000   -60.1750    -90.0    top       SMD
 D7            D                   D_1206_3216Metric             146.5000   -66.6000   147.9000   -66.6000    180.0    top       SMD
 C5            0.1uF               Hidden                        150.3000   -57.5500   0.0000     0.0000       90.0    top       SMD
 C2            100nF               C_0603                        157.2000   -63.2000   156.4250   -63.2000      0.0    top       SMD
@@ -45,12 +46,12 @@ D5            BAV99S              SOT-363_SC-70-6               168.2500   -72.7
 JP2           Jumper_2_Open       Pad_1206_0805_Open            140.5500   -74.0250   139.0875   -74.0250      0.0    bottom    VIRTUAL
 Logo1         AJK                 AJK                           167.0000   -60.0000   0.0000     0.0000      -90.0    bottom    VIRTUAL
 ## End
-## 219 SMD pads
+## 222 SMD pads
 ## 14 TH pads
 ## 92 Virtual pads
 ## 2 Top TH modules
 ## 1 Bot TH modules
-## 27 Top SMD modules
+## 28 Top SMD modules
 ## 5 Bot SMD modules
 ## 0 Top Virtual modules
 ## 4 Bot Virtual modules
