@@ -48,7 +48,8 @@ Various KiCad designs, with 3D printed case designs.
 - Pads to allow a GPIO to be tied to GND and one to be tied to 3.3V to power a separate device if needed
 - USB-C connection for power and also debug/serial.
 - Alternative external DC supply 4V to 60V (safe to connect at same time as USB-C)
-- On board RGB LED.
+- On board RGB LED
+- A buzzer connection, as separate pads on back of board, with FET drive and back EMF diode
 
 ![a](https://user-images.githubusercontent.com/996983/154688606-ff696f24-0eac-4adf-965b-7ab453dbc4a4.png)
 
@@ -69,9 +70,13 @@ General purpose small board for use from USB, including passing 5V to connected 
 
 - Tiny board (12.5mm x 21mm, with antenna on side)
 - USB connection
-- 4 pin SPOX connector can be all GPIO, but links for one pin to GND, and link to change second pin to 5V DC
+- RGb LED
+- 4 pin SPOX connector can be all GPIO
+- Pin 1 can be linked to GND
+- Pin 2 can be unlinked from GPIO and linked to USB 5V supply
+- Pin 4 has addition FET on separate GPIo to drive 3.3V supply, and a back EMF diode, allowing drive of buzzer, etc.
 
-![Generic5](https://user-images.githubusercontent.com/996983/156793863-f028c9df-fdc0-407b-a6b5-f752a6766258.png)
+![Generic5](https://user-images.githubusercontent.com/996983/156886747-55e5c608-20fe-482c-bbdd-4d36e5d28d6c.png)
 
 ## ESP32-LowPower
 
