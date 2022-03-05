@@ -74,7 +74,7 @@ General purpose small board for use from USB, including passing 5V to connected 
 - 4 pin SPOX connector can be all GPIO
 - Pin 1 can be linked to GND
 - Pin 2 can be unlinked from GPIO and linked to USB 5V supply
-- Pin 4 has addition FET on separate GPIo to drive 3.3V supply, and a back EMF diode, allowing drive of buzzer, etc.
+- Pin 3 has addition FET on separate GPIO to drive 3.3V supply, and a back EMF diode, allowing drive of buzzer, etc.
 
 ![Generic5](https://user-images.githubusercontent.com/996983/156886747-55e5c608-20fe-482c-bbdd-4d36e5d28d6c.png)
 
