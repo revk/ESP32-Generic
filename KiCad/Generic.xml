@@ -2,15 +2,15 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic.kicad_sch</source>
-    <date>Sunday, 20 February 2022 at 12:22:56</date>
+    <date>Saturday, 05 March 2022 at 07:55:13</date>
     <tool>Eeschema (6.0.2-0)</tool>
-    <textvar name="DATE">2022-02-19</textvar>
+    <textvar name="DATE">2022-03-06</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Generic ESP32 module</title>
         <company/>
         <rev>6</rev>
-        <date>2022-02-19</date>
+        <date>2022-03-06</date>
         <source>Generic.kicad_sch</source>
         <comment number="1" value="@TheRealRevK"/>
         <comment number="2" value="www.me.uk"/>
@@ -129,7 +129,7 @@
     </comp>
     <comp ref="D3">
       <value>BAV99S</value>
-      <footprint>RevK:SOT-363_SC-70-6</footprint>
+      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
       <datasheet>https://assets.nexperia.com/documents/data-sheet/BAV99_SER.pdf</datasheet>
       <fields>
         <field name="Manufacturer">Nexperia</field>
@@ -145,7 +145,7 @@
     </comp>
     <comp ref="D4">
       <value>BAV99S</value>
-      <footprint>RevK:SOT-363_SC-70-6</footprint>
+      <footprint>Package_TO_SOT_SMD:SOT-363_SC-70-6</footprint>
       <datasheet>https://assets.nexperia.com/documents/data-sheet/BAV99_SER.pdf</datasheet>
       <fields>
         <field name="Manufacturer">Nexperia</field>
@@ -202,7 +202,7 @@
         <field name="Order URL">https://www.toby.co.uk/signal-to-board-connectors/usb-connectors/csp-usc16-tr-valcon-usb-type-c-surface-mount-pcb-socket/</field>
         <field name="Part No">CSP-USC16-TR</field>
       </fields>
-      <libsource lib="Connector" part="USB_C_Receptacle_USB2.0" description="USB 2.0-only Type-C Receptacle connector"/>
+      <libsource lib="RevK" part="USB-C" description="USB 2.0-only Type-C Receptacle connector"/>
       <property name="Manufacturer" value="Valcon"/>
       <property name="Part No" value="CSP-USC16-TR"/>
       <property name="Order URL" value="https://www.toby.co.uk/signal-to-board-connectors/usb-connectors/csp-usc16-tr-valcon-usb-type-c-surface-mount-pcb-socket/"/>
@@ -213,7 +213,7 @@
     </comp>
     <comp ref="J3">
       <value>DC</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical</footprint>
+      <footprint>RevK:Molex_MiniSPOX_H2RA</footprint>
       <fields>
         <field name="Notes">Not fitted</field>
       </fields>
@@ -351,7 +351,7 @@
     </comp>
     <comp ref="U1">
       <value>ESP32-WROOM-32</value>
-      <footprint>RF_Module:ESP32-WROOM-32</footprint>
+      <footprint>RevK:ESP32-WROOM-32</footprint>
       <datasheet>https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf</datasheet>
       <libsource lib="RevK" part="ESP32-WROOM-32" description="RF Module, ESP32-D0WDQ6 SoC, Wi-Fi 802.11b/g/n, Bluetooth, BLE, 32-bit, 2.7-3.6V, onboard antenna, SMD"/>
       <property name="Sheetname" value=""/>
@@ -363,17 +363,11 @@
       <value>FT231XQ</value>
       <footprint>RevK:QFN-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm</footprint>
       <datasheet>https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT231X.pdf</datasheet>
-      <fields>
-        <field name="Manufacturer">FTDI</field>
-        <field name="Part No">FT231XQ</field>
-      </fields>
-      <libsource lib="Interface_USB" part="FT231XQ" description="Full Speed USB to Full Handshake UART, QFN-20"/>
-      <property name="Manufacturer" value="FTDI"/>
-      <property name="Part No" value="FT231XQ"/>
+      <libsource lib="RevK" part="FT231XQ" description="Full Speed USB to Full Handshake UART, QFN-20"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="Generic.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>00000000-0000-0000-0000-000060849d1e</tstamps>
+      <tstamps>2299bfba-90e1-41cb-b6a5-65013084c533</tstamps>
     </comp>
     <comp ref="U3">
       <value>LMR16006+FB</value>
@@ -410,37 +404,6 @@
         <pin num="4" name="Pin_4" type="passive"/>
         <pin num="5" name="Pin_5" type="passive"/>
         <pin num="6" name="Pin_6" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="Connector" part="USB_C_Receptacle_USB2.0">
-      <description>USB 2.0-only Type-C Receptacle connector</description>
-      <docs>https://www.usb.org/sites/default/files/documents/usb_type-c.zip</docs>
-      <footprints>
-        <fp>USB*C*Receptacle*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">J</field>
-        <field name="Value">USB_C_Receptacle_USB2.0</field>
-        <field name="Datasheet">https://www.usb.org/sites/default/files/documents/usb_type-c.zip</field>
-      </fields>
-      <pins>
-        <pin num="A1" name="GND" type="passive"/>
-        <pin num="A4" name="VBUS" type="passive"/>
-        <pin num="A5" name="CC1" type="bidirectional"/>
-        <pin num="A6" name="D+" type="bidirectional"/>
-        <pin num="A7" name="D-" type="bidirectional"/>
-        <pin num="A8" name="SBU1" type="bidirectional"/>
-        <pin num="A9" name="VBUS" type="passive"/>
-        <pin num="A12" name="GND" type="passive"/>
-        <pin num="B1" name="GND" type="passive"/>
-        <pin num="B4" name="VBUS" type="passive"/>
-        <pin num="B5" name="CC2" type="bidirectional"/>
-        <pin num="B6" name="D+" type="bidirectional"/>
-        <pin num="B7" name="D-" type="bidirectional"/>
-        <pin num="B8" name="SBU2" type="bidirectional"/>
-        <pin num="B9" name="VBUS" type="passive"/>
-        <pin num="B12" name="GND" type="passive"/>
-        <pin num="S1" name="SHIELD" type="passive"/>
       </pins>
     </libpart>
     <libpart lib="Device" part="C">
@@ -535,42 +498,6 @@
         <pin num="6" name="K3A4" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="Interface_USB" part="FT231XQ">
-      <description>Full Speed USB to Full Handshake UART, QFN-20</description>
-      <docs>https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT231X.pdf</docs>
-      <footprints>
-        <fp>QFN*4x4mm*P0.5mm*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">U</field>
-        <field name="Value">FT231XQ</field>
-        <field name="Footprint">Package_DFN_QFN:QFN-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm</field>
-        <field name="Datasheet">https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT231X.pdf</field>
-      </fields>
-      <pins>
-        <pin num="1" name="RXD" type="input"/>
-        <pin num="2" name="~{RI}" type="input"/>
-        <pin num="3" name="GND" type="power_in"/>
-        <pin num="4" name="~{DSR}" type="input"/>
-        <pin num="5" name="~{DCD}" type="input"/>
-        <pin num="6" name="~{CTS}" type="input"/>
-        <pin num="7" name="CBUS2" type="bidirectional"/>
-        <pin num="8" name="USBDP" type="bidirectional"/>
-        <pin num="9" name="USBDM" type="bidirectional"/>
-        <pin num="10" name="3V3OUT" type="power_out"/>
-        <pin num="11" name="~{RESET}" type="input"/>
-        <pin num="12" name="VCC" type="power_in"/>
-        <pin num="13" name="GND" type="power_in"/>
-        <pin num="14" name="CBUS1" type="bidirectional"/>
-        <pin num="15" name="CBUS0" type="bidirectional"/>
-        <pin num="16" name="CBUS3" type="bidirectional"/>
-        <pin num="17" name="TXD" type="output"/>
-        <pin num="18" name="~{DTR}" type="output"/>
-        <pin num="19" name="~{RTS}" type="output"/>
-        <pin num="20" name="VCCIO" type="power_in"/>
-        <pin num="21" name="GND" type="power_in"/>
-      </pins>
-    </libpart>
     <libpart lib="RevK" part="AJK">
       <fields>
         <field name="Reference">Logo</field>
@@ -588,7 +515,7 @@
       <fields>
         <field name="Reference">U</field>
         <field name="Value">ESP32-WROOM-32</field>
-        <field name="Footprint">RF_Module:ESP32-WROOM-32</field>
+        <field name="Footprint">RevK:ESP32-WROOM-32</field>
         <field name="Datasheet">https://www.espressif.com/sites/default/files/documentation/esp32-wroom-32_datasheet_en.pdf</field>
       </fields>
       <pins>
@@ -633,6 +560,42 @@
         <pin num="39" name="GND" type="passive"/>
       </pins>
     </libpart>
+    <libpart lib="RevK" part="FT231XQ">
+      <description>Full Speed USB to Full Handshake UART, QFN-20</description>
+      <docs>https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT231X.pdf</docs>
+      <footprints>
+        <fp>QFN*4x4mm*P0.5mm*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">FT231XQ</field>
+        <field name="Footprint">RevK:QFN-20-1EP_4x4mm_P0.5mm_EP2.5x2.5mm</field>
+        <field name="Datasheet">https://www.ftdichip.com/Support/Documents/DataSheets/ICs/DS_FT231X.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="RXD" type="input"/>
+        <pin num="2" name="~{RI}" type="input"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="~{DSR}" type="input"/>
+        <pin num="5" name="~{DCD}" type="input"/>
+        <pin num="6" name="~{CTS}" type="input"/>
+        <pin num="7" name="CBUS2" type="bidirectional"/>
+        <pin num="8" name="USBDP" type="bidirectional"/>
+        <pin num="9" name="USBDM" type="bidirectional"/>
+        <pin num="10" name="3V3OUT" type="passive"/>
+        <pin num="11" name="~{RESET}" type="input"/>
+        <pin num="12" name="VCC" type="power_in"/>
+        <pin num="13" name="GND" type="power_in"/>
+        <pin num="14" name="CBUS1" type="bidirectional"/>
+        <pin num="15" name="CBUS0" type="bidirectional"/>
+        <pin num="16" name="CBUS3" type="bidirectional"/>
+        <pin num="17" name="TXD" type="output"/>
+        <pin num="18" name="~{DTR}" type="output"/>
+        <pin num="19" name="~{RTS}" type="output"/>
+        <pin num="20" name="VCCIO" type="power_in"/>
+        <pin num="21" name="GND" type="power_in"/>
+      </pins>
+    </libpart>
     <libpart lib="RevK" part="Hidden">
       <fields>
         <field name="Reference">Z</field>
@@ -666,10 +629,43 @@
       <fields>
         <field name="Reference">J</field>
         <field name="Value">PowerIn</field>
+        <field name="Footprint">RevK:Molex_MiniSPOX_H2RA</field>
       </fields>
       <pins>
-        <pin num="1" name="Pin_1" type="power_out"/>
-        <pin num="2" name="Pin_2" type="power_out"/>
+        <pin num="1" name="GND" type="power_in"/>
+        <pin num="2" name="DC" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="RevK" part="USB-C">
+      <description>USB 2.0-only Type-C Receptacle connector</description>
+      <docs>https://www.usb.org/sites/default/files/documents/usb_type-c.zip</docs>
+      <footprints>
+        <fp>USB*C*Receptacle*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">USB-C</field>
+        <field name="Footprint">RevK:USC16-TR-Round</field>
+        <field name="Datasheet">https://www.usb.org/sites/default/files/documents/usb_type-c.zip</field>
+      </fields>
+      <pins>
+        <pin num="A1" name="GND" type="power_out"/>
+        <pin num="A4" name="VBUS" type="power_out"/>
+        <pin num="A5" name="CC1" type="bidirectional"/>
+        <pin num="A6" name="D+" type="bidirectional"/>
+        <pin num="A7" name="D-" type="bidirectional"/>
+        <pin num="A8" name="SBU1" type="no_connect"/>
+        <pin num="A9" name="VBUS" type="passive"/>
+        <pin num="A12" name="GND" type="passive"/>
+        <pin num="B1" name="GND" type="passive"/>
+        <pin num="B4" name="VBUS" type="passive"/>
+        <pin num="B5" name="CC2" type="bidirectional"/>
+        <pin num="B6" name="D+" type="bidirectional"/>
+        <pin num="B7" name="D-" type="bidirectional"/>
+        <pin num="B8" name="SBU2" type="no_connect"/>
+        <pin num="B9" name="VBUS" type="passive"/>
+        <pin num="B12" name="GND" type="passive"/>
+        <pin num="S1" name="SHIELD" type="passive"/>
       </pins>
     </libpart>
   </libparts>
@@ -682,9 +678,6 @@
     </library>
     <library logical="Diode">
       <uri>/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols//Diode.kicad_sym</uri>
-    </library>
-    <library logical="Interface_USB">
-      <uri>/Applications/KiCad/KiCad.app/Contents/SharedSupport/symbols//Interface_USB.kicad_sym</uri>
     </library>
     <library logical="RevK">
       <uri>/Users/adrian/Documents/KiCad/6.0/symbols/RevK.kicad_sym</uri>
@@ -701,7 +694,7 @@
       <node ref="R1" pin="2" pintype="passive"/>
       <node ref="R17" pin="1" pintype="passive"/>
       <node ref="U1" pin="2" pinfunction="VDD" pintype="power_in"/>
-      <node ref="U2" pin="10" pinfunction="3V3OUT" pintype="power_out"/>
+      <node ref="U2" pin="10" pinfunction="3V3OUT" pintype="passive"/>
       <node ref="U2" pin="11" pinfunction="~{RESET}" pintype="input"/>
       <node ref="U2" pin="12" pinfunction="VCC" pintype="power_in"/>
       <node ref="U2" pin="20" pinfunction="VCCIO" pintype="power_in"/>
@@ -725,7 +718,7 @@
     </net>
     <net code="6" name="DC">
       <node ref="D2" pin="1" pinfunction="K" pintype="passive"/>
-      <node ref="J3" pin="2" pinfunction="Pin_2" pintype="power_out"/>
+      <node ref="J3" pin="2" pinfunction="DC" pintype="power_out"/>
       <node ref="U3" pin="1" pinfunction="SHDN" pintype="input"/>
       <node ref="U3" pin="2" pinfunction="VIN" pintype="power_in"/>
     </net>
@@ -748,12 +741,12 @@
       <node ref="D4" pin="1" pinfunction="A1" pintype="passive"/>
       <node ref="D4" pin="4" pinfunction="A3" pintype="passive"/>
       <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="J2" pin="A1" pinfunction="GND" pintype="passive"/>
+      <node ref="J2" pin="A1" pinfunction="GND" pintype="power_out"/>
       <node ref="J2" pin="A12" pinfunction="GND" pintype="passive"/>
       <node ref="J2" pin="B1" pinfunction="GND" pintype="passive"/>
       <node ref="J2" pin="B12" pinfunction="GND" pintype="passive"/>
       <node ref="J2" pin="S1" pinfunction="SHIELD" pintype="passive"/>
-      <node ref="J3" pin="1" pinfunction="Pin_1" pintype="power_out"/>
+      <node ref="J3" pin="1" pinfunction="GND" pintype="power_in"/>
       <node ref="R11" pin="2" pintype="passive"/>
       <node ref="R12" pin="1" pintype="passive"/>
       <node ref="R16" pin="2" pintype="passive"/>
@@ -866,7 +859,7 @@
     <net code="30" name="VBUS">
       <node ref="C5" pin="2" pintype="passive"/>
       <node ref="D2" pin="2" pinfunction="A" pintype="passive"/>
-      <node ref="J2" pin="A4" pinfunction="VBUS" pintype="passive"/>
+      <node ref="J2" pin="A4" pinfunction="VBUS" pintype="power_out"/>
       <node ref="J2" pin="A9" pinfunction="VBUS" pintype="passive"/>
       <node ref="J2" pin="B4" pinfunction="VBUS" pintype="passive"/>
       <node ref="J2" pin="B9" pinfunction="VBUS" pintype="passive"/>
@@ -885,10 +878,10 @@
       <node ref="D5" pin="" pintype="no_connect"/>
     </net>
     <net code="35" name="unconnected-(J2-PadA8)">
-      <node ref="J2" pin="A8" pinfunction="SBU1" pintype="bidirectional+no_connect"/>
+      <node ref="J2" pin="A8" pinfunction="SBU1" pintype="no_connect"/>
     </net>
     <net code="36" name="unconnected-(J2-PadB8)">
-      <node ref="J2" pin="B8" pinfunction="SBU2" pintype="bidirectional+no_connect"/>
+      <node ref="J2" pin="B8" pinfunction="SBU2" pintype="no_connect"/>
     </net>
     <net code="37" name="unconnected-(L1-Pad~)">
       <node ref="L1" pin="" pintype="no_connect"/>

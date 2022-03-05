@@ -1,24 +1,23 @@
-### Module positions - created on 2022-02-20 12:24
+### Module positions - created on 2022-03-05 07:54
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
 ## Side : ALL
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-R2            NF                  Pad_1206_0805_Open            130.4700   -124.3500  130.4700   -125.8125    90.0    top       VIRTUAL
-R3            NF                  Pad_1206_0805_Open            127.9700   -124.3500  127.9700   -125.8125    90.0    top       VIRTUAL
-R4            NF                  Pad_1206_0805_Open            125.4700   -124.3500  125.4700   -125.8125    90.0    top       VIRTUAL
+R2            NF                  Pad_1206_0805_Open            130.4700   -124.3500  130.4700   -125.2625    90.0    top       VIRTUAL
+R3            NF                  Pad_1206_0805_Open            127.9700   -124.3500  127.9700   -125.2625    90.0    top       VIRTUAL
+R4            NF                  Pad_1206_0805_Open            125.4700   -124.3500  125.4700   -125.2625    90.0    top       VIRTUAL
 R5            NF                  Pad_1206_0805_Open            122.9700   -124.3500  122.9700   -125.2625    90.0    top       VIRTUAL
 R6            NF                  Pad_1206_0805_Open            119.7000   -124.3500  119.7000   -125.2625    90.0    top       VIRTUAL
 J2            USB-C               USC16-TR-Round                136.2450   -111.1000  0.0000     0.0000       90.0    top       SMD
 J3            DC                  PinHeader_1x02_P2.54mm_Vert.. 134.0000   -125.8000  134.0000   -125.8000   180.0    top       THD
-C1            NF                  Pad_1206_0805_Open            135.0000   -119.1000  135.0000   -120.5625    90.0    top       VIRTUAL
-U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.7000   -112.3000  121.7000   -114.2000    90.0    top       SMD
+C1            NF                  Pad_1206_0805_Open            135.0000   -119.1000  135.0000   -120.0125    90.0    top       VIRTUAL
 R10           220R                R_0603                        119.2000   -102.4000  118.3750   -102.4000     0.0    top       SMD
 D2            D                   D_1206_3216Metric             125.3000   -107.6000  126.7000   -107.6000   180.0    top       SMD
 C2            100nF               C_0603                        118.7000   -106.6000  117.9250   -106.6000     0.0    top       SMD
 R12           5K1                 R_0603                        128.1000   -108.5000  128.1000   -107.6750   -90.0    top       SMD
-R7            NF                  Pad_1206_0805_Open            120.0500   -117.8000  118.5875   -117.8000     0.0    top       VIRTUAL
+R7            NF                  Pad_1206_0805_Open            120.0500   -117.8000  119.1375   -117.8000     0.0    top       VIRTUAL
 D4            BAV99S              SOT-363_SC-70-6               124.2000   -117.8000  123.2500   -117.1500     0.0    top       SMD
 D3            BAV99S              SOT-363_SC-70-6               128.4500   -117.8000  127.5000   -117.1500     0.0    top       SMD
 R11           5K1                 R_0603                        128.1000   -114.4000  128.1000   -113.5750   -90.0    top       SMD
@@ -41,11 +40,12 @@ R18           3M 1% or NF         R_0603                        124.4000   -99.6
 Logo1         AJK                 AJK                           125.3000   -103.3000  0.0000     0.0000        0.0    top       VIRTUAL
 R17           10M 1% or 0R        R_0603                        127.1000   -99.6000   127.9250   -99.6000    180.0    top       SMD
 R16           10k                 R_0603                        120.6000   -107.4000  120.6000   -108.2250    90.0    top       SMD
+U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.7000   -112.3000  121.7000   -114.2000    90.0    top       SMD
 U3            LMR16006+FB         RegulatorBlockFB              130.0600   -101.7500  129.1100   -103.1000     0.0    top       SMD
 J1            Connector           Molex_MiniSPOX_H6RA           126.7200   -120.5000  132.9700   -120.5000   180.0    bottom    THD
 U1            ESP32-WROOM-32      ESP32-WROOM-32                126.7000   -108.1500  135.2000   -99.8950    180.0    bottom    SMD
 ## End
-## 180 SMD pads
+## 195 SMD pads
 ## 8 TH pads
 ## 28 Virtual pads
 ## 1 Top TH modules

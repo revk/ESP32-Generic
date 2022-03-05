@@ -2,15 +2,15 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic4.kicad_sch</source>
-    <date>Friday, 04 March 2022 at 08:16:32</date>
+    <date>Saturday, 05 March 2022 at 08:11:21</date>
     <tool>Eeschema (6.0.2-0)</tool>
-    <textvar name="DATE">2022-03-03</textvar>
+    <textvar name="DATE">2022-03-06</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Generic ESP32-PICO-MINI module</title>
         <company/>
         <rev>1</rev>
-        <date>2022-03-03</date>
+        <date>2022-03-06</date>
         <source>Generic4.kicad_sch</source>
         <comment number="1" value="@TheRealRevK"/>
         <comment number="2" value="www.me.uk"/>
@@ -222,13 +222,14 @@
         <fp>Connector*:*_1x??_*</fp>
       </footprints>
       <fields>
-        <field name="Reference">J</field>
-        <field name="Value">Conn_01x04</field>
+        <field name="Reference">J2</field>
+        <field name="Value">SPOX</field>
+        <field name="Footprint">RevK:Molex_MiniSPOX_H4RA</field>
         <field name="Datasheet">~</field>
       </fields>
       <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
-        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="1" name="Pin_1" type="power_out"/>
+        <pin num="2" name="Pin_2" type="power_out"/>
         <pin num="3" name="Pin_3" type="passive"/>
         <pin num="4" name="Pin_4" type="passive"/>
       </pins>
@@ -403,7 +404,7 @@
       <node ref="U1" pin="27" pinfunction="IO7" pintype="bidirectional"/>
     </net>
     <net code="2" name="DC">
-      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="power_out"/>
       <node ref="U2" pin="1" pinfunction="SHDN" pintype="input"/>
       <node ref="U2" pin="2" pinfunction="VIN" pintype="power_in"/>
     </net>
@@ -421,7 +422,7 @@
     </net>
     <net code="5" name="GND">
       <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
-      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="power_out"/>
       <node ref="R5" pin="1" pintype="passive"/>
       <node ref="U1" pin="1" pinfunction="GND" pintype="power_in"/>
       <node ref="U1" pin="11" pinfunction="GND" pintype="power_in"/>
@@ -551,7 +552,7 @@
       <node ref="U1" pin="19" pinfunction="IO12" pintype="bidirectional+no_connect"/>
     </net>
     <net code="35" name="unconnected-(U1-Pad20)">
-      <node ref="U1" pin="20" pinfunction="IO13" pintype="bidirectional"/>
+      <node ref="U1" pin="20" pinfunction="IO13" pintype="bidirectional+no_connect"/>
     </net>
     <net code="36" name="unconnected-(U1-Pad22)">
       <node ref="U1" pin="22" pinfunction="IO2" pintype="bidirectional+no_connect"/>
@@ -560,7 +561,7 @@
       <node ref="U1" pin="25" pinfunction="NC" pintype="no_connect"/>
     </net>
     <net code="38" name="unconnected-(U1-Pad28)">
-      <node ref="U1" pin="28" pinfunction="IO8" pintype="bidirectional"/>
+      <node ref="U1" pin="28" pinfunction="IO8" pintype="bidirectional+no_connect"/>
     </net>
     <net code="39" name="unconnected-(U1-Pad29)">
       <node ref="U1" pin="29" pinfunction="IO5" pintype="bidirectional+no_connect"/>

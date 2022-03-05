@@ -1,16 +1,16 @@
-### Module positions - created on 2022-02-20 12:24
+### Module positions - created on 2022-03-05 07:54
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
 ## Side : top
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-R2            NF                  Pad_1206_0805_Open            130.4700   -124.3500  130.4700   -125.8125    90.0    top       VIRTUAL
-R3            NF                  Pad_1206_0805_Open            127.9700   -124.3500  127.9700   -125.8125    90.0    top       VIRTUAL
-R4            NF                  Pad_1206_0805_Open            125.4700   -124.3500  125.4700   -125.8125    90.0    top       VIRTUAL
+R2            NF                  Pad_1206_0805_Open            130.4700   -124.3500  130.4700   -125.2625    90.0    top       VIRTUAL
+R3            NF                  Pad_1206_0805_Open            127.9700   -124.3500  127.9700   -125.2625    90.0    top       VIRTUAL
+R4            NF                  Pad_1206_0805_Open            125.4700   -124.3500  125.4700   -125.2625    90.0    top       VIRTUAL
 R5            NF                  Pad_1206_0805_Open            122.9700   -124.3500  122.9700   -125.2625    90.0    top       VIRTUAL
 R6            NF                  Pad_1206_0805_Open            119.7000   -124.3500  119.7000   -125.2625    90.0    top       VIRTUAL
-C1            NF                  Pad_1206_0805_Open            135.0000   -119.1000  135.0000   -120.5625    90.0    top       VIRTUAL
-R7            NF                  Pad_1206_0805_Open            120.0500   -117.8000  118.5875   -117.8000     0.0    top       VIRTUAL
+C1            NF                  Pad_1206_0805_Open            135.0000   -119.1000  135.0000   -120.0125    90.0    top       VIRTUAL
+R7            NF                  Pad_1206_0805_Open            120.0500   -117.8000  119.1375   -117.8000     0.0    top       VIRTUAL
 Logo1         AJK                 AJK                           125.3000   -103.3000  0.0000     0.0000        0.0    top       VIRTUAL
 ## End

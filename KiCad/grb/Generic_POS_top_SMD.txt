@@ -1,4 +1,4 @@
-### Module positions - created on 2022-02-20 12:24
+### Module positions - created on 2022-03-05 07:54
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
@@ -6,7 +6,6 @@
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
 J2            USB-C               USC16-TR-Round                136.2450   -111.1000  0.0000     0.0000       90.0    top       SMD
-U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.7000   -112.3000  121.7000   -114.2000    90.0    top       SMD
 R10           220R                R_0603                        119.2000   -102.4000  118.3750   -102.4000     0.0    top       SMD
 D2            D                   D_1206_3216Metric             125.3000   -107.6000  126.7000   -107.6000   180.0    top       SMD
 C2            100nF               C_0603                        118.7000   -106.6000  117.9250   -106.6000     0.0    top       SMD
@@ -32,5 +31,6 @@ R1            10k                 R_0603                        118.7000   -105.
 R18           3M 1% or NF         R_0603                        124.4000   -99.6000   123.5750   -99.6000      0.0    top       SMD
 R17           10M 1% or 0R        R_0603                        127.1000   -99.6000   127.9250   -99.6000    180.0    top       SMD
 R16           10k                 R_0603                        120.6000   -107.4000  120.6000   -108.2250    90.0    top       SMD
+U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.7000   -112.3000  121.7000   -114.2000    90.0    top       SMD
 U3            LMR16006+FB         RegulatorBlockFB              130.0600   -101.7500  129.1100   -103.1000     0.0    top       SMD
 ## End

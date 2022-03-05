@@ -1,10 +1,11 @@
-### Module positions - created on 2022-03-04 13:01
+### Module positions - created on 2022-03-05 08:37
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 31.100mm, Pcb Width 12.600mm [based on Edge bounding box]
 ## Side : bottom
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-JP1           Jumper_2_Open       Pad_1206_0805_Open            157.5000   -24.2500   157.5000   -22.7875    -90.0    bottom    VIRTUAL
-JP2           Jumper_2_Open       Pad_1206_0805_Open            153.7500   -25.6000   152.8375   -25.6000      0.0    bottom    VIRTUAL
+JP1           Jumper_2_Open       Pad_0603_Open                 158.4000   -25.0000   158.4000   -24.2000    -90.0    bottom    VIRTUAL
+JP2           Jumper_2_Open       Pad_0603_Open                 156.3000   -25.0000   157.1000   -25.0000    180.0    bottom    VIRTUAL
+JP3           Jumper_2_Bridged    Pad_0603_Bridged              153.7500   -25.0000   154.5500   -25.0000    180.0    bottom    VIRTUAL
 ## End
