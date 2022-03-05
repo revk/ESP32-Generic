@@ -1901,7 +1901,7 @@
   (gr_text "${DATE}" (at 159.4 28.9 90) (layer "B.SilkS") (tstamp 73a6a009-f337-4955-97a4-ef652363f668)
     (effects (font (size 0.5 0.5) (thickness 0.1)) (justify mirror))
   )
-  (gr_text "Generic5" (at 158.7 35.7 270) (layer "B.SilkS") (tstamp 84a2ecd5-cc1e-41b1-bab3-95dfa190379a)
+  (gr_text "Generic5" (at 154.25 41.75) (layer "B.SilkS") (tstamp 84a2ecd5-cc1e-41b1-bab3-95dfa190379a)
     (effects (font (size 0.75 0.75) (thickness 0.1)) (justify mirror))
   )
   (gr_text "⏚" (at 158.4 25.1 90) (layer "B.SilkS") (tstamp 9d955782-59de-446b-8b37-f219d7093b79)
