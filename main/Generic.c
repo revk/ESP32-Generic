@@ -25,9 +25,6 @@ static const char TAG[] = "Generic";
 #if	CONFIG_BOOTLOADER_LOG_LEVEL > 0
 #warning CONFIG_BOOTLOADER_LOG_LEVEL recommended to be no output
 #endif
-#ifndef	CONFIG_FREERTOS_UNICORE
-#error Make this single core (CONFIG_FREERTOS_UNICORE)
-#endif
 
 #define	MAXGPIO	36
 #define BITFIELDS "-"
