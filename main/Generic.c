@@ -10,8 +10,9 @@ static const char TAG[] = "Generic";
 #include "vl53l1x.h"
 #include <driver/gpio.h>
 #include <driver/uart.h>
-#include "driver/adc.h"
-#include "esp_adc_cal.h"
+#include <driver/adc.h>
+#include <driver/ledc.h>
+#include <esp_adc_cal.h>
 
 #ifdef	CONFIG_LWIP_DHCP_DOES_ARP_CHECK
 #warning CONFIG_LWIP_DHCP_DOES_ARP_CHECK means DHCP is slow
@@ -30,18 +31,19 @@ static const char TAG[] = "Generic";
 #define BITFIELDS "-"
 #define PORT_INV 0x40
 #define port_mask(p) ((p)&63)
-static uint8_t input[MAXGPIO];  // Input GPIOs
-static uint8_t output[MAXGPIO]; // Output GPIOs
-static uint32_t outputmark[MAXGPIO];    // Output mark time (ms)
-static uint32_t outputspace[MAXGPIO];   // Output mark time (ms)
-static uint8_t power[MAXGPIO];  // Fixed output GPIOs 
-int holding = 0;
+static uint8_t  input[MAXGPIO]; //Input GPIOs
+static uint8_t  output[MAXGPIO]; //Output GPIOs
+static uint32_t outputmark[MAXGPIO]; //Output mark time(ms)
+   static uint32_t outputspace[MAXGPIO]; //Output mark time(ms)
+   static uint8_t  power[MAXGPIO]; //Fixed output GPIOs
+   int             holding = 0;
 
 // Dynamic
-static uint64_t volatile outputbits = 0;        // Requested output
-static uint64_t volatile outputraw = 0; // Current output
-static uint32_t outputremaining[MAXGPIO] = { }; // Output remaining time (ms)
-static uint32_t outputcount[MAXGPIO] = { };     // Output count
+   static uint64_t volatile outputbits = 0; // Requested output
+   static uint64_t volatile outputraw = 0; // Current output
+   static uint64_t volatile outputoverride = 0; // Override output (e.g. PWM)
+   static uint32_t outputremaining[MAXGPIO] = {}; //Output remaining time(ms)
+   static uint32_t outputcount[MAXGPIO] = {}; //Output count
 
 #define	settings		\
 	u32(period,0)	\
@@ -72,15 +74,15 @@ settings
 #undef u8
 #undef b
 #undef s
-    uint64_t busy = 0;
-char usb_present = 0;
-char charger_present = 0;
-const char *rangererr = NULL;
-uint16_t range = 0;
-uint32_t voltage = 0;
+uint64_t busy = 0;
+   char            usb_present = 0;
+   char            charger_present = 0;
+   const char     *rangererr = NULL;
+   uint16_t        range = 0;
+   uint32_t        voltage = 0;
 
 
-void input_task(void *arg)
+   void            input_task(void *arg)
 {
    arg = arg;
    while (1)
@@ -93,7 +95,8 @@ void input_task(void *arg)
    }
 }
 
-void output_task(void *arg)
+void
+output_task(void *arg)
 {
    arg = arg;
    while (1)
@@ -102,34 +105,36 @@ void output_task(void *arg)
       for (int i = 0; i < MAXGPIO; i++)
          if (output[i])
          {
-            int p = port_mask(output[i]);
+            int             p = port_mask(output[i]);
             if (outputremaining[i] && !--outputremaining[i])
-               outputbits ^= (1ULL << i);       // timeout
-            if ((outputbits ^ outputraw) & (1ULL << i))
-            {                   // Change output
-               outputraw ^= (1ULL << i);
+               outputbits ^= (1ULL << i); //timeout
+               if ((outputbits ^ outputraw) & (1ULL << i))
+            { //Change output
+                  outputraw ^= (1ULL << i);
                REVK_ERR_CHECK(gpio_hold_dis(p));
                REVK_ERR_CHECK(gpio_set_level(p, ((output[i] & PORT_INV) ? 1 : 0) ^ ((outputbits >> i) & 1)));
                REVK_ERR_CHECK(gpio_hold_en(p));
                if (outputbits & (1ULL << i))
-                  outputremaining[i] = outputmark[i];   // Time
-               else if (!outputcount[i] || !--outputcount[i])
+                  outputremaining[i] = outputmark[i]; //Time
+                  else if (!outputcount[i] || !--outputcount[i])
                   outputremaining[i] = 0;
                else
-                  outputremaining[i] = outputspace[i];  // Time
+                  outputremaining[i] = outputspace[i]; //Time
             }
          }
    }
 }
 
 
-const char *app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
+const char     *
+app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
       return NULL;
-   // Not for us or not a command from main MQTT
-   char value[100];
-   int len = 0;
+   //Not for us
+      or not a command from main MQTT
+         char            value[100];
+   int             len = 0;
    if (j)
    {
       len = jo_strncpy(j, value, sizeof(value));
@@ -150,12 +155,12 @@ const char *app_callback(int client, const char *prefix, const char *target, con
    }
    if (!strncmp(suffix, "output", 6))
    {
-      int i = atoi(suffix + 6);
+      int             i = atoi(suffix + 6);
       if (i < 0 || i >= MAXGPIO)
          return "Bad output number";
       if (!output[i])
          return "Output not configured";
-      int c = atoi(value);
+      int             c = atoi(value);
       if (!c && (*value == 't' || *value == 'y'))
          c = 1;
       if (c)
@@ -163,21 +168,43 @@ const char *app_callback(int client, const char *prefix, const char *target, con
          if (!outputcount[i])
          {
             outputcount[i] = c;
-            outputbits |= (1ULL << i);  // On
+            outputbits |= (1ULL << i);
+            //On
          }
       } else
       {
          outputcount[i] = 0;
-         outputbits &= ~(1ULL << i);    // Off
+         outputbits &= ~(1ULL << i);
+         //Off
       }
+      return "";
+   }
+   if (!strncmp(suffix, "pwm", 3))
+   {
+      int             i = atoi(suffix + 3);
+      if (i < 0 || i >= MAXGPIO)
+         return "Bad output number";
+      if (!output[i])
+         return "Output not configured";
+      int             freq = atoi(value);
+      if (!freq)
+      {
+         outputcount[i] = 0;
+         outputoverride &= ~(1ULL << i);
+         outputbits &= ~(1ULL << i);
+            return "";
+      }
+         outputoverride |= (1ULL << i);
+
       return "";
    }
    return NULL;
 }
 
-void app_main()
+void
+app_main()
 {
-   time_t now = time(0);
+   time_t          now = time(0);
    revk_boot(&app_callback);
    revk_register("input", MAXGPIO, sizeof(*input), &input, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
    revk_register("output", MAXGPIO, sizeof(*output), &output, BITFIELDS, SETTING_BITFIELD | SETTING_SET | SETTING_SECRET);
@@ -198,28 +225,28 @@ void app_main()
 #undef u8
 #undef b
 #undef s
-       revk_start();
+      revk_start();
    {
-    gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
+      gpio_config_t   c = {mode:GPIO_MODE_OUTPUT};
       for (int i = 0; i < MAXGPIO; i++)
       {
          if (input[i])
          {
-            int p = port_mask(input[i]);
+            int             p = port_mask(input[i]);
             REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_reset_pin(p));
             REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_INPUT));
          }
          if (output[i])
          {
-            int p = port_mask(output[i]);
+            int             p = port_mask(output[i]);
             c.pin_bit_mask |= (1ULL << p);
             REVK_ERR_CHECK(gpio_set_level(p, (output[i] & PORT_INV) ? 1 : 0));
             holding++;
          }
          if (power[i])
          {
-            int p = port_mask(power[i]);
+            int             p = port_mask(power[i]);
             c.pin_bit_mask |= (1ULL << p);
             REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_set_level(p, (power[i] & PORT_INV) ? 0 : 1));
@@ -273,7 +300,7 @@ void app_main()
             gpio_set_pull_mode(1, GPIO_PULLDOWN_ONLY);
          }
          busy = 0;
-         // No point waiting, powered via USB port
+         //No point waiting, powered via USB port
       }
    }
    if (adcon)
@@ -282,7 +309,7 @@ void app_main()
       REVK_ERR_CHECK(gpio_set_level(port_mask(adcon), (adcon & PORT_INV) ? 0 : 1));     /* on */
       REVK_ERR_CHECK(gpio_set_direction(port_mask(adcon), GPIO_MODE_OUTPUT));
 
-      esp_adc_cal_characteristics_t adc_chars = { 0 };
+      esp_adc_cal_characteristics_t adc_chars = {0};
       esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
       REVK_ERR_CHECK(adc1_config_width(ADC_WIDTH_BIT_12));
       REVK_ERR_CHECK(adc1_config_channel_atten(adc, ADC_ATTEN_DB_11));
@@ -290,7 +317,7 @@ void app_main()
       voltage = 0;
       for (int try = 0; try < TRIES; try++)
       {
-         uint32_t v = 0;
+         uint32_t        v = 0;
          REVK_ERR_CHECK(esp_adc_cal_get_voltage(adc, &adc_chars, &v));
          if (adcr2)
             v = v * (adcr1 + adcr2) / adcr2;
@@ -317,7 +344,7 @@ void app_main()
       ESP_LOGI(TAG, "Ranger init GND=%d PWR=%d SCL=%d SDA=%d Address=%02X", port_mask(rangergnd), port_mask(rangerpwr), port_mask(rangerscl), port_mask(rangersda), rangeraddress);
       if (ranger0x)
       {
-         vl53l0x_t *v = vl53l0x_config(0, port_mask(rangerscl), port_mask(rangersda), -1, rangeraddress, 0);
+         vl53l0x_t      *v = vl53l0x_config(0, port_mask(rangerscl), port_mask(rangersda), -1, rangeraddress, 0);
          if (!v)
             ESP_LOGE(TAG, "Ranger config failed");
          else
@@ -333,7 +360,7 @@ void app_main()
          }
       } else
       {                         /* Try 1X */
-         vl53l1x_t *v = vl53l1x_config(0, port_mask(rangerscl), port_mask(rangersda), -1, rangeraddress, 0);
+         vl53l1x_t      *v = vl53l1x_config(0, port_mask(rangerscl), port_mask(rangersda), -1, rangeraddress, 0);
          if (!v)
             ESP_LOGE(TAG, "Ranger config failed");
          else
@@ -366,15 +393,15 @@ void app_main()
          while ((now = time(0)) < 30)
             sleep(1);
       }
-      int64_t run = esp_timer_get_time();
-      struct tm tm;
+      int64_t         run = esp_timer_get_time();
+      struct tm       tm;
       gmtime_r(&now, &tm);
       if (!tm.tm_hour && !tm.tm_min && awake < 10)
          awake = 10;            /* allow clock to set */
-      jo_t j = jo_object_alloc();
+      jo_t            j = jo_object_alloc();
       jo_string(j, "id", revk_id);
       jo_stringf(j, "ts", "%04d-%02d-%02dT%02d:%02d:%02dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-      jo_litf(j, "runtime", "%u.%06u", (int) run / 1000000, (int) run % 1000000);
+      jo_litf(j, "runtime", "%u.%06u", (int)run / 1000000, (int)run % 1000000);
       if (range)
          jo_litf(j, "range", "%d", range);
       if (voltage)
@@ -383,7 +410,7 @@ void app_main()
          jo_bool(j, "charger", 1);
       else if (usb_present)
          jo_bool(j, "usb", 1);
-      int i;
+      int             i;
       for (i = 0; i < MAXGPIO && !input[i]; i++);
       if (i < MAXGPIO)
       {
@@ -396,11 +423,11 @@ void app_main()
    }
 
    if (!period)
-   {                            // We run forever, not sleeping
-      ESP_LOGE(TAG, "Idle");
+   {
+      //We run forever, not sleeping
+         ESP_LOGE(TAG, "Idle");
       return;
    }
-
    if (!busy)
    {
       ESP_LOGI(TAG, "Wait for %d", awake);      /* wait a bit */
@@ -411,15 +438,14 @@ void app_main()
    }
    if (busy)
    {
-      ESP_LOGI(TAG, "Waiting %d", (int) ((busy - esp_timer_get_time()) / 1000000ULL));
+      ESP_LOGI(TAG, "Waiting %d", (int)((busy - esp_timer_get_time()) / 1000000ULL));
       while (busy > esp_timer_get_time())
          sleep(1);
    }
-
-   time_t next = (time(0) + 5) / period * period + period;
+   time_t          next = (time(0) + 5) / period * period + period;
    {
-      char reason[100];
-      struct tm tm;
+      char            reason[100];
+      struct tm       tm;
       gmtime_r(&next, &tm);
       sprintf(reason, "Sleep after %lldms until %04d-%02d-%02dT%02d:%02d:%02dZ", esp_timer_get_time() / 1000, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       revk_mqtt_close(reason);
@@ -433,7 +459,7 @@ void app_main()
    }
    if (usb_present && !charger_present)
       sleep(1);
-   struct timeval tv;
+   struct timeval  tv;
    gettimeofday(&tv, NULL);
    if (next < tv.tv_sec + 1)
       next = tv.tv_sec + 1;
