@@ -88,20 +88,20 @@ stl:	$(patsubst %,KiCad/%.stl,$(MODELS))
 	echo "Made $@"
 
 KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic2.scad: KiCad/Generic2.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic3.scad: KiCad/Generic3.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic4.scad: KiCad/Generic4.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic5.scad: KiCad/Generic5.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/LowPower.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
