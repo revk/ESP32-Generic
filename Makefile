@@ -5,6 +5,7 @@
 
 PROJECT_NAME := Generic
 SUFFIX := $(shell components/ESP32-RevK/suffix)
+MODELS := Generic LowPower Generic2 Generic3 Generic4 Generic5
 
 all:
 	@echo Make: build/$(PROJECT_NAME)$(SUFFIX).bin
@@ -78,8 +79,8 @@ ftdizap/ftdizap: ftdizap/ftdizap.c
 PCBCase/case: PCBCase/case.c
 	make -C PCBCase
 
-scad: KiCad/Generic.scad KiCad/LowPower.scad KiCad/Generic2.scad KiCad/Generic3.scad KiCad/Generic4.scad KiCad/Generic5.scad
-stl: KiCad/Generic.stl KiCad/LowPower.stl KiCad/Generic2.stl KiCad/Generic3.stl KiCad/Generic4.stl KiCad/Generic5.stl
+scad:	$(patsubst %,KiCad/%.scad,$(MODELS))
+stl:	$(patsubst %,KiCad/%.stl,$(MODELS))
 
 %.stl: %.scad
 	echo "Making $@"
