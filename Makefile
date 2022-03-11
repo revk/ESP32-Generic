@@ -97,7 +97,7 @@ KiCad/Generic3.scad: KiCad/Generic3.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic4.scad: KiCad/Generic4.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=2
+	PCBCase/case -o $@ $< --edge=2 --base=2.4
 
 KiCad/Generic5.scad: KiCad/Generic5.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
