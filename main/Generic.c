@@ -8,6 +8,7 @@ static const char TAG[] = "Generic";
 #include "esp_task_wdt.h"
 #include "vl53l0x.h"
 #include "vl53l1x.h"
+#include "epaper.h"
 #include <driver/gpio.h>
 #include <driver/uart.h>
 #include <driver/adc.h>
@@ -60,6 +61,15 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(rangerscl,)	\
 	io(rangersda,)	\
         u8(rangeraddress,0x29)  \
+	u8(epaperport,0)	\
+	io(epapercs,)	\
+	io(epaperclk,)	\
+	io(epaperdin,)	\
+	io(epaperdc,)	\
+	io(epaperrst,)	\
+	io(epaperbusy,)	\
+	io(epaperena,)	\
+	b(epaperflip)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -187,26 +197,27 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       if (!freq)
       {
          gpio_reset_pin(p);
+         REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_OUTPUT));
          outputcount[i] = 0;
-         outputoverride &= ~(1ULL << i);
+         outputraw |= (1ULL << i);
          outputbits &= ~(1ULL << i);
+         outputoverride &= ~(1ULL << i);
          return "";
       }
       outputoverride |= (1ULL << i);
-      ledc_channel_config_t c = {
-         .gpio_num = p,
-         .channel = i,
-         .timer_sel = i,
-         .duty = 0,
-         .hpoint = 0xFFFF,
-      };
-      REVK_ERR_CHECK(ledc_channel_config(&c));
       ledc_timer_config_t t = {
-         .duty_resolution = 1,
+         .duty_resolution = 8,
          .timer_num = i,
          .freq_hz = freq,
       };
       REVK_ERR_CHECK(ledc_timer_config(&t));
+      ledc_channel_config_t c = {
+         .gpio_num = p,
+         .channel = i,
+         .timer_sel = i,
+         .duty = 128,
+      };
+      REVK_ERR_CHECK(ledc_channel_config(&c));
       return "";
    }
    return NULL;
@@ -222,6 +233,8 @@ void app_main()
    revk_register("outputmark", MAXGPIO, sizeof(*outputmark), &outputmark, NULL, SETTING_LIVE);
    revk_register("outputspace", MAXGPIO, sizeof(*outputspace), &outputspace, NULL, SETTING_LIVE);
    revk_register("power", MAXGPIO, sizeof(*power), &power, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
+   revk_register("ranger", 0, sizeof(ranger0x), &ranger0x, NULL, SETTING_BOOLEAN | SETTING_SECRET);     // Header
+   revk_register("epaper", 0, sizeof(epaperport), &epaperport, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);  // Header
 #define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
 #define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
@@ -236,6 +249,11 @@ void app_main()
 #undef b
 #undef s
        revk_start();
+   if (epaperdin)
+   {
+      const char *e = epaper_start(epaperport, port_mask(epapercs), port_mask(epaperclk), port_mask(epaperdin), port_mask(epaperdc), port_mask(epaperrst), port_mask(epaperbusy), port_mask(epaperena), epaperflip);
+      ESP_LOGE(TAG, "Failed epaper start %s", e);
+   }
    {
     gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
       for (int i = 0; i < MAXGPIO; i++)
