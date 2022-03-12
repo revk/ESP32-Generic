@@ -135,12 +135,37 @@ void output_task(void *arg)
    }
 }
 
+const char *epaper_qr(const char *value)
+{
+   uint32_t width = 0;
+ uint8_t *qr = qr_encode(strlen(value), value, widthp: &width, noquiet:1);
+   if (!qr)
+      return "Failed to encode";
+   if (!width || width > CONFIG_EPAPER_WIDTH)
+   {
+      free(qr);
+      return "Too wide";
+   }
+   epaper_lock();
+   epaper_clear(0);
+   int s = CONFIG_EPAPER_WIDTH / width;
+   int o = (CONFIG_EPAPER_WIDTH - width * s) / 2;
+   for (int y = 0; y < width; y++)
+      for (int x = 0; x < width; x++)
+         if (qr[width * y + x] & QR_TAG_BLACK)
+            for (int dy = 0; dy < s; dy++)
+               for (int dx = 0; dx < s; dx++)
+                  epaper_pixel(o + x * s + dx, o + y * s + dy, 0xFF);
+   epaper_unlock();
+   free(qr);
+   return NULL;
+}
 
 const char *app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
       return NULL;              //Not for us or not a command from main MQTT
-   char value[100];
+   char value[1000];
    int len = 0;
    if (j)
    {
@@ -160,11 +185,9 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       busy = 0;
       return "";
    }
-   if(!strcmp(suffix,"qr"))
+   if (!strcmp(suffix, "qr"))
    {
-	   epaper_lock();
-
-	   epaper_unlock();
+      return epaper_qr(value) ? : "";
    }
    if (!strncmp(suffix, "output", 6))
    {
@@ -241,7 +264,7 @@ void app_main()
    revk_register("outputspace", MAXGPIO, sizeof(*outputspace), &outputspace, NULL, SETTING_LIVE);
    revk_register("power", MAXGPIO, sizeof(*power), &power, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
    revk_register("ranger", 0, sizeof(ranger0x), &ranger0x, NULL, SETTING_BOOLEAN | SETTING_SECRET);     // Header
-   revk_register("epaper", 0, sizeof(epapercs), &epapercs, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);  // Header
+   revk_register("epaper", 0, sizeof(epapercs), &epapercs, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);      // Header
 #define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
 #define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
@@ -266,7 +289,8 @@ void app_main()
          jo_string(j, "error", "Failed to start");
          jo_string(j, "description", e);
          revk_error("epaper", &j);
-      }
+      } else
+         epaper_qr("HTTPS://GENERIC.REVK.UK");
    }
    {
     gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
