@@ -5,6 +5,7 @@
 
 PROJECT_NAME := Generic
 SUFFIX := $(shell components/ESP32-RevK/suffix)
+MODELS := Generic LowPower Generic2 Generic3 Generic4 Generic5
 
 all:
 	@echo Make: $(PROJECT_NAME)$(SUFFIX).bin
@@ -78,8 +79,8 @@ ftdizap/ftdizap: ftdizap/ftdizap.c
 PCBCase/case: PCBCase/case.c
 	make -C PCBCase
 
-scad: KiCad/Generic.scad KiCad/LowPower.scad KiCad/Generic2.scad KiCad/Generic3.scad KiCad/Generic4.scad KiCad/Generic5.scad
-stl: KiCad/Generic.stl KiCad/LowPower.stl KiCad/Generic2.stl KiCad/Generic3.stl KiCad/Generic4.stl KiCad/Generic5.stl
+scad:	$(patsubst %,KiCad/%.scad,$(MODELS))
+stl:	$(patsubst %,KiCad/%.stl,$(MODELS))
 
 %.stl: %.scad
 	echo "Making $@"
@@ -87,20 +88,20 @@ stl: KiCad/Generic.stl KiCad/LowPower.stl KiCad/Generic2.stl KiCad/Generic3.stl 
 	echo "Made $@"
 
 KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic2.scad: KiCad/Generic2.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic3.scad: KiCad/Generic3.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
 KiCad/Generic4.scad: KiCad/Generic4.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2.6
 
 KiCad/Generic5.scad: KiCad/Generic5.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2.6
 
 KiCad/LowPower.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
-	PCBCase/case -o $@ $< --edge=2 --base=3.5
+	PCBCase/case -o $@ $< --edge=2 --base=2
 
