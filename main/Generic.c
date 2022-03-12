@@ -9,6 +9,7 @@ static const char TAG[] = "Generic";
 #include "vl53l0x.h"
 #include "vl53l1x.h"
 #include "epaper.h"
+#include <hal/spi_types.h>
 #include <driver/gpio.h>
 #include <driver/uart.h>
 #include <driver/adc.h>
@@ -61,7 +62,6 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(rangerscl,)	\
 	io(rangersda,)	\
         u8(rangeraddress,0x29)  \
-	u8(epaperport,0)	\
 	io(epapercs,)	\
 	io(epaperclk,)	\
 	io(epaperdin,)	\
@@ -234,7 +234,7 @@ void app_main()
    revk_register("outputspace", MAXGPIO, sizeof(*outputspace), &outputspace, NULL, SETTING_LIVE);
    revk_register("power", MAXGPIO, sizeof(*power), &power, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
    revk_register("ranger", 0, sizeof(ranger0x), &ranger0x, NULL, SETTING_BOOLEAN | SETTING_SECRET);     // Header
-   revk_register("epaper", 0, sizeof(epaperport), &epaperport, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);  // Header
+   revk_register("epaper", 0, sizeof(epapercs), &epapercs, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);  // Header
 #define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
 #define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
@@ -251,21 +251,15 @@ void app_main()
        revk_start();
    if (epaperdin)
    {
-      const char *e = epaper_start(epaperport, port_mask(epapercs), port_mask(epaperclk), port_mask(epaperdin), port_mask(epaperdc), port_mask(epaperrst), port_mask(epaperbusy), port_mask(epaperena), epaperflip);
+      const char *e = epaper_start(HSPI_HOST, port_mask(epapercs), port_mask(epaperclk), port_mask(epaperdin), port_mask(epaperdc), port_mask(epaperrst), port_mask(epaperbusy), port_mask(epaperena), epaperflip);
       if (e)
       {
+         ESP_LOGE(TAG, "epaper %s", e);
          jo_t j = jo_object_alloc();
          jo_string(j, "error", "Failed to start");
          jo_string(j, "description", e);
          revk_error("epaper", &j);
       }
-   } else
-   {
-      epaper_lock();
-      epaper_clear(0);
-      epaper_pos(CONFIG_EPAPER_WIDTH / 2, 0, EPAPER_T | EPAPER_C | EPAPER_V);
-      epaper_text(2, "%s", "TEST");
-      epaper_unlock();
    }
    {
     gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
@@ -467,6 +461,17 @@ void app_main()
    {
       //We run forever, not sleeping
       ESP_LOGE(TAG, "Idle");
+      int n = 0;
+      while (1)
+      {
+         n++;
+         epaper_lock();
+         epaper_clear(0);
+         epaper_pos(CONFIG_EPAPER_WIDTH / 2, 10, EPAPER_T | EPAPER_C | EPAPER_V);
+         epaper_text(5, "%d", n);
+         epaper_unlock();
+         sleep(1);
+      }
       return;
    }
    if (!busy)
