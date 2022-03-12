@@ -9,6 +9,7 @@ static const char TAG[] = "Generic";
 #include "vl53l0x.h"
 #include "vl53l1x.h"
 #include "epaper.h"
+#include "iec18004.h"
 #include <hal/spi_types.h>
 #include <driver/gpio.h>
 #include <driver/uart.h>
@@ -158,6 +159,12 @@ const char *app_callback(int client, const char *prefix, const char *target, con
    {
       busy = 0;
       return "";
+   }
+   if(!strcmp(suffix,"qr"))
+   {
+	   epaper_lock();
+
+	   epaper_unlock();
    }
    if (!strncmp(suffix, "output", 6))
    {
@@ -461,17 +468,6 @@ void app_main()
    {
       //We run forever, not sleeping
       ESP_LOGE(TAG, "Idle");
-      int n = 0;
-      while (1)
-      {
-         n++;
-         epaper_lock();
-         epaper_clear(0);
-         epaper_pos(CONFIG_EPAPER_WIDTH / 2, 10, EPAPER_T | EPAPER_C | EPAPER_V);
-         epaper_text(5, "%d", n);
-         epaper_unlock();
-         sleep(1);
-      }
       return;
    }
    if (!busy)
