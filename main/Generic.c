@@ -252,7 +252,20 @@ void app_main()
    if (epaperdin)
    {
       const char *e = epaper_start(epaperport, port_mask(epapercs), port_mask(epaperclk), port_mask(epaperdin), port_mask(epaperdc), port_mask(epaperrst), port_mask(epaperbusy), port_mask(epaperena), epaperflip);
-      ESP_LOGE(TAG, "Failed epaper start %s", e);
+      if (e)
+      {
+         jo_t j = jo_object_alloc();
+         jo_string(j, "error", "Failed to start");
+         jo_string(j, "description", e);
+         revk_error("epaper", &j);
+      }
+   } else
+   {
+      epaper_lock();
+      epaper_clear(0);
+      epaper_pos(CONFIG_EPAPER_WIDTH / 2, 0, EPAPER_T | EPAPER_C | EPAPER_V);
+      epaper_text(2, "%s", "TEST");
+      epaper_unlock();
    }
    {
     gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
