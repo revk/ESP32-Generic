@@ -117,17 +117,10 @@ void output_task(void *arg)
          {
             int p = port_mask(output[i]);
             if (outputremaining[i] && !--outputremaining[i])
-<<<<<<< HEAD
-               outputbits ^= (1ULL << i); //timeout
-            if ((outputbits ^ outputraw) & (1ULL << i))
-            { //Change output
-                  outputraw ^= (1ULL << i);
-=======
                outputbits ^= (1ULL << i);       //timeout
             if ((outputbits ^ outputraw) & (1ULL << i))
             {                   //Change output
                outputraw ^= (1ULL << i);
->>>>>>> 21acbd8b32427c5c5df3bc551b16242b0de1db28
                REVK_ERR_CHECK(gpio_hold_dis(p));
                REVK_ERR_CHECK(gpio_set_level(p, ((output[i] & PORT_INV) ? 1 : 0) ^ ((outputbits >> i) & 1)));
                REVK_ERR_CHECK(gpio_hold_en(p));
@@ -171,16 +164,9 @@ const char *epaper_qr(const char *value)
 const char *app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
-<<<<<<< HEAD
-      return NULL;
-   //Not for us or not a command from main MQTT
-   char            value[100];
-   int             len = 0;
-=======
       return NULL;              //Not for us or not a command from main MQTT
    char value[1000];
    int len = 0;
->>>>>>> 21acbd8b32427c5c5df3bc551b16242b0de1db28
    if (j)
    {
       len = jo_strncpy(j, value, sizeof(value));
