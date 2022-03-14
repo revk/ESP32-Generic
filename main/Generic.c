@@ -8,6 +8,9 @@ static const char TAG[] = "Generic";
 #include "esp_task_wdt.h"
 #include "vl53l0x.h"
 #include "vl53l1x.h"
+#include "epaper.h"
+#include "iec18004.h"
+#include <hal/spi_types.h>
 #include <driver/gpio.h>
 #include <driver/uart.h>
 #include <driver/adc.h>
@@ -31,19 +34,19 @@ static const char TAG[] = "Generic";
 #define BITFIELDS "-"
 #define PORT_INV 0x40
 #define port_mask(p) ((p)&63)
-static uint8_t  input[MAXGPIO]; //Input GPIOs
-static uint8_t  output[MAXGPIO]; //Output GPIOs
-static uint32_t outputmark[MAXGPIO]; //Output mark time(ms)
-   static uint32_t outputspace[MAXGPIO]; //Output mark time(ms)
-   static uint8_t  power[MAXGPIO]; //Fixed output GPIOs
-   int             holding = 0;
+static uint8_t input[MAXGPIO];  //Input GPIOs
+static uint8_t output[MAXGPIO]; //Output GPIOs
+static uint32_t outputmark[MAXGPIO];    //Output mark time(ms)
+static uint32_t outputspace[MAXGPIO];   //Output mark time(ms)
+static uint8_t power[MAXGPIO];  //Fixed output GPIOs
+int holding = 0;
 
 // Dynamic
-   static uint64_t volatile outputbits = 0; // Requested output
-   static uint64_t volatile outputraw = 0; // Current output
-   static uint64_t volatile outputoverride = 0; // Override output (e.g. PWM)
-   static uint32_t outputremaining[MAXGPIO] = {}; //Output remaining time(ms)
-   static uint32_t outputcount[MAXGPIO] = {}; //Output count
+static uint64_t volatile outputbits = 0;        // Requested output
+static uint64_t volatile outputraw = 0; // Current output
+static uint64_t volatile outputoverride = 0;    // Override output (e.g. PWM)
+static uint32_t outputremaining[MAXGPIO] = { }; //Output remaining time(ms)
+static uint32_t outputcount[MAXGPIO] = { };     //Output count
 
 #define	settings		\
 	u32(period,0)	\
@@ -60,6 +63,14 @@ static uint32_t outputmark[MAXGPIO]; //Output mark time(ms)
 	io(rangerscl,)	\
 	io(rangersda,)	\
         u8(rangeraddress,0x29)  \
+	io(epapercs,)	\
+	io(epaperclk,)	\
+	io(epaperdin,)	\
+	io(epaperdc,)	\
+	io(epaperrst,)	\
+	io(epaperbusy,)	\
+	io(epaperena,)	\
+	b(epaperflip)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -74,15 +85,15 @@ settings
 #undef u8
 #undef b
 #undef s
-uint64_t busy = 0;
-   char            usb_present = 0;
-   char            charger_present = 0;
-   const char     *rangererr = NULL;
-   uint16_t        range = 0;
-   uint32_t        voltage = 0;
+    uint64_t busy = 0;
+char usb_present = 0;
+char charger_present = 0;
+const char *rangererr = NULL;
+uint16_t range = 0;
+uint32_t voltage = 0;
 
 
-   void            input_task(void *arg)
+void input_task(void *arg)
 {
    arg = arg;
    while (1)
@@ -95,45 +106,81 @@ uint64_t busy = 0;
    }
 }
 
-void
-output_task(void *arg)
+void output_task(void *arg)
 {
    arg = arg;
    while (1)
    {
       usleep(1000LL);
       for (int i = 0; i < MAXGPIO; i++)
-         if (output[i])
+         if (output[i] && !(outputoverride & (1ULL << i)))
          {
-            int             p = port_mask(output[i]);
+            int p = port_mask(output[i]);
             if (outputremaining[i] && !--outputremaining[i])
+<<<<<<< HEAD
                outputbits ^= (1ULL << i); //timeout
             if ((outputbits ^ outputraw) & (1ULL << i))
             { //Change output
                   outputraw ^= (1ULL << i);
+=======
+               outputbits ^= (1ULL << i);       //timeout
+            if ((outputbits ^ outputraw) & (1ULL << i))
+            {                   //Change output
+               outputraw ^= (1ULL << i);
+>>>>>>> 21acbd8b32427c5c5df3bc551b16242b0de1db28
                REVK_ERR_CHECK(gpio_hold_dis(p));
                REVK_ERR_CHECK(gpio_set_level(p, ((output[i] & PORT_INV) ? 1 : 0) ^ ((outputbits >> i) & 1)));
                REVK_ERR_CHECK(gpio_hold_en(p));
                if (outputbits & (1ULL << i))
-                  outputremaining[i] = outputmark[i]; //Time
-                  else if (!outputcount[i] || !--outputcount[i])
+                  outputremaining[i] = outputmark[i];   //Time
+               else if (!outputcount[i] || !--outputcount[i])
                   outputremaining[i] = 0;
                else
-                  outputremaining[i] = outputspace[i]; //Time
+                  outputremaining[i] = outputspace[i];  //Time
             }
          }
    }
 }
 
+const char *epaper_qr(const char *value)
+{
+   uint32_t width = 0;
+ uint8_t *qr = qr_encode(strlen(value), value, widthp: &width, noquiet:1);
+   if (!qr)
+      return "Failed to encode";
+   if (!width || width > CONFIG_EPAPER_WIDTH)
+   {
+      free(qr);
+      return "Too wide";
+   }
+   epaper_lock();
+   epaper_clear(0);
+   int s = CONFIG_EPAPER_WIDTH / width;
+   int o = (CONFIG_EPAPER_WIDTH - width * s) / 2;
+   for (int y = 0; y < width; y++)
+      for (int x = 0; x < width; x++)
+         if (qr[width * y + x] & QR_TAG_BLACK)
+            for (int dy = 0; dy < s; dy++)
+               for (int dx = 0; dx < s; dx++)
+                  epaper_pixel(o + x * s + dx, o + y * s + dy, 0xFF);
+   epaper_unlock();
+   free(qr);
+   return NULL;
+}
 
-const char     *
-app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
+const char *app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
+<<<<<<< HEAD
       return NULL;
    //Not for us or not a command from main MQTT
    char            value[100];
    int             len = 0;
+=======
+      return NULL;              //Not for us or not a command from main MQTT
+   char value[1000];
+   int len = 0;
+>>>>>>> 21acbd8b32427c5c5df3bc551b16242b0de1db28
    if (j)
    {
       len = jo_strncpy(j, value, sizeof(value));
@@ -152,14 +199,18 @@ app_callback(int client, const char *prefix, const char *target, const char *suf
       busy = 0;
       return "";
    }
+   if (!strcmp(suffix, "qr"))
+   {
+      return epaper_qr(value) ? : "";
+   }
    if (!strncmp(suffix, "output", 6))
    {
-      int             i = atoi(suffix + 6);
+      int i = atoi(suffix + 6);
       if (i < 0 || i >= MAXGPIO)
          return "Bad output number";
       if (!output[i])
          return "Output not configured";
-      int             c = atoi(value);
+      int c = atoi(value);
       if (!c && (*value == 't' || *value == 'y'))
          c = 1;
       if (c)
@@ -180,30 +231,45 @@ app_callback(int client, const char *prefix, const char *target, const char *suf
    }
    if (!strncmp(suffix, "pwm", 3))
    {
-      int             i = atoi(suffix + 3);
+      int i = atoi(suffix + 3);
       if (i < 0 || i >= MAXGPIO)
          return "Bad output number";
       if (!output[i])
          return "Output not configured";
-      int             freq = atoi(value);
+      int p = port_mask(output[i]);
+      int freq = atoi(value);
       if (!freq)
       {
+         gpio_reset_pin(p);
+         REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_OUTPUT));
          outputcount[i] = 0;
-         outputoverride &= ~(1ULL << i);
+         outputraw |= (1ULL << i);
          outputbits &= ~(1ULL << i);
-            return "";
+         outputoverride &= ~(1ULL << i);
+         return "";
       }
-         outputoverride |= (1ULL << i);
-
+      outputoverride |= (1ULL << i);
+      ledc_timer_config_t t = {
+         .duty_resolution = 8,
+         .timer_num = i,
+         .freq_hz = freq,
+      };
+      REVK_ERR_CHECK(ledc_timer_config(&t));
+      ledc_channel_config_t c = {
+         .gpio_num = p,
+         .channel = i,
+         .timer_sel = i,
+         .duty = 128,
+      };
+      REVK_ERR_CHECK(ledc_channel_config(&c));
       return "";
    }
    return NULL;
 }
 
-void
-app_main()
+void app_main()
 {
-   time_t          now = time(0);
+   time_t now = time(0);
    revk_boot(&app_callback);
    revk_register("input", MAXGPIO, sizeof(*input), &input, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
    revk_register("output", MAXGPIO, sizeof(*output), &output, BITFIELDS, SETTING_BITFIELD | SETTING_SET | SETTING_SECRET);
@@ -211,6 +277,8 @@ app_main()
    revk_register("outputmark", MAXGPIO, sizeof(*outputmark), &outputmark, NULL, SETTING_LIVE);
    revk_register("outputspace", MAXGPIO, sizeof(*outputspace), &outputspace, NULL, SETTING_LIVE);
    revk_register("power", MAXGPIO, sizeof(*power), &power, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
+   revk_register("ranger", 0, sizeof(ranger0x), &ranger0x, NULL, SETTING_BOOLEAN | SETTING_SECRET);     // Header
+   revk_register("epaper", 0, sizeof(epapercs), &epapercs, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);      // Header
 #define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
 #define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
@@ -224,28 +292,41 @@ app_main()
 #undef u8
 #undef b
 #undef s
-      revk_start();
+       revk_start();
+   if (epaperdin)
    {
-      gpio_config_t   c = {mode:GPIO_MODE_OUTPUT};
+      const char *e = epaper_start(HSPI_HOST, port_mask(epapercs), port_mask(epaperclk), port_mask(epaperdin), port_mask(epaperdc), port_mask(epaperrst), port_mask(epaperbusy), port_mask(epaperena), epaperflip);
+      if (e)
+      {
+         ESP_LOGE(TAG, "epaper %s", e);
+         jo_t j = jo_object_alloc();
+         jo_string(j, "error", "Failed to start");
+         jo_string(j, "description", e);
+         revk_error("epaper", &j);
+      } else
+         epaper_qr("HTTPS://GENERIC.REVK.UK");
+   }
+   {
+    gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
       for (int i = 0; i < MAXGPIO; i++)
       {
          if (input[i])
          {
-            int             p = port_mask(input[i]);
+            int p = port_mask(input[i]);
             REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_reset_pin(p));
             REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_INPUT));
          }
          if (output[i])
          {
-            int             p = port_mask(output[i]);
+            int p = port_mask(output[i]);
             c.pin_bit_mask |= (1ULL << p);
             REVK_ERR_CHECK(gpio_set_level(p, (output[i] & PORT_INV) ? 1 : 0));
             holding++;
          }
          if (power[i])
          {
-            int             p = port_mask(power[i]);
+            int p = port_mask(power[i]);
             c.pin_bit_mask |= (1ULL << p);
             REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_set_level(p, (power[i] & PORT_INV) ? 0 : 1));
@@ -308,7 +389,7 @@ app_main()
       REVK_ERR_CHECK(gpio_set_level(port_mask(adcon), (adcon & PORT_INV) ? 0 : 1));     /* on */
       REVK_ERR_CHECK(gpio_set_direction(port_mask(adcon), GPIO_MODE_OUTPUT));
 
-      esp_adc_cal_characteristics_t adc_chars = {0};
+      esp_adc_cal_characteristics_t adc_chars = { 0 };
       esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_chars);
       REVK_ERR_CHECK(adc1_config_width(ADC_WIDTH_BIT_12));
       REVK_ERR_CHECK(adc1_config_channel_atten(adc, ADC_ATTEN_DB_11));
@@ -316,7 +397,7 @@ app_main()
       voltage = 0;
       for (int try = 0; try < TRIES; try++)
       {
-         uint32_t        v = 0;
+         uint32_t v = 0;
          REVK_ERR_CHECK(esp_adc_cal_get_voltage(adc, &adc_chars, &v));
          if (adcr2)
             v = v * (adcr1 + adcr2) / adcr2;
@@ -343,7 +424,7 @@ app_main()
       ESP_LOGI(TAG, "Ranger init GND=%d PWR=%d SCL=%d SDA=%d Address=%02X", port_mask(rangergnd), port_mask(rangerpwr), port_mask(rangerscl), port_mask(rangersda), rangeraddress);
       if (ranger0x)
       {
-         vl53l0x_t      *v = vl53l0x_config(0, port_mask(rangerscl), port_mask(rangersda), -1, rangeraddress, 0);
+         vl53l0x_t *v = vl53l0x_config(0, port_mask(rangerscl), port_mask(rangersda), -1, rangeraddress, 0);
          if (!v)
             ESP_LOGE(TAG, "Ranger config failed");
          else
@@ -359,7 +440,7 @@ app_main()
          }
       } else
       {                         /* Try 1X */
-         vl53l1x_t      *v = vl53l1x_config(0, port_mask(rangerscl), port_mask(rangersda), -1, rangeraddress, 0);
+         vl53l1x_t *v = vl53l1x_config(0, port_mask(rangerscl), port_mask(rangersda), -1, rangeraddress, 0);
          if (!v)
             ESP_LOGE(TAG, "Ranger config failed");
          else
@@ -392,15 +473,15 @@ app_main()
          while ((now = time(0)) < 30)
             sleep(1);
       }
-      int64_t         run = esp_timer_get_time();
-      struct tm       tm;
+      int64_t run = esp_timer_get_time();
+      struct tm tm;
       gmtime_r(&now, &tm);
       if (!tm.tm_hour && !tm.tm_min && awake < 10)
          awake = 10;            /* allow clock to set */
-      jo_t            j = jo_object_alloc();
+      jo_t j = jo_object_alloc();
       jo_string(j, "id", revk_id);
       jo_stringf(j, "ts", "%04d-%02d-%02dT%02d:%02d:%02dZ", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
-      jo_litf(j, "runtime", "%u.%06u", (int)run / 1000000, (int)run % 1000000);
+      jo_litf(j, "runtime", "%u.%06u", (int) run / 1000000, (int) run % 1000000);
       if (range)
          jo_litf(j, "range", "%d", range);
       if (voltage)
@@ -409,7 +490,7 @@ app_main()
          jo_bool(j, "charger", 1);
       else if (usb_present)
          jo_bool(j, "usb", 1);
-      int             i;
+      int i;
       for (i = 0; i < MAXGPIO && !input[i]; i++);
       if (i < MAXGPIO)
       {
@@ -424,7 +505,7 @@ app_main()
    if (!period)
    {
       //We run forever, not sleeping
-         ESP_LOGE(TAG, "Idle");
+      ESP_LOGE(TAG, "Idle");
       return;
    }
    if (!busy)
@@ -437,14 +518,14 @@ app_main()
    }
    if (busy)
    {
-      ESP_LOGI(TAG, "Waiting %d", (int)((busy - esp_timer_get_time()) / 1000000ULL));
+      ESP_LOGI(TAG, "Waiting %d", (int) ((busy - esp_timer_get_time()) / 1000000ULL));
       while (busy > esp_timer_get_time())
          sleep(1);
    }
-   time_t          next = (time(0) + 5) / period * period + period;
+   time_t next = (time(0) + 5) / period * period + period;
    {
-      char            reason[100];
-      struct tm       tm;
+      char reason[100];
+      struct tm tm;
       gmtime_r(&next, &tm);
       sprintf(reason, "Sleep after %lldms until %04d-%02d-%02dT%02d:%02d:%02dZ", esp_timer_get_time() / 1000, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec);
       revk_mqtt_close(reason);
@@ -458,7 +539,7 @@ app_main()
    }
    if (usb_present && !charger_present)
       sleep(1);
-   struct timeval  tv;
+   struct timeval tv;
    gettimeofday(&tv, NULL);
    if (next < tv.tv_sec + 1)
       next = tv.tv_sec + 1;

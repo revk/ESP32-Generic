@@ -3,6 +3,7 @@
 *.swp
 .DS_Store
 */*.bin
+*.bin
 *.old
 */*.old
 */*/*.old
