@@ -108,7 +108,7 @@ output_task(void *arg)
             int             p = port_mask(output[i]);
             if (outputremaining[i] && !--outputremaining[i])
                outputbits ^= (1ULL << i); //timeout
-               if ((outputbits ^ outputraw) & (1ULL << i))
+            if ((outputbits ^ outputraw) & (1ULL << i))
             { //Change output
                   outputraw ^= (1ULL << i);
                REVK_ERR_CHECK(gpio_hold_dis(p));
@@ -131,9 +131,8 @@ app_callback(int client, const char *prefix, const char *target, const char *suf
 {
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
       return NULL;
-   //Not for us
-      or not a command from main MQTT
-         char            value[100];
+   //Not for us or not a command from main MQTT
+   char            value[100];
    int             len = 0;
    if (j)
    {
