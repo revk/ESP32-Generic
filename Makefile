@@ -4,7 +4,7 @@
 #
 
 PROJECT_NAME := Generic
-SUFFIX := $(shell components/ESP32-RevK/suffix)
+SUFFIX := $(shell components/ESP32-RevK/buildsuffix)
 MODELS := Generic LowPower Generic2 Generic3 Generic4 Generic5
 
 all:
@@ -18,18 +18,15 @@ tools: envlog envgraph taspowerlog taspowersvg
 set:    wroom solo pico
 
 pico:
-	@sed -e 's/# CONFIG_ESP32_SPIRAM_SUPPORT is not set/CONFIG_ESP32_SPIRAM_SUPPORT=y/' -e 's/# CONFIG_ESPTOOLPY_FLASHSIZE_8MB is not set/CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y/' -e 's/CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y/# CONFIG_ESPTOOLPY_FLASHSIZE_4MB is not set/' -e 's/CONFIG_FREERTOS_UNICORE=y/# CONFIG_FREERTOS_UNICORE is not set/' sdkconfig > sdkconfig.new
-	@mv -f sdkconfig.new sdkconfig
+	components/ESP32-RevK/setbuildsuffix -S1-PICO
 	@make
 
 wroom:
-	@sed -e 's/CONFIG_ESP32_SPIRAM_SUPPORT=y/# CONFIG_ESP32_SPIRAM_SUPPORT is not set/' -e 's/# CONFIG_ESPTOOLPY_FLASHSIZE_4MB is not set/CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y/' -e 's/CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y/# CONFIG_ESPTOOLPY_FLASHSIZE_8MB is not set/' -e 's/CONFIG_FREERTOS_UNICORE=y/# CONFIG_FREERTOS_UNICORE is not set/' sdkconfig > sdkconfig.new
-	@mv -f sdkconfig.new sdkconfig
+	components/ESP32-RevK/setbuildsuffix -S1
 	@make
 
 solo:
-	@sed -e 's/CONFIG_ESP32_SPIRAM_SUPPORT=y/# CONFIG_ESP32_SPIRAM_SUPPORT is not set/' -e 's/# CONFIG_ESPTOOLPY_FLASHSIZE_4MB is not set/CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y/' -e 's/CONFIG_ESPTOOLPY_FLASHSIZE_8MB=y/# CONFIG_ESPTOOLPY_FLASHSIZE_8MB is not set/' -e 's/# CONFIG_FREERTOS_UNICORE is not set/CONFIG_FREERTOS_UNICORE=y/' sdkconfig > sdkconfig.new
-	@mv -f sdkconfig.new sdkconfig
+	components/ESP32-RevK/setbuildsuffix -S1-SOLO
 	@make
 
 flash:
