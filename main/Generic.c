@@ -492,6 +492,7 @@ void app_main()
    {
       //We run forever, not sleeping
       ESP_LOGE(TAG, "Idle");
+      while(1)sleep(1);
       return;
    }
    if (!busy)
