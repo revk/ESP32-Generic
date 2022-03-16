@@ -426,7 +426,7 @@
 
   (footprint "RevK:Hidden" (layer "B.Cu")
     (tedit 621345EE) (tstamp 0ba84243-70c7-48df-bdf9-a84868bb200d)
-    (at 96 45.65 -90)
+    (at 94.45 45.15 -90)
     (property "Note" "0603 or 0805")
     (property "Part No" "")
     (property "Sheetfile" "Generic4.kicad_sch")
@@ -499,7 +499,7 @@
 
   (footprint "RevK:Hidden" (layer "B.Cu")
     (tedit 621345EE) (tstamp 5da4882e-c667-4e22-8c6f-59ed3561f408)
-    (at 99.12 45.27)
+    (at 97.57 44.77)
     (property "Manufacturer" "Bourns")
     (property "Note" "")
     (property "Part No" "CD1206-B2100")
@@ -531,7 +531,7 @@
 
   (footprint "RevK:Hidden" (layer "B.Cu")
     (tedit 621345EE) (tstamp 6167ac01-a97a-4a6f-b811-bc0a02b4630c)
-    (at 103.5 42.35 -90)
+    (at 101.95 41.85 -90)
     (property "Note" "X7R or X5R 0603")
     (property "Part No" "")
     (property "Sheetfile" "Generic4.kicad_sch")
@@ -745,7 +745,7 @@
 
   (footprint "RevK:Hidden" (layer "B.Cu")
     (tedit 621345EE) (tstamp 8c21236c-b177-4669-8716-36f516ca4a7d)
-    (at 102.25 45.65 -90)
+    (at 100.7 45.15 -90)
     (property "Note" "0603 or 0805")
     (property "Part No" "")
     (property "Sheetfile" "Generic4.kicad_sch")
@@ -1005,7 +1005,7 @@
 
   (footprint "RevK:Hidden" (layer "B.Cu")
     (tedit 621345EE) (tstamp da90d19a-0e7e-4050-931c-1a89ae1517e3)
-    (at 97.5 42.1)
+    (at 95.95 41.6)
     (property "Manufacturer" "Laird")
     (property "Note" "")
     (property "Part No" "TYA4020")
