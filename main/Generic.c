@@ -147,14 +147,20 @@ const char *gfx_qr(const char *value)
    }
    gfx_lock();
    gfx_clear(0);
-   int s = CONFIG_GFX_WIDTH / width;
-   int o = (CONFIG_GFX_WIDTH - width * s) / 2;
+#if CONFIG_GFX_WIDTH > CONFIG_GFX_HEIGH
+   const int w=CONFIG_GFX_HEIGHT;
+#else
+   const int w=CONFIG_GFX_WIDTH;
+#endif
+   int s = w / width;
+   int ox = (CONFIG_GFX_WIDTH - width * s) / 2;
+   int oy = (CONFIG_GFX_HEIGHT - width * s) / 2;
    for (int y = 0; y < width; y++)
       for (int x = 0; x < width; x++)
          if (qr[width * y + x] & QR_TAG_BLACK)
             for (int dy = 0; dy < s; dy++)
                for (int dx = 0; dx < s; dx++)
-                  gfx_pixel(o + x * s + dx, o + y * s + dy, 0xFF);
+                  gfx_pixel(ox + x * s + dx, oy + y * s + dy, 0xFF);
    gfx_unlock();
    free(qr);
    return NULL;
