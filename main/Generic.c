@@ -70,6 +70,7 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(gfxrst,)	\
 	io(gfxbusy,)	\
 	io(gfxena,)	\
+	io(gfxflip,)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -148,9 +149,9 @@ const char *gfx_qr(const char *value)
    gfx_lock();
    gfx_clear(0);
 #if CONFIG_GFX_WIDTH > CONFIG_GFX_HEIGH
-   const int w=CONFIG_GFX_HEIGHT;
+   const int w = CONFIG_GFX_HEIGHT;
 #else
-   const int w=CONFIG_GFX_WIDTH;
+   const int w = CONFIG_GFX_WIDTH;
 #endif
    int s = w / width;
    int ox = (CONFIG_GFX_WIDTH - width * s) / 2;
@@ -194,10 +195,10 @@ const char *app_callback(int client, const char *prefix, const char *target, con
    {
       return gfx_qr(value) ? : "";
    }
-   if(!strcmp(suffix,"message"))
+   if (!strcmp(suffix, "message"))
    {
-	   gfx_message(value);
-	   return "";
+      gfx_message(value);
+      return "";
    }
    if (!strncmp(suffix, "output", 6))
    {
@@ -274,7 +275,7 @@ void app_main()
    revk_register("outputspace", MAXGPIO, sizeof(*outputspace), &outputspace, NULL, SETTING_LIVE);
    revk_register("power", MAXGPIO, sizeof(*power), &power, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
    revk_register("ranger", 0, sizeof(ranger0x), &ranger0x, NULL, SETTING_BOOLEAN | SETTING_SECRET);     // Header
-   revk_register("gfx", 0, sizeof(gfxcs), &gfxcs, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);      // Header
+   revk_register("gfx", 0, sizeof(gfxcs), &gfxcs, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);       // Header
 #define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
 #define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
@@ -289,9 +290,9 @@ void app_main()
 #undef b
 #undef s
        revk_start();
-   if (gfxmosi||gfxdc||gfxsck)
+   if (gfxmosi || gfxdc || gfxsck)
    {
-      const char *e = gfx_init(port:HSPI_HOST, cs:port_mask(gfxcs), sck:port_mask(gfxsck), mosi:port_mask(gfxmosi), dc:port_mask(gfxdc), rst:port_mask(gfxrst), busy:port_mask(gfxbusy), ena:port_mask(gfxena) );
+    const char *e = gfx_init(port: HSPI_HOST, cs: port_mask(gfxcs), sck: port_mask(gfxsck), mosi: port_mask(gfxmosi), dc: port_mask(gfxdc), rst: port_mask(gfxrst), busy: port_mask(gfxbusy), ena: port_mask(gfxena), flip:gfxflip);
       if (e)
       {
          ESP_LOGE(TAG, "gfx %s", e);
@@ -502,7 +503,8 @@ void app_main()
    {
       //We run forever, not sleeping
       ESP_LOGE(TAG, "Idle");
-      while(1)sleep(1);
+      while (1)
+         sleep(1);
       return;
    }
    if (!busy)
