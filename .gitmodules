@@ -15,9 +15,9 @@
 	path = components/ESP32-VL53L1X
 	url = https://github.com/revk/ESP32-VL53L1X
 	branch = main
-[submodule "components/ESP32-epaper"]
-	path = components/ESP32-epaper
-	url = https://github.com/revk/ESP32-epaper
 [submodule "components/QR"]
 	path = components/QR
 	url = https://github.com/revk/QR
+[submodule "components/ESP32-GFX"]
+	path = components/ESP32-GFX
+	url = https://github.com/revk/ESP32-GFX
