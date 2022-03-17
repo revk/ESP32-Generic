@@ -8,7 +8,7 @@ static const char TAG[] = "Generic";
 #include "esp_task_wdt.h"
 #include "vl53l0x.h"
 #include "vl53l1x.h"
-#include "epaper.h"
+#include "gfx.h"
 #include "iec18004.h"
 #include <hal/spi_types.h>
 #include <driver/gpio.h>
@@ -63,14 +63,13 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(rangerscl,)	\
 	io(rangersda,)	\
         u8(rangeraddress,0x29)  \
-	io(epapercs,)	\
-	io(epaperclk,)	\
-	io(epaperdin,)	\
-	io(epaperdc,)	\
-	io(epaperrst,)	\
-	io(epaperbusy,)	\
-	io(epaperena,)	\
-	b(epaperflip)	\
+	io(gfxcs,)	\
+	io(gfxsck,)	\
+	io(gfxmosi,)	\
+	io(gfxdc,)	\
+	io(gfxrst,)	\
+	io(gfxbusy,)	\
+	io(gfxena,)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -135,28 +134,28 @@ void output_task(void *arg)
    }
 }
 
-const char *epaper_qr(const char *value)
+const char *gfx_qr(const char *value)
 {
    uint32_t width = 0;
  uint8_t *qr = qr_encode(strlen(value), value, widthp: &width, noquiet:1);
    if (!qr)
       return "Failed to encode";
-   if (!width || width > CONFIG_EPAPER_WIDTH)
+   if (!width || width > CONFIG_GFX_WIDTH)
    {
       free(qr);
       return "Too wide";
    }
-   epaper_lock();
-   epaper_clear(0);
-   int s = CONFIG_EPAPER_WIDTH / width;
-   int o = (CONFIG_EPAPER_WIDTH - width * s) / 2;
+   gfx_lock();
+   gfx_clear(0);
+   int s = CONFIG_GFX_WIDTH / width;
+   int o = (CONFIG_GFX_WIDTH - width * s) / 2;
    for (int y = 0; y < width; y++)
       for (int x = 0; x < width; x++)
          if (qr[width * y + x] & QR_TAG_BLACK)
             for (int dy = 0; dy < s; dy++)
                for (int dx = 0; dx < s; dx++)
-                  epaper_pixel(o + x * s + dx, o + y * s + dy, 0xFF);
-   epaper_unlock();
+                  gfx_pixel(o + x * s + dx, o + y * s + dy, 0xFF);
+   gfx_unlock();
    free(qr);
    return NULL;
 }
@@ -187,7 +186,7 @@ const char *app_callback(int client, const char *prefix, const char *target, con
    }
    if (!strcmp(suffix, "qr"))
    {
-      return epaper_qr(value) ? : "";
+      return gfx_qr(value) ? : "";
    }
    if (!strncmp(suffix, "output", 6))
    {
@@ -264,7 +263,7 @@ void app_main()
    revk_register("outputspace", MAXGPIO, sizeof(*outputspace), &outputspace, NULL, SETTING_LIVE);
    revk_register("power", MAXGPIO, sizeof(*power), &power, BITFIELDS, SETTING_BITFIELD | SETTING_SET);
    revk_register("ranger", 0, sizeof(ranger0x), &ranger0x, NULL, SETTING_BOOLEAN | SETTING_SECRET);     // Header
-   revk_register("epaper", 0, sizeof(epapercs), &epapercs, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);      // Header
+   revk_register("gfx", 0, sizeof(gfxcs), &gfxcs, "- ", SETTING_SET | SETTING_BITFIELD | SETTING_SECRET);      // Header
 #define io(n,d)           revk_register(#n,0,sizeof(n),&n,"- "#d,SETTING_SET|SETTING_BITFIELD);
 #define b(n) revk_register(#n,0,sizeof(n),&n,NULL,SETTING_BOOLEAN);
 #define u32(n,d) revk_register(#n,0,sizeof(n),&n,#d,0);
@@ -279,18 +278,18 @@ void app_main()
 #undef b
 #undef s
        revk_start();
-   if (epaperdin)
+   if (gfxmosi||gfxdc||gfxsck)
    {
-      const char *e = epaper_start(HSPI_HOST, port_mask(epapercs), port_mask(epaperclk), port_mask(epaperdin), port_mask(epaperdc), port_mask(epaperrst), port_mask(epaperbusy), port_mask(epaperena), epaperflip);
+      const char *e = gfx_init(port:HSPI_HOST, cs:port_mask(gfxcs), sck:port_mask(gfxsck), mosi:(gfxmosi), dc:port_mask(gfxdc), rst:port_mask(gfxrst), busy:port_mask(gfxbusy), ena:port_mask(gfxena) );
       if (e)
       {
-         ESP_LOGE(TAG, "epaper %s", e);
+         ESP_LOGE(TAG, "gfx %s", e);
          jo_t j = jo_object_alloc();
          jo_string(j, "error", "Failed to start");
          jo_string(j, "description", e);
-         revk_error("epaper", &j);
+         revk_error("gfx", &j);
       } else
-         epaper_qr("HTTPS://GENERIC.REVK.UK");
+         gfx_qr("HTTPS://GENERIC.REVK.UK");
    }
    {
     gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
