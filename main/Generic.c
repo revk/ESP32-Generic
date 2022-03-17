@@ -64,13 +64,12 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(rangersda,)	\
         u8(rangeraddress,0x29)  \
 	io(gfxcs,)	\
-	io(gfxclk,)	\
-	io(gfxdin,)	\
+	io(gfxsck,)	\
+	io(gfxmosi,)	\
 	io(gfxdc,)	\
 	io(gfxrst,)	\
 	io(gfxbusy,)	\
 	io(gfxena,)	\
-	b(gfxflip)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -141,15 +140,15 @@ const char *gfx_qr(const char *value)
  uint8_t *qr = qr_encode(strlen(value), value, widthp: &width, noquiet:1);
    if (!qr)
       return "Failed to encode";
-   if (!width || width > CONFIG_EPAPER_WIDTH)
+   if (!width || width > CONFIG_GFX_WIDTH)
    {
       free(qr);
       return "Too wide";
    }
    gfx_lock();
    gfx_clear(0);
-   int s = CONFIG_EPAPER_WIDTH / width;
-   int o = (CONFIG_EPAPER_WIDTH - width * s) / 2;
+   int s = CONFIG_GFX_WIDTH / width;
+   int o = (CONFIG_GFX_WIDTH - width * s) / 2;
    for (int y = 0; y < width; y++)
       for (int x = 0; x < width; x++)
          if (qr[width * y + x] & QR_TAG_BLACK)
@@ -279,9 +278,9 @@ void app_main()
 #undef b
 #undef s
        revk_start();
-   if (gfxdin)
+   if (gfxmosi||gfxdc||gfxsck)
    {
-      const char *e = gfx_start(HSPI_HOST, port_mask(gfxcs), port_mask(gfxclk), port_mask(gfxdin), port_mask(gfxdc), port_mask(gfxrst), port_mask(gfxbusy), port_mask(gfxena), gfxflip);
+      const char *e = gfx_init(port:HSPI_HOST, cs:port_mask(gfxcs), sck:port_mask(gfxsck), mosi:(gfxmosi), dc:port_mask(gfxdc), rst:port_mask(gfxrst), busy:port_mask(gfxbusy), ena:port_mask(gfxena) );
       if (e)
       {
          ESP_LOGE(TAG, "gfx %s", e);
