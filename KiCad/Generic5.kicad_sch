@@ -1992,7 +1992,7 @@
   (symbol (lib_id "power:VBUS") (at 187.96 25.4 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000060464020)
-    (property "Reference" "#PWR08" (id 0) (at 187.96 29.21 0)
+    (property "Reference" "#PWR010" (id 0) (at 187.96 29.21 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "VBUS" (id 1) (at 188.341 21.0058 0))
@@ -2024,7 +2024,7 @@
   (symbol (lib_id "power:GND") (at 187.96 31.75 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00006046cdd6)
-    (property "Reference" "#PWR09" (id 0) (at 187.96 38.1 0)
+    (property "Reference" "#PWR011" (id 0) (at 187.96 38.1 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 188.087 36.1442 0))
@@ -2040,7 +2040,7 @@
   (symbol (lib_id "power:GND") (at 200.025 63.5 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00006046dfec)
-    (property "Reference" "#PWR010" (id 0) (at 200.025 69.85 0)
+    (property "Reference" "#PWR012" (id 0) (at 200.025 69.85 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 200.152 67.8942 0))
@@ -2071,7 +2071,7 @@
   (symbol (lib_id "power:GND") (at 226.06 114.3 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00006084d835)
-    (property "Reference" "#PWR016" (id 0) (at 232.41 114.3 0)
+    (property "Reference" "#PWR018" (id 0) (at 232.41 114.3 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 229.3112 114.173 90)
@@ -2089,7 +2089,7 @@
   (symbol (lib_id "power:GND") (at 226.06 119.38 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00006084dcbb)
-    (property "Reference" "#PWR017" (id 0) (at 232.41 119.38 0)
+    (property "Reference" "#PWR019" (id 0) (at 232.41 119.38 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 229.3112 119.253 90)
@@ -2107,7 +2107,7 @@
   (symbol (lib_id "power:GND") (at 226.06 121.92 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00006084e14d)
-    (property "Reference" "#PWR018" (id 0) (at 232.41 121.92 0)
+    (property "Reference" "#PWR020" (id 0) (at 232.41 121.92 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 229.3112 121.793 90)
@@ -2125,7 +2125,7 @@
   (symbol (lib_id "power:GND") (at 226.06 124.46 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-00006084e5cb)
-    (property "Reference" "#PWR019" (id 0) (at 232.41 124.46 0)
+    (property "Reference" "#PWR021" (id 0) (at 232.41 124.46 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 229.3112 124.333 90)
@@ -2143,7 +2143,7 @@
   (symbol (lib_id "power:GND") (at 208.28 144.78 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000608547a1)
-    (property "Reference" "#PWR012" (id 0) (at 208.28 151.13 0)
+    (property "Reference" "#PWR014" (id 0) (at 208.28 151.13 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 208.407 149.1742 0))
@@ -2159,7 +2159,7 @@
   (symbol (lib_id "power:GND") (at 220.345 60.96 270) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000608ef177)
-    (property "Reference" "#PWR013" (id 0) (at 213.995 60.96 0)
+    (property "Reference" "#PWR015" (id 0) (at 213.995 60.96 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 217.0938 61.087 90)
@@ -2177,7 +2177,7 @@
   (symbol (lib_id "power:+3.3V") (at 220.345 63.5 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000608ef736)
-    (property "Reference" "#PWR014" (id 0) (at 224.155 63.5 0)
+    (property "Reference" "#PWR016" (id 0) (at 224.155 63.5 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (id 1) (at 217.17 63.5 90)
@@ -2232,7 +2232,7 @@
   (symbol (lib_id "power:GND") (at 180.34 129.54 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000060926541)
-    (property "Reference" "#PWR07" (id 0) (at 180.34 135.89 0)
+    (property "Reference" "#PWR09" (id 0) (at 180.34 135.89 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 180.467 133.9342 0))
@@ -2263,7 +2263,7 @@
   (symbol (lib_id "power:+3.3V") (at 121.92 35.56 270) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000060a44fe5)
-    (property "Reference" "#PWR06" (id 0) (at 118.11 35.56 0)
+    (property "Reference" "#PWR08" (id 0) (at 118.11 35.56 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (id 1) (at 125.1712 35.941 90)
@@ -2499,7 +2499,7 @@
   (symbol (lib_id "power:+3.3V") (at 205.74 99.06 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 206e2d47-6ee1-4a37-ba8c-0b5ca978f401)
-    (property "Reference" "#PWR011" (id 0) (at 205.74 102.87 0)
+    (property "Reference" "#PWR013" (id 0) (at 205.74 102.87 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (id 1) (at 206.121 94.6658 0))
@@ -2586,7 +2586,7 @@
   (symbol (lib_id "power:GND") (at 241.935 142.24 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 3b88bb35-a58c-4d46-ab6f-8f3fa123a0dc)
-    (property "Reference" "#PWR022" (id 0) (at 241.935 148.59 0)
+    (property "Reference" "#PWR024" (id 0) (at 241.935 148.59 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 241.935 146.6834 0))
@@ -2625,7 +2625,7 @@
   (symbol (lib_id "power:GND") (at 231.14 73.66 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 43ac1e5e-55b4-4274-a7ec-fd3947e95aec)
-    (property "Reference" "#PWR020" (id 0) (at 231.14 80.01 0)
+    (property "Reference" "#PWR022" (id 0) (at 231.14 80.01 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 231.14 78.2225 0))
@@ -2641,7 +2641,7 @@
   (symbol (lib_id "power:VBUS") (at 226.06 55.88 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 47c11fc4-bbbc-4f9a-a11e-2870de9840a1)
-    (property "Reference" "#PWR015" (id 0) (at 226.06 59.69 0)
+    (property "Reference" "#PWR017" (id 0) (at 226.06 59.69 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "VBUS" (id 1) (at 226.441 51.4858 0))
@@ -2687,7 +2687,7 @@
   (symbol (lib_id "power:VBUS") (at 241.935 127 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 53e573d4-fbea-4112-ab2d-fabfff4beb00)
-    (property "Reference" "#PWR021" (id 0) (at 241.935 130.81 0)
+    (property "Reference" "#PWR023" (id 0) (at 241.935 130.81 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "VBUS" (id 1) (at 241.935 123.4242 0))
@@ -2721,7 +2721,7 @@
   (symbol (lib_id "power:+3.3V") (at 119.38 78.74 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 5a99768e-d25b-4632-aa33-9050e210a6d2)
-    (property "Reference" "#PWR0101" (id 0) (at 119.38 82.55 0)
+    (property "Reference" "#PWR07" (id 0) (at 119.38 82.55 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+3.3V" (id 1) (at 119.38 75.1642 0))
@@ -2896,7 +2896,7 @@
     (property "Reference" "R10" (id 0) (at 231.14 71.755 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "3M 1% or NF" (id 1) (at 233.045 69.85 0)
+    (property "Value" "30k 1% or NF" (id 1) (at 233.045 69.85 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 232.918 69.85 90)
@@ -2912,7 +2912,7 @@
   (symbol (lib_id "power:GND") (at 101.6 87.63 0) (unit 1)
     (in_bom yes) (on_board yes) (fields_autoplaced)
     (uuid 851f4633-6493-46b9-aca3-fcb06a4992b7)
-    (property "Reference" "#PWR0102" (id 0) (at 101.6 93.98 0)
+    (property "Reference" "#PWR06" (id 0) (at 101.6 93.98 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "GND" (id 1) (at 101.6 92.0734 0))
@@ -3006,7 +3006,7 @@
     (property "Reference" "R9" (id 0) (at 226.06 66.04 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10M 1% or 0R" (id 1) (at 227.965 69.215 90)
+    (property "Value" "100k 1% or 0R" (id 1) (at 227.965 69.215 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 224.155 67.818 90)
@@ -3039,62 +3039,62 @@
     (path "/00000000-0000-0000-0000-0000608ff224"
       (reference "#PWR05") (unit 1) (value "GND") (footprint "")
     )
-    (path "/00000000-0000-0000-0000-000060a44fe5"
-      (reference "#PWR06") (unit 1) (value "+3.3V") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-000060926541"
-      (reference "#PWR07") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-000060464020"
-      (reference "#PWR08") (unit 1) (value "VBUS") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-00006046cdd6"
-      (reference "#PWR09") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-00006046dfec"
-      (reference "#PWR010") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/206e2d47-6ee1-4a37-ba8c-0b5ca978f401"
-      (reference "#PWR011") (unit 1) (value "+3.3V") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-0000608547a1"
-      (reference "#PWR012") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-0000608ef177"
-      (reference "#PWR013") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-0000608ef736"
-      (reference "#PWR014") (unit 1) (value "+3.3V") (footprint "")
-    )
-    (path "/47c11fc4-bbbc-4f9a-a11e-2870de9840a1"
-      (reference "#PWR015") (unit 1) (value "VBUS") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-00006084d835"
-      (reference "#PWR016") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-00006084dcbb"
-      (reference "#PWR017") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-00006084e14d"
-      (reference "#PWR018") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-00006084e5cb"
-      (reference "#PWR019") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/43ac1e5e-55b4-4274-a7ec-fd3947e95aec"
-      (reference "#PWR020") (unit 1) (value "GND") (footprint "")
-    )
-    (path "/53e573d4-fbea-4112-ab2d-fabfff4beb00"
-      (reference "#PWR021") (unit 1) (value "VBUS") (footprint "")
-    )
-    (path "/3b88bb35-a58c-4d46-ab6f-8f3fa123a0dc"
-      (reference "#PWR022") (unit 1) (value "GND") (footprint "")
+    (path "/851f4633-6493-46b9-aca3-fcb06a4992b7"
+      (reference "#PWR06") (unit 1) (value "GND") (footprint "")
     )
     (path "/5a99768e-d25b-4632-aa33-9050e210a6d2"
-      (reference "#PWR0101") (unit 1) (value "+3.3V") (footprint "")
+      (reference "#PWR07") (unit 1) (value "+3.3V") (footprint "")
     )
-    (path "/851f4633-6493-46b9-aca3-fcb06a4992b7"
-      (reference "#PWR0102") (unit 1) (value "GND") (footprint "")
+    (path "/00000000-0000-0000-0000-000060a44fe5"
+      (reference "#PWR08") (unit 1) (value "+3.3V") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-000060926541"
+      (reference "#PWR09") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-000060464020"
+      (reference "#PWR010") (unit 1) (value "VBUS") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-00006046cdd6"
+      (reference "#PWR011") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-00006046dfec"
+      (reference "#PWR012") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/206e2d47-6ee1-4a37-ba8c-0b5ca978f401"
+      (reference "#PWR013") (unit 1) (value "+3.3V") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-0000608547a1"
+      (reference "#PWR014") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-0000608ef177"
+      (reference "#PWR015") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-0000608ef736"
+      (reference "#PWR016") (unit 1) (value "+3.3V") (footprint "")
+    )
+    (path "/47c11fc4-bbbc-4f9a-a11e-2870de9840a1"
+      (reference "#PWR017") (unit 1) (value "VBUS") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-00006084d835"
+      (reference "#PWR018") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-00006084dcbb"
+      (reference "#PWR019") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-00006084e14d"
+      (reference "#PWR020") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-00006084e5cb"
+      (reference "#PWR021") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/43ac1e5e-55b4-4274-a7ec-fd3947e95aec"
+      (reference "#PWR022") (unit 1) (value "GND") (footprint "")
+    )
+    (path "/53e573d4-fbea-4112-ab2d-fabfff4beb00"
+      (reference "#PWR023") (unit 1) (value "VBUS") (footprint "")
+    )
+    (path "/3b88bb35-a58c-4d46-ab6f-8f3fa123a0dc"
+      (reference "#PWR024") (unit 1) (value "GND") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000609259a6"
       (reference "C1") (unit 1) (value "100nF") (footprint "RevK:C_0603")
@@ -3163,10 +3163,10 @@
       (reference "R8") (unit 1) (value "27R") (footprint "RevK:R_0603")
     )
     (path "/fc3ca677-79f2-42b6-a5b3-ff3b18df1d6c"
-      (reference "R9") (unit 1) (value "10M 1% or 0R") (footprint "RevK:R_0603")
+      (reference "R9") (unit 1) (value "100k 1% or 0R") (footprint "RevK:R_0603")
     )
     (path "/83151023-5106-4495-aeff-aefc75dfd6c0"
-      (reference "R10") (unit 1) (value "3M 1% or NF") (footprint "RevK:R_0603")
+      (reference "R10") (unit 1) (value "30k 1% or NF") (footprint "RevK:R_0603")
     )
     (path "/4d78a6c3-1ed6-452b-b14a-0166e9a43345"
       (reference "R11") (unit 1) (value "4k7") (footprint "RevK:R_0603")

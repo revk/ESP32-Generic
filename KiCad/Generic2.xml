@@ -2,15 +2,15 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic2.kicad_sch</source>
-    <date>Thursday, 24 February 2022 at 08:02:26</date>
+    <date>Thursday, 17 March 2022 at 07:31:18</date>
     <tool>Eeschema (6.0.2-0)</tool>
-    <textvar name="DATE">2022-02-24</textvar>
+    <textvar name="DATE">2022-03-06</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Larger generic ESP32 module</title>
         <company/>
         <rev>1</rev>
-        <date>2022-02-24</date>
+        <date>2022-03-06</date>
         <source>Generic2.kicad_sch</source>
         <comment number="1" value="@TheRealRevK"/>
         <comment number="2" value="www.me.uk"/>
@@ -384,7 +384,7 @@
       <tstamps>00000000-0000-0000-0000-000060e0737c</tstamps>
     </comp>
     <comp ref="R11">
-      <value>10M 1% or 0R</value>
+      <value>100k 1% or 0R</value>
       <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
@@ -393,7 +393,7 @@
       <tstamps>fc3ca677-79f2-42b6-a5b3-ff3b18df1d6c</tstamps>
     </comp>
     <comp ref="R12">
-      <value>3M 1% or NF</value>
+      <value>30k 1% or NF</value>
       <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>

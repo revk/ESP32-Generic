@@ -2,15 +2,15 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/Generic5.kicad_sch</source>
-    <date>Saturday, 05 March 2022 at 15:32:54</date>
+    <date>Thursday, 17 March 2022 at 07:26:59</date>
     <tool>Eeschema (6.0.2-0)</tool>
-    <textvar name="DATE">2022-03-06</textvar>
+    <textvar name="DATE">2022-03-10</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Generic ESP32-PICO-MINI module</title>
         <company/>
         <rev>1</rev>
-        <date>2022-03-06</date>
+        <date>2022-03-10</date>
         <source>Generic5.kicad_sch</source>
         <comment number="1" value="@TheRealRevK"/>
         <comment number="2" value="www.me.uk"/>
@@ -78,7 +78,7 @@
     </comp>
     <comp ref="D1">
       <value>D</value>
-      <footprint>Diode_SMD:D_1206_3216Metric</footprint>
+      <footprint>RevK:D_1206</footprint>
       <libsource lib="Device" part="D" description="Diode"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="Generic5.kicad_sch"/>
@@ -247,7 +247,7 @@
       <tstamps>6201f353-a12c-4291-b5f8-72be16100336</tstamps>
     </comp>
     <comp ref="R9">
-      <value>10M 1% or 0R</value>
+      <value>100k 1% or 0R</value>
       <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
@@ -256,7 +256,7 @@
       <tstamps>fc3ca677-79f2-42b6-a5b3-ff3b18df1d6c</tstamps>
     </comp>
     <comp ref="R10">
-      <value>3M 1% or NF</value>
+      <value>30k 1% or NF</value>
       <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>

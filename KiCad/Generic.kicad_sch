@@ -1525,7 +1525,6 @@
     )
   )
 
-
   (junction (at 183.515 43.18) (diameter 0) (color 0 0 0 0)
     (uuid 05b39569-aaa4-4273-9b2f-9e1c6ca4bf60)
   )
@@ -2290,10 +2289,10 @@
     (property "Reference" "J3" (id 0) (at 239.395 43.815 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "DC" (id 1) (at 242.57 46.355 0)
+    (property "Value" "DC" (id 1) (at 243.84 43.18 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "RevK:Molex_MiniSPOX_H2RA" (id 2) (at 238.125 46.355 0)
+    (property "Footprint" "RevK:DC" (id 2) (at 238.125 46.355 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Datasheet" "~" (id 3) (at 238.125 46.355 0)
@@ -3478,7 +3477,7 @@
     (property "Reference" "R18" (id 0) (at 234.315 72.39 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "3M 1% or NF" (id 1) (at 236.22 70.485 0)
+    (property "Value" "30k 1% or NF" (id 1) (at 236.22 70.485 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 236.093 70.485 90)
@@ -3627,7 +3626,7 @@
     (property "Reference" "R17" (id 0) (at 229.235 66.675 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10M 1% or 0R" (id 1) (at 231.14 69.85 90)
+    (property "Value" "100k 1% or 0R" (id 1) (at 231.14 69.85 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 227.33 68.453 90)
@@ -3796,7 +3795,7 @@
       (reference "J2") (unit 1) (value "USB-C") (footprint "RevK:USC16-TR-Round")
     )
     (path "/00000000-0000-0000-0000-000060460b50"
-      (reference "J3") (unit 1) (value "DC") (footprint "RevK:Molex_MiniSPOX_H2RA")
+      (reference "J3") (unit 1) (value "DC") (footprint "RevK:DC")
     )
     (path "/00000000-0000-0000-0000-0000610fe01a"
       (reference "L1") (unit 1) (value "6.8uH") (footprint "RevK:Hidden")
@@ -3853,10 +3852,10 @@
       (reference "R16") (unit 1) (value "10k") (footprint "RevK:R_0603")
     )
     (path "/fc3ca677-79f2-42b6-a5b3-ff3b18df1d6c"
-      (reference "R17") (unit 1) (value "10M 1% or 0R") (footprint "RevK:R_0603")
+      (reference "R17") (unit 1) (value "100k 1% or 0R") (footprint "RevK:R_0603")
     )
     (path "/83151023-5106-4495-aeff-aefc75dfd6c0"
-      (reference "R18") (unit 1) (value "3M 1% or NF") (footprint "RevK:R_0603")
+      (reference "R18") (unit 1) (value "30k 1% or NF") (footprint "RevK:R_0603")
     )
     (path "/d3737146-f8f2-4cf9-a53d-a4805b531c09"
       (reference "U1") (unit 1) (value "ESP32-WROOM-32") (footprint "RevK:ESP32-WROOM-32")

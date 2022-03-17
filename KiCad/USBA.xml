@@ -2,15 +2,15 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/USBA.kicad_sch</source>
-    <date>Sunday, 30 January 2022 at 11:03:09</date>
-    <tool>Eeschema (6.0.1-0)</tool>
-    <textvar name="DATE">2022-01-30</textvar>
+    <date>Thursday, 17 March 2022 at 07:31:58</date>
+    <tool>Eeschema (6.0.2-0)</tool>
+    <textvar name="DATE">2022-02-18</textvar>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Generic ESP32 USB-A</title>
         <company/>
         <rev>1</rev>
-        <date>2022-01-30</date>
+        <date>2022-02-18</date>
         <source>USBA.kicad_sch</source>
         <comment number="1" value="@TheRealRevK"/>
         <comment number="2" value="www.me.uk"/>
@@ -172,7 +172,7 @@
       <tstamps>00000000-0000-0000-0000-000060a436c8</tstamps>
     </comp>
     <comp ref="R4">
-      <value>10M 1% or 0R</value>
+      <value>100k 1% or 0R</value>
       <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
@@ -181,7 +181,7 @@
       <tstamps>0822ca37-715d-4e56-a8e3-be77335446d8</tstamps>
     </comp>
     <comp ref="R5">
-      <value>3M 1% or NF</value>
+      <value>30k 1% or NF</value>
       <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>

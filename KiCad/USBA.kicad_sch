@@ -2075,7 +2075,7 @@
     (property "Reference" "R4" (id 0) (at 186.69 52.07 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10M 1% or 0R" (id 1) (at 188.595 55.245 90)
+    (property "Value" "100k 1% or 0R" (id 1) (at 188.595 55.245 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 184.785 53.848 90)
@@ -2190,7 +2190,7 @@
     (property "Reference" "R5" (id 0) (at 191.77 57.785 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "3M 1% or NF" (id 1) (at 193.675 55.88 0)
+    (property "Value" "30k 1% or NF" (id 1) (at 193.675 55.88 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 193.548 55.88 90)
@@ -2299,10 +2299,10 @@
       (reference "R3") (unit 1) (value "330R") (footprint "RevK:R_0603")
     )
     (path "/0822ca37-715d-4e56-a8e3-be77335446d8"
-      (reference "R4") (unit 1) (value "10M 1% or 0R") (footprint "RevK:R_0603")
+      (reference "R4") (unit 1) (value "100k 1% or 0R") (footprint "RevK:R_0603")
     )
     (path "/e06620f1-6613-429a-ab9d-1435eff32a58"
-      (reference "R5") (unit 1) (value "3M 1% or NF") (footprint "RevK:R_0603")
+      (reference "R5") (unit 1) (value "30k 1% or NF") (footprint "RevK:R_0603")
     )
     (path "/00000000-0000-0000-0000-0000618d0b84"
       (reference "SW1") (unit 1) (value "SW_Push") (footprint "RevK:SW_PUSH_6mm_SMD")

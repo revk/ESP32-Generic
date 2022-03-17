@@ -4271,7 +4271,7 @@
     (property "Reference" "R17" (id 0) (at 231.775 44.45 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "3M 1% or NF" (id 1) (at 233.68 42.545 0)
+    (property "Value" "100k 1% or NF" (id 1) (at 233.68 42.545 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 233.553 42.545 90)
@@ -4318,7 +4318,7 @@
     (property "Reference" "R16" (id 0) (at 226.695 38.735 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10M 1% or 0R" (id 1) (at 228.6 41.91 90)
+    (property "Value" "330k 1% or 0R" (id 1) (at 228.6 41.91 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 224.79 40.513 90)
@@ -4550,10 +4550,10 @@
       (reference "R15") (unit 1) (value "10K") (footprint "RevK:R_0603")
     )
     (path "/fc3ca677-79f2-42b6-a5b3-ff3b18df1d6c"
-      (reference "R16") (unit 1) (value "10M 1% or 0R") (footprint "RevK:R_0603")
+      (reference "R16") (unit 1) (value "330k 1% or 0R") (footprint "RevK:R_0603")
     )
     (path "/83151023-5106-4495-aeff-aefc75dfd6c0"
-      (reference "R17") (unit 1) (value "3M 1% or NF") (footprint "RevK:R_0603")
+      (reference "R17") (unit 1) (value "100k 1% or NF") (footprint "RevK:R_0603")
     )
     (path "/00000000-0000-0000-0000-000060ab0248"
       (reference "R18") (unit 1) (value "10K") (footprint "RevK:R_0603")

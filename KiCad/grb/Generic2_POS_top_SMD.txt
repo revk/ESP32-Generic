@@ -1,4 +1,4 @@
-### Module positions - created on 2022-03-05 07:59
+### Module positions - created on 2022-03-17 07:31
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 22.600mm, Pcb Width 35.600mm [based on Edge bounding box]
@@ -28,13 +28,13 @@ L1            6.8uH               Hidden                        149.7400   -90.3
 C5            0.1uF               Hidden                        149.9900   -96.3400   0.0000     0.0000        0.0    top       SMD
 R1            10k                 R_0603                        139.7000   -102.0250  139.7000   -102.8500    90.0    top       SMD
 D8            BAV99S              SOT-363_SC-70-6               162.2500   -102.4500  161.6000   -103.4000    90.0    top       SMD
-R12           3M 1% or NF         R_0603                        150.0000   -97.6500   150.8250   -97.6500    180.0    top       SMD
+R12           30k 1% or NF        R_0603                        150.0000   -97.6500   150.8250   -97.6500    180.0    top       SMD
 R5            4k7                 R_0603                        143.2000   -94.6000   144.0250   -94.6000    180.0    top       SMD
 D9            BAV99S              SOT-363_SC-70-6               162.2500   -106.9500  161.6000   -107.9000    90.0    top       SMD
 R6            10k                 R_0603                        140.5000   -94.6000   141.3250   -94.6000    180.0    top       SMD
 D7            BAV99S              SOT-363_SC-70-6               162.2500   -98.2000   161.6000   -99.1500     90.0    top       SMD
 U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 141.4500   -98.0500   140.4500   -99.9500     90.0    top       SMD
-R11           10M 1% or 0R        R_0603                        146.2000   -91.5500   146.2000   -90.7250    -90.0    top       SMD
+R11           100k 1% or 0R       R_0603                        146.2000   -91.5500   146.2000   -90.7250    -90.0    top       SMD
 D5            BAV99S              SOT-363_SC-70-6               133.2500   -90.4500   133.9000   -89.5000    -90.0    top       SMD
 U3            LMR16006+FB         RegulatorBlockFB              149.7400   -94.2400   151.0900   -95.1900     90.0    top       SMD
 ## End

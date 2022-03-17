@@ -1,4 +1,4 @@
-### Module positions - created on 2022-03-05 07:54
+### Module positions - created on 2022-03-17 07:34
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
@@ -28,8 +28,8 @@ L1            6.8uH               Hidden                        133.9600   -101.
 C6            0.1uF               Hidden                        127.9600   -102.0000  0.0000     0.0000      -90.0    top       SMD
 R15           4k7                 R_0603                        121.8000   -107.4000  121.8000   -106.5750   -90.0    top       SMD
 R1            10k                 R_0603                        118.7000   -105.4000  119.5250   -105.4000   180.0    top       SMD
-R18           3M 1% or NF         R_0603                        124.4000   -99.6000   123.5750   -99.6000      0.0    top       SMD
-R17           10M 1% or 0R        R_0603                        127.1000   -99.6000   127.9250   -99.6000    180.0    top       SMD
+R18           30k 1% or NF        R_0603                        124.4000   -99.6000   123.5750   -99.6000      0.0    top       SMD
+R17           100k 1% or 0R       R_0603                        127.1000   -99.6000   127.9250   -99.6000    180.0    top       SMD
 R16           10k                 R_0603                        120.6000   -107.4000  120.6000   -108.2250    90.0    top       SMD
 U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.7000   -112.3000  121.7000   -114.2000    90.0    top       SMD
 U3            LMR16006+FB         RegulatorBlockFB              130.0600   -101.7500  129.1100   -103.1000     0.0    top       SMD

@@ -1,4 +1,4 @@
-### Module positions - created on 2022-02-18 13:29
+### Module positions - created on 2022-03-17 07:31
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 32.110mm, Pcb Width 19.100mm [based on Edge bounding box]
@@ -7,6 +7,6 @@
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
 D1            RGB                 LED-RGB-1.6x1.6               114.1000   -100.1000  114.9750   -100.6000     0.0    top       THD
 Logo1         AJK                 AJK                           114.4500   -117.0400  0.0000     0.0000      180.0    top       THD
-U4            QR                  QR-HA                         126.7100   -110.1000  0.0000     0.0000       90.0    top       THD
+U4            QR                  QR-HA                         126.7100   -110.0500  0.0000     0.0000       90.0    top       THD
 J1            USB_A               USB-A-PCB                     121.5000   -131.0000  125.0000   -126.0500     0.0    top       THD
 ## End

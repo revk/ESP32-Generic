@@ -1,4 +1,4 @@
-### Module positions - created on 2022-02-18 13:29
+### Module positions - created on 2022-03-17 07:31
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 32.110mm, Pcb Width 19.100mm [based on Edge bounding box]
@@ -16,7 +16,7 @@ D2            Schottky            Hidden                        127.1400   -105.
 L1            6.8uH               Hidden                        128.7600   -102.1500  0.0000     0.0000      180.0    top       SMD
 C2            0.1uF               Hidden                        122.7600   -102.4000  0.0000     0.0000      -90.0    top       SMD
 SW1           SW_Push             SW_PUSH_6mm_SMD               121.5000   -116.1000  125.7000   -113.8500     0.0    top       SMD
-R5            3M 1% or NF         R_0603                        121.4000   -102.4000  121.4000   -103.2250    90.0    top       SMD
-R4            10M 1% or 0R        R_0603                        120.6000   -100.4000  119.7750   -100.4000     0.0    top       SMD
+R5            30k 1% or NF        R_0603                        121.4000   -102.4000  121.4000   -103.2250    90.0    top       SMD
+R4            100k 1% or 0R       R_0603                        120.6000   -100.4000  119.7750   -100.4000     0.0    top       SMD
 U3            LMR16006+FB         RegulatorBlockFB              124.8600   -102.1500  123.9100   -103.5000     0.0    top       SMD
 ## End

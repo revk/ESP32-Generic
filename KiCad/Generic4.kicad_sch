@@ -1551,8 +1551,8 @@
     (property "Reference" "C4" (id 0) (at 203.581 41.0753 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10nF" (id 1) (at 203.581 43.6122 0)
-      (effects (font (size 0 0)) (justify left))
+    (property "Value" "100nF" (id 1) (at 203.581 43.6122 0)
+      (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "RevK:C_0603" (id 2) (at 201.6252 45.72 0)
       (effects (font (size 1.27 1.27)) hide)
@@ -1934,7 +1934,7 @@
       (reference "C3") (unit 1) (value "10uF") (footprint "RevK:Hidden")
     )
     (path "/296b967f-b7a9-453f-856a-7b874fdca3db"
-      (reference "C4") (unit 1) (value "10nF") (footprint "RevK:C_0603")
+      (reference "C4") (unit 1) (value "100nF") (footprint "RevK:C_0603")
     )
     (path "/c402b2b8-0bbd-4038-b1b9-845d84949881"
       (reference "D1") (unit 1) (value "RGB") (footprint "RevK:LED-RGB-1.6x1.6")

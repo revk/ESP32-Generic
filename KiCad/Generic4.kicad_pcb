@@ -835,7 +835,7 @@
       (effects (font (size 0.5 0.5) (thickness 0.08)) (justify mirror))
       (tstamp 900cb6c8-1d05-4537-a4f0-9a7cc1a2ea1c)
     )
-    (fp_text value "10nF" (at 0 0 90) (layer "B.Fab")
+    (fp_text value "100nF" (at 0 0 90) (layer "B.Fab")
       (effects (font (size 0.4 0.4) (thickness 0.08)) (justify mirror))
       (tstamp b500fd76-a613-4f44-aac4-99213e86ff44)
     )

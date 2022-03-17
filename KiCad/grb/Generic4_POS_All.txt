@@ -1,11 +1,10 @@
-### Module positions - created on 2022-03-16 17:34
+### Module positions - created on 2022-03-17 07:25
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 19.600mm, Pcb Width 13.300mm [based on Edge bounding box]
 ## Side : ALL
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-C4            10nF                C_0603                        94.7000    -50.3000   94.7000    -49.5250    -90.0    bottom    SMD
 U1            ESP32-PICO-MINI-02  ESP32-PICO-MINI-02            100.0000   -44.1932   94.1000    -40.1932      0.0    top       SMD
 J2            SPOX                Molex_MiniSPOX_H4RA           100.0000   -51.4400   96.2500    -51.4400      0.0    top       THD
 C3            10uF                Hidden                        94.4500    -45.1500   0.0000     0.0000      -90.0    bottom    SMD
@@ -18,6 +17,7 @@ R1            680R                R_0603                        102.7000   -44.7
 R3            220R                R_0603                        105.8500   -44.7000   105.8500   -43.8750    -90.0    bottom    SMD
 C2            2.2uF               Hidden                        100.7000   -45.1500   0.0000     0.0000      -90.0    bottom    SMD
 D1            RGB                 LED-RGB-1.6x1.6               104.9000   -41.6000   105.7750   -41.1000      0.0    bottom    SMD
+C4            100nF               C_0603                        94.7000    -50.3000   94.7000    -49.5250    -90.0    bottom    SMD
 U2            LMR16006+FB         RegulatorBlockFB              99.8500    -41.6000   100.8000   -42.9500    180.0    bottom    SMD
 L1            6.8uH               Hidden                        95.9500    -41.6000   0.0000     0.0000        0.0    bottom    SMD
 R4            100k 1% or 0R       R_0603                        105.0000   -39.5000   105.8250   -39.5000    180.0    bottom    SMD

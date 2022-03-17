@@ -3819,7 +3819,7 @@
     (property "Reference" "R12" (id 0) (at 245.745 51.435 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Value" "3M 1% or NF" (id 1) (at 247.65 49.53 0)
+    (property "Value" "30k 1% or NF" (id 1) (at 247.65 49.53 0)
       (effects (font (size 1.27 1.27)) (justify right))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 247.523 49.53 90)
@@ -4319,7 +4319,7 @@
     (property "Reference" "R11" (id 0) (at 240.665 45.72 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10M 1% or 0R" (id 1) (at 242.57 48.895 90)
+    (property "Value" "100k 1% or 0R" (id 1) (at 242.57 48.895 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "RevK:R_0603" (id 2) (at 238.76 47.498 90)
@@ -4649,10 +4649,10 @@
       (reference "R10") (unit 1) (value "27R") (footprint "RevK:R_0603")
     )
     (path "/fc3ca677-79f2-42b6-a5b3-ff3b18df1d6c"
-      (reference "R11") (unit 1) (value "10M 1% or 0R") (footprint "RevK:R_0603")
+      (reference "R11") (unit 1) (value "100k 1% or 0R") (footprint "RevK:R_0603")
     )
     (path "/83151023-5106-4495-aeff-aefc75dfd6c0"
-      (reference "R12") (unit 1) (value "3M 1% or NF") (footprint "RevK:R_0603")
+      (reference "R12") (unit 1) (value "30k 1% or NF") (footprint "RevK:R_0603")
     )
     (path "/d5e983d3-8ec8-49a4-988e-8dcad7ce08a3"
       (reference "U1") (unit 1) (value "ESP32-WROOM-32") (footprint "RevK:ESP32-WROOM-32")

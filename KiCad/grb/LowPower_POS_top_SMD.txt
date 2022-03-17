@@ -1,4 +1,4 @@
-### Module positions - created on 2022-01-30 09:59
+### Module positions - created on 2022-03-17 07:30
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
 ## Pcb Height 29.100mm, Pcb Width 19.100mm [based on Edge bounding box]
@@ -6,7 +6,6 @@
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
 J2            USB-C               USC16-TR-Round                135.7750   -111.1000  0.0000     0.0000       90.0    top       SMD
-U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.2300   -112.7000  121.2300   -114.6000    90.0    top       SMD
 R1            10K                 R_0603                        119.7300   -106.7000  120.5550   -106.7000   180.0    top       SMD
 R10           330R                R_0603                        118.7300   -102.4000  117.9050   -102.4000     0.0    top       SMD
 R19           18K                 R_0603                        123.1300   -105.7000  122.3050   -105.7000     0.0    top       SMD
@@ -32,7 +31,8 @@ C8            10uF                Hidden                        134.9900   -105.
 D5            Schottky            Hidden                        131.8700   -104.9200  0.0000     0.0000        0.0    top       SMD
 L1            6.8uH               Hidden                        133.4900   -101.7500  0.0000     0.0000        0.0    top       SMD
 C6            0.1uF               Hidden                        127.4900   -102.0000  0.0000     0.0000      -90.0    top       SMD
-R17           3M 1% or NF         R_0603                        123.9300   -99.6000   123.1050   -99.6000      0.0    top       SMD
-R16           10M 1% or 0R        R_0603                        126.6300   -99.6000   127.4550   -99.6000    180.0    top       SMD
+R17           100k 1% or NF       R_0603                        123.9300   -99.6000   123.1050   -99.6000      0.0    top       SMD
+U2            FT231XQ             QFN-20-1EP_4x4mm_P0.5mm_EP2.. 122.2300   -112.7000  121.2300   -114.6000    90.0    top       SMD
+R16           330k 1% or 0R       R_0603                        126.6300   -99.6000   127.4550   -99.6000    180.0    top       SMD
 U4            LMR16006+FB         RegulatorBlockFB              129.5900   -101.7500  128.6400   -103.1000     0.0    top       SMD
 ## End
