@@ -188,6 +188,11 @@ const char *app_callback(int client, const char *prefix, const char *target, con
    {
       return gfx_qr(value) ? : "";
    }
+   if(!strcmp(suffix,"message"))
+   {
+	   gfx_message(value);
+	   return "";
+   }
    if (!strncmp(suffix, "output", 6))
    {
       int i = atoi(suffix + 6);
