@@ -70,11 +70,7 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(gfxrst,)	\
 	io(gfxbusy,)	\
 	io(gfxena,)	\
-<<<<<<< HEAD
 	u8(gfxflip,)	\
-=======
-	io(gfxflip,)	\
->>>>>>> 8de30daddc5e95aa1c2d897265c720121624306c
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -296,11 +292,7 @@ void app_main()
        revk_start();
    if (gfxmosi || gfxdc || gfxsck)
    {
-<<<<<<< HEAD
-      const char *e = gfx_init(port:HSPI_HOST, cs:port_mask(gfxcs), sck:port_mask(gfxsck), mosi:port_mask(gfxmosi), dc:port_mask(gfxdc), rst:port_mask(gfxrst), busy:port_mask(gfxbusy), ena:port_mask(gfxena),flip:gfxflip );
-=======
     const char *e = gfx_init(port: HSPI_HOST, cs: port_mask(gfxcs), sck: port_mask(gfxsck), mosi: port_mask(gfxmosi), dc: port_mask(gfxdc), rst: port_mask(gfxrst), busy: port_mask(gfxbusy), ena: port_mask(gfxena), flip:gfxflip);
->>>>>>> 8de30daddc5e95aa1c2d897265c720121624306c
       if (e)
       {
          ESP_LOGE(TAG, "gfx %s", e);
