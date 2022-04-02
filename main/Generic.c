@@ -70,6 +70,9 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(gfxrst,)	\
 	io(gfxbusy,)	\
 	io(gfxena,)	\
+	io(uart1rx,)	\
+	io(uart2rx,)	\
+	b(daikin)	\
 	u8(gfxflip,)	\
 
 #define u32(n,d)        uint32_t n;
@@ -92,6 +95,68 @@ const char *rangererr = NULL;
 uint16_t range = 0;
 uint32_t voltage = 0;
 
+volatile uint8_t uarts = 1;
+void uart_task(void *arg)
+{
+   uint8_t rx = *(uint8_t *) arg;
+   uint8_t uart = uarts++;
+   esp_err_t err = 0;
+   uart_config_t uart_config = {
+      .baud_rate = 9600,
+      .data_bits = UART_DATA_8_BITS,
+      .parity = UART_PARITY_DISABLE,
+      .stop_bits = UART_STOP_BITS_1,
+      .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
+   };
+   if (!err)
+      err = uart_param_config(uart, &uart_config);
+   if (!err)
+      err = uart_set_pin(uart, -1, port_mask(rx), -1, -1);
+   if (!err)
+      err = uart_driver_install(uart, 1024, 0, 0, NULL, 0);
+   if (err)
+   {
+      jo_t j = jo_object_alloc();
+      jo_string(j, "error", "Failed to uart");
+      jo_int(j, "uart", uart);
+      jo_int(j, "gpio", port_mask(rx));
+      jo_string(j, "description", esp_err_to_name(err));
+      revk_error("uart", &j);
+      return;
+   }
+   while (1)
+   {
+      uint8_t buf[256];
+      int len = uart_read_bytes(uart, buf, sizeof(buf), 10 / portTICK_PERIOD_MS);
+      if (len <= 0)
+         continue;
+      jo_t j = jo_object_alloc();
+      jo_int(j, "uart", uart);
+      jo_int(j, "gpio", port_mask(rx));
+      if (daikin)
+      {                         // Daikin debug
+         uint8_t c = 0;
+         for (int i = 0; i < len; i++)
+            c += buf[i];
+         if (c != 0xFF)
+            jo_bool(j, "badsum", 1);
+         if (len < 6 || buf[2] != len)
+            jo_bool(j, "badlen", 1);
+         if (buf[0] != 6 || buf[3] != 1)
+            jo_bool(j, "badhead", 1);
+         jo_stringf(j, uart == 1 ? "tx" : "rx", "%02X", buf[1]);
+         if (buf[4] != (uart == 1 ? 0 : 6))
+            jo_stringf(j, "tag", "%02X", buf[4]);
+         if (len > 6)
+            jo_base16(j, "data", buf + 5, len - 6);
+      } else
+      {
+         jo_int(j, "len", len);
+         jo_base16(j, "data", buf, len);
+      }
+      revk_info("uart", &j);
+   }
+}
 
 void input_task(void *arg)
 {
@@ -498,6 +563,11 @@ void app_main()
       }
       revk_info(NULL, &j);
    }
+
+   if (uart1rx)
+      revk_task("uart1", uart_task, &uart1rx);
+   if (uart2rx)
+      revk_task("uart2", uart_task, &uart2rx);
 
    if (!period)
    {
