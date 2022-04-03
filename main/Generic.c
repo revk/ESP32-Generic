@@ -128,43 +128,56 @@ void uart_task(void *arg)
    while (1)
    {
       uint8_t buf[256];
-      int len = uart_read_bytes(uart, buf, sizeof(buf), (s21 ? 20 : 10) / portTICK_PERIOD_MS);
+      int len = 0;
+      if (s21)
+      {
+         len = uart_read_bytes(uart, buf, 1, 10 / portTICK_PERIOD_MS);
+         if (len == 1)
+         {                      // Start
+            if (*buf == 6)
+               len = 0;         // ACK
+            else
+               while (len < sizeof(buf))
+               {
+                  if (uart_read_bytes(uart, buf + len, 1, 100 / portTICK_PERIOD_MS) <= 0)
+                     break;
+                  len++;
+                  if (buf[len - 1] == 3)
+                     break;     // End
+               }
+         }
+      } else
+         len = uart_read_bytes(uart, buf, sizeof(buf), 10 / portTICK_PERIOD_MS);
       if (len <= 0)
          continue;
       jo_t j = jo_object_alloc();
-      jo_int(j, "uart", uart);
-      jo_int(j, "gpio", port_mask(rx));
       if (daikin)
       {                         // Daikin debug
          if (s21)
          {
-            if (len > 2 && buf[0] == 6 && buf[1] == 6)
-               memmove(buf, buf + 1, --len);    // We see double ack some times?
             uint8_t c = 0;
-            for (int i = 2; i < len - 2; i++)
+            for (int i = 1; i < len - 2; i++)
                c += buf[i];
             if (buf[len - 2] != c)
             {
                jo_stringf(j, "badsum", "%02X", c);
                jo_base16(j, "raw", buf, len);
             }
-            if (len < 6)
-               jo_bool(j, "badlen", 1);
-            if (buf[0] != 6 || buf[1] != 2 || buf[len - 1] != 3)
+            if (len < 5)
             {
-               jo_bool(j, "badhead", 1);
+               jo_bool(j, "badlen", 1);
                jo_base16(j, "raw", buf, len);
             }
-            jo_stringf(j, uart == 1 ? "tx" : "rx", "%c", buf[2]);
-            jo_stringf(j, "cmd", "%c", buf[3]);
-            if (len > 6)
+            jo_stringf(j, uart == 1 ? "tx" : "rx", "%c", buf[1]);
+            jo_stringf(j, "cmd", "%c", buf[2]);
+            if (len > 5)
             {
                int i;
-               for (i = 4; i < len - 2 && ((buf[i] >= 0x20 && buf[i] <= 0x7E) || buf[i] == 0xFF); i++);
+               for (i = 3; i < len - 2 && ((buf[i] >= 0x20 && buf[i] <= 0x7E) || buf[i] == 0xFF); i++);
                if (i < len - 2)
-                  jo_base16(j, "data", buf + 4, len - 6);
+                  jo_base16(j, "data", buf + 3, len - 5);
                else
-                  jo_stringn(j, "value", (char *) buf + 4, len - 6);
+                  jo_stringn(j, "value", (char *) buf + 3, len - 5);
             }
          } else
          {
@@ -185,6 +198,8 @@ void uart_task(void *arg)
          }
       } else
       {
+         jo_int(j, "uart", uart);
+         jo_int(j, "gpio", port_mask(rx));
          jo_int(j, "len", len);
          jo_base16(j, "data", buf, len);
       }
