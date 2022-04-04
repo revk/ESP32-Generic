@@ -72,6 +72,7 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(gfxena,)	\
 	io(uart1rx,)	\
 	io(uart2rx,)	\
+	b(s21)		\
 	b(daikin)	\
 	u8(gfxflip,)	\
 
@@ -102,7 +103,7 @@ void uart_task(void *arg)
    uint8_t uart = uarts++;
    esp_err_t err = 0;
    uart_config_t uart_config = {
-      .baud_rate = 9600,
+      .baud_rate = s21 ? 2400 : 9600,
       .data_bits = UART_DATA_8_BITS,
       .parity = UART_PARITY_DISABLE,
       .stop_bits = UART_STOP_BITS_1,
@@ -127,30 +128,78 @@ void uart_task(void *arg)
    while (1)
    {
       uint8_t buf[256];
-      int len = uart_read_bytes(uart, buf, sizeof(buf), 10 / portTICK_PERIOD_MS);
+      int len = 0;
+      if (s21)
+      {
+         len = uart_read_bytes(uart, buf, 1, 10 / portTICK_PERIOD_MS);
+         if (len == 1)
+         {                      // Start
+            if (*buf == 6)
+               len = 0;         // ACK
+            else
+               while (len < sizeof(buf))
+               {
+                  if (uart_read_bytes(uart, buf + len, 1, 100 / portTICK_PERIOD_MS) <= 0)
+                     break;
+                  len++;
+                  if (buf[len - 1] == 3)
+                     break;     // End
+               }
+         }
+      } else
+         len = uart_read_bytes(uart, buf, sizeof(buf), 10 / portTICK_PERIOD_MS);
       if (len <= 0)
          continue;
       jo_t j = jo_object_alloc();
-      jo_int(j, "uart", uart);
-      jo_int(j, "gpio", port_mask(rx));
       if (daikin)
       {                         // Daikin debug
-         uint8_t c = 0;
-         for (int i = 0; i < len; i++)
-            c += buf[i];
-         if (c != 0xFF)
-            jo_bool(j, "badsum", 1);
-         if (len < 6 || buf[2] != len)
-            jo_bool(j, "badlen", 1);
-         if (buf[0] != 6 || buf[3] != 1)
-            jo_bool(j, "badhead", 1);
-         jo_stringf(j, uart == 1 ? "tx" : "rx", "%02X", buf[1]);
-         if (buf[4] != (uart == 1 ? 0 : 6))
-            jo_stringf(j, "tag", "%02X", buf[4]);
-         if (len > 6)
-            jo_base16(j, "data", buf + 5, len - 6);
+         if (s21)
+         {
+            uint8_t c = 0;
+            for (int i = 1; i < len - 2; i++)
+               c += buf[i];
+            if (buf[len - 2] != c)
+            {
+               jo_stringf(j, "badsum", "%02X", c);
+               jo_base16(j, "raw", buf, len);
+            }
+            if (len < 5)
+            {
+               jo_bool(j, "badlen", 1);
+               jo_base16(j, "raw", buf, len);
+            }
+            jo_stringf(j, uart == 1 ? "tx" : "rx", "%c", buf[1]);
+            jo_stringf(j, "cmd", "%c", buf[2]);
+            if (len > 5)
+            {
+               int i;
+               for (i = 3; i < len - 2 && ((buf[i] >= 0x20 && buf[i] <= 0x7E) || buf[i] == 0xFF); i++);
+               if (i < len - 2)
+                  jo_base16(j, "data", buf + 3, len - 5);
+               else
+                  jo_stringn(j, "value", (char *) buf + 3, len - 5);
+            }
+         } else
+         {
+            uint8_t c = 0;
+            for (int i = 0; i < len; i++)
+               c += buf[i];
+            if (c != 0xFF)
+               jo_bool(j, "badsum", 1);
+            if (len < 6 || buf[2] != len)
+               jo_bool(j, "badlen", 1);
+            if (buf[0] != 6 || buf[3] != 1)
+               jo_bool(j, "badhead", 1);
+            jo_stringf(j, uart == 1 ? "tx" : "rx", "%02X", buf[1]);
+            if (buf[4] != (uart == 1 ? 0 : 6))
+               jo_stringf(j, "tag", "%02X", buf[4]);
+            if (len > 6)
+               jo_base16(j, "data", buf + 5, len - 6);
+         }
       } else
       {
+         jo_int(j, "uart", uart);
+         jo_int(j, "gpio", port_mask(rx));
          jo_int(j, "len", len);
          jo_base16(j, "data", buf, len);
       }
