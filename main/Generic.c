@@ -378,6 +378,21 @@ const char *app_callback(int client, const char *prefix, const char *target, con
    return NULL;
 }
 
+// --------------------------------------------------------------------------------
+// Web
+static esp_err_t web_root(httpd_req_t * req)
+{
+	 if (revk_link_down())
+      return revk_web_config(req);      // Direct to web set up
+   httpd_resp_sendstr_chunk(req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
+   httpd_resp_sendstr_chunk(req, "<html><body style='font-family:sans-serif;background:#8cf;'><h1>");
+   if (*hostname)
+      httpd_resp_sendstr_chunk(req, hostname);
+   httpd_resp_sendstr_chunk(req, "</h1>");
+   httpd_resp_sendstr_chunk(req, NULL);
+   return ESP_OK;
+}
+
 void app_main()
 {
    time_t now = time(0);
@@ -404,6 +419,22 @@ void app_main()
 #undef b
 #undef s
        revk_start();
+
+   // Web interface
+   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+   httpd_handle_t server = NULL;
+   if (!httpd_start(&server, &config))
+   {
+      {
+         httpd_uri_t uri = {
+            .uri = "/",
+            .method = HTTP_GET,
+            .handler = web_root,
+            .user_ctx = NULL
+         };
+         REVK_ERR_CHECK(httpd_register_uri_handler(server, &uri));
+      }
+   }
    if (gfxmosi || gfxdc || gfxsck)
    {
     const char *e = gfx_init(port: HSPI_HOST, cs: port_mask(gfxcs), sck: port_mask(gfxsck), mosi: port_mask(gfxmosi), dc: port_mask(gfxdc), rst: port_mask(gfxrst), busy: port_mask(gfxbusy), ena: port_mask(gfxena), flip:gfxflip);
