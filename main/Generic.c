@@ -380,14 +380,16 @@ const char *app_callback(int client, const char *prefix, const char *target, con
 
 // --------------------------------------------------------------------------------
 // Web
+#ifdef	CONFIG_REVK_APCONFIG
+#error 	Clash with CONFIG_REVK_APCONFIG set
+#endif
 static esp_err_t web_root(httpd_req_t * req)
 {
 	 if (revk_link_down())
       return revk_web_config(req);      // Direct to web set up
    httpd_resp_sendstr_chunk(req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
    httpd_resp_sendstr_chunk(req, "<html><body style='font-family:sans-serif;background:#8cf;'><h1>");
-   if (*hostname)
-      httpd_resp_sendstr_chunk(req, hostname);
+      httpd_resp_sendstr_chunk(req, appname);
    httpd_resp_sendstr_chunk(req, "</h1>");
    httpd_resp_sendstr_chunk(req, NULL);
    return ESP_OK;
@@ -434,6 +436,26 @@ void app_main()
          };
          REVK_ERR_CHECK(httpd_register_uri_handler(server, &uri));
       }
+      {
+         httpd_uri_t uri = {
+            .uri = "/wifi",
+            .method = HTTP_GET,
+            .handler = revk_web_config,
+            .user_ctx = NULL
+         };
+         REVK_ERR_CHECK(httpd_register_uri_handler(server, &uri));
+      }
+#ifdef  CONFIG_WS_TRANSPORT
+        {
+           httpd_uri_t uri = {
+              .uri = "/wifilist",	// TODO should be out function that calls this after cookie checks probably?
+              .method = HTTP_GET,
+              .handler = revk_web_wifilist,
+              .is_websocket = true,
+           };
+           REVK_ERR_CHECK(httpd_register_uri_handler(server, &uri));
+        }
+#endif
    }
    if (gfxmosi || gfxdc || gfxsck)
    {
