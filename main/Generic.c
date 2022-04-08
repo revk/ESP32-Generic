@@ -95,6 +95,7 @@ char charger_present = 0;
 const char *rangererr = NULL;
 uint16_t range = 0;
 uint32_t voltage = 0;
+httpd_handle_t webserver = NULL;
 
 volatile uint8_t uarts = 1;
 void uart_task(void *arg)
@@ -295,6 +296,8 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       if (len > sizeof(value))
          return "Too long";
    }
+   if (!strcmp(suffix, "shutdown"))
+      httpd_stop(webserver);
    if (!strcmp(suffix, "upgrade") || !strcmp(suffix, "wait"))
    {
       busy = esp_timer_get_time() + 60000000ULL;
@@ -385,11 +388,11 @@ const char *app_callback(int client, const char *prefix, const char *target, con
 #endif
 static esp_err_t web_root(httpd_req_t * req)
 {
-	 if (revk_link_down())
+   if (revk_link_down())
       return revk_web_config(req);      // Direct to web set up
    httpd_resp_sendstr_chunk(req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
    httpd_resp_sendstr_chunk(req, "<html><body style='font-family:sans-serif;background:#8cf;'><h1>");
-      httpd_resp_sendstr_chunk(req, appname);
+   httpd_resp_sendstr_chunk(req, appname);
    httpd_resp_sendstr_chunk(req, "</h1>");
    httpd_resp_sendstr_chunk(req, NULL);
    return ESP_OK;
@@ -424,8 +427,7 @@ void app_main()
 
    // Web interface
    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-   httpd_handle_t server = NULL;
-   if (!httpd_start(&server, &config))
+   if (!httpd_start(&webserver, &config))
    {
       {
          httpd_uri_t uri = {
@@ -434,7 +436,7 @@ void app_main()
             .handler = web_root,
             .user_ctx = NULL
          };
-         REVK_ERR_CHECK(httpd_register_uri_handler(server, &uri));
+         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
       }
       {
          httpd_uri_t uri = {
@@ -443,18 +445,18 @@ void app_main()
             .handler = revk_web_config,
             .user_ctx = NULL
          };
-         REVK_ERR_CHECK(httpd_register_uri_handler(server, &uri));
+         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
       }
-#ifdef  CONFIG_WS_TRANSPORT
-        {
-           httpd_uri_t uri = {
-              .uri = "/wifilist",	// TODO should be out function that calls this after cookie checks probably?
-              .method = HTTP_GET,
-              .handler = revk_web_wifilist,
-              .is_websocket = true,
-           };
-           REVK_ERR_CHECK(httpd_register_uri_handler(server, &uri));
-        }
+#ifdef  CONFIG_HTTPD_WS_SUPPORT
+      {
+         httpd_uri_t uri = {
+            .uri = "/wifilist", // TODO should be out function that calls this after cookie checks probably?
+            .method = HTTP_GET,
+            .handler = revk_web_wifilist,
+            .is_websocket = true,
+         };
+         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
+      }
 #endif
    }
    if (gfxmosi || gfxdc || gfxsck)
