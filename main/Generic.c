@@ -447,25 +447,7 @@ void app_main()
          };
          REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
       }
-      {
-         httpd_uri_t uri = {
-            .uri = "/hotspot-detect.html",
-            .method = HTTP_GET,
-            .handler = revk_web_config,
-         };
-         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
-      }
-#ifdef  CONFIG_HTTPD_WS_SUPPORT
-      {
-         httpd_uri_t uri = {
-            .uri = "/wifilist", // TODO should be out function that calls this after cookie checks probably?
-            .method = HTTP_GET,
-            .handler = revk_web_wifilist,
-            .is_websocket = true,
-         };
-         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
-      }
-#endif
+      revk_web_config_start(webserver);
    }
    if (gfxmosi || gfxdc || gfxsck)
    {
