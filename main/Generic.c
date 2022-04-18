@@ -296,7 +296,7 @@ void se_task(void *arg)
          // Log
          j = jo_object_alloc();
          jo_string(j, "unit", unit);
-         jo_int(j, "site", site);
+         jo_int(j, "site", sesite);
          jo_string(j, "city", city);
          jo_litf(j, "pv", "%.2f", pv);
          jo_litf(j, "load", "%.2f", load);
