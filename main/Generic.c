@@ -243,7 +243,7 @@ void se_task(void *arg)
       REVK_ERR_CHECK(esp_http_client_cleanup(client));
       return j;
    }
-   char name[17];
+   char city[17];
    jo_t j;
    asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/details?api_key=%s", sesite, sekey);
    while (1)
@@ -253,8 +253,8 @@ void se_task(void *arg)
          continue;
       if ((j = fetch(url)))
       {
-         if (jo_find(j, "*.name") == JO_STRING)
-            jo_strncpy(j, name, sizeof(name));
+         if (jo_find(j, "*.location.city") == JO_STRING)
+            jo_strncpy(j, city, sizeof(city));
          jo_free(&j);
          break;
       } else
@@ -303,7 +303,7 @@ void se_task(void *arg)
          gfx_lock();
          gfx_clear(0);
          gfx_pos(gfx_width() / 2, 0, GFX_T | GFX_C | GFX_V);
-         gfx_text(-2, "%s", name);
+         gfx_text(-2, "%s", city);
          gfx_text(-2, "Generation");
          gfx_text(5, "%.2f%s", pv, unit);
          gfx_text(-2, "Consumption");
