@@ -295,12 +295,12 @@ void se_task(void *arg)
          free(url);
          // Log
          j = jo_object_alloc();
-         jo_string(j, "unit", unit);
          jo_int(j, "site", sesite);
          jo_string(j, "city", city);
          jo_litf(j, "pv", "%.2f", pv);
          jo_litf(j, "load", "%.2f", load);
          jo_litf(j, "today", "%.1f", today / 1000);
+         jo_string(j, "unit", unit);
          revk_info("solaredge", &j);
          // Display
          gfx_lock();
