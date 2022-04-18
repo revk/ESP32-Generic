@@ -304,10 +304,14 @@ void se_task(void *arg)
          gfx_clear(0);
          gfx_pos(gfx_width() / 2, 0, GFX_T | GFX_C | GFX_V);
          gfx_text(-2, "%s", city);
+         gfx_fill(gfx_width(), 1, 255);
+         gfx_pos(gfx_x(), gfx_y() + 2, gfx_a());
          gfx_text(-2, "Generation");
          gfx_text(5, "%.2f%s", pv, unit);
          gfx_text(-2, "Consumption");
          gfx_text(5, "%.2f%s", load, unit);
+         gfx_fill(gfx_width(), 1, 255);
+         gfx_pos(gfx_x(), gfx_y() + 2, gfx_a());
          gfx_text(-2, "Today");
          gfx_text(5, "%.1fkWh", today / 1000);
          gfx_unlock();
