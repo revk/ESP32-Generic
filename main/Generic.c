@@ -245,11 +245,11 @@ void se_task(void *arg)
                   jo_t j = jo_parse_mem(buf, len);
                   if (j)
                   {
-                     if (jo_find(j, "siteCurrentPowerFlow/unit") == JO_STRING)
+                     if (jo_find(j, "*.unit") == JO_STRING)
                         jo_strncpy(j, unit, sizeof(unit));
-                     if (jo_find(j, "siteCurrentPowerFlow/PV/currentPower") == JO_NUMBER)
+                     if (jo_find(j, "*.PV.currentPower") == JO_NUMBER)
                         pv = jo_read_float(j);
-                     if (jo_find(j, "siteCurrentPowerFlow/LOAD/currentPower") == JO_NUMBER)
+                     if (jo_find(j, "*.LOAD.currentPower") == JO_NUMBER)
                         load = jo_read_float(j);
                      jo_free(&j);
                      if (*unit && (pv || load))
