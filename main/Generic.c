@@ -1,5 +1,5 @@
 /* Generic app */
-/* Copyright ©2019 - 22 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0 */
+/* Copyright Â©2019 - 2022 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0 */
 /* This has a wide range of example stuff in it that does not in itself warrant a separate project */
 /* Including UART logging and debug for Daikin air-con */
 /* Including display text and QR code */
@@ -239,7 +239,7 @@ void se_task(void *arg)
                int len = esp_http_client_read_response(client, buf, max);
                if (len > 0 && len <= max)
                {
-                  char unit[10] = "";
+                  char unit[3] = "";
                   float pv = 0,
                       load = 0;
                   jo_t j = jo_parse_mem(buf, len);
