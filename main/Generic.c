@@ -298,6 +298,7 @@ void se_task(void *arg)
          jo_string(j, "unit", unit);
          jo_litf(j, "pv", "%.2f", pv);
          jo_litf(j, "load", "%.2f", load);
+         jo_litf(j, "today", "%.1f", today / 1000);
          revk_info("solaredge", &j);
          // Display
          gfx_lock();
