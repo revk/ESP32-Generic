@@ -218,74 +218,99 @@ void uart_task(void *arg)
 
 void se_task(void *arg)
 {                               // Solar edge monitor
-   sleep(5);
    char *url = NULL;
-   asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/currentPowerFlow?api_key=%s", sesite, sekey);
    int max = 5000;
    char *buf = malloc(max);
+   jo_t fetch(const char *url) {
+      jo_t j = NULL;
+      esp_http_client_config_t config = {
+         .url = url,
+         .crt_bundle_attach = esp_crt_bundle_attach,
+      };
+      esp_http_client_handle_t client = esp_http_client_init(&config);
+      if (!client)
+         return NULL;
+      if (!esp_http_client_open(client, 0))
+      {
+         if (esp_http_client_fetch_headers(client) >= 0)
+         {
+            int len = esp_http_client_read_response(client, buf, max);
+            if (len > 0 && len <= max)
+               j = jo_parse_mem(buf, len);
+         }
+         esp_http_client_close(client);
+      }
+      REVK_ERR_CHECK(esp_http_client_cleanup(client));
+      return j;
+   }
+   char name[17];
+   jo_t j;
+   asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/details?api_key=%s", sesite, sekey);
+   while (1)
+   {
+      sleep(5);
+      if (revk_link_down())
+         continue;
+      if ((j = fetch(url)))
+      {
+         if (jo_find(j, "*.name") == JO_STRING)
+            jo_strncpy(j, name, sizeof(name));
+         jo_free(&j);
+         break;
+      } else
+         sleep(60);
+   }
+   free(url);
+   time_t last = 0;
+   float today = 0;
    if (url && buf)
       while (1)
       {
-         esp_http_client_config_t config = {
-            .url = url,
-            .crt_bundle_attach = esp_crt_bundle_attach,
-         };
-         esp_http_client_handle_t client = esp_http_client_init(&config);
-         if (client)
-         {
-            REVK_ERR_CHECK(esp_http_client_open(client, 0));
-            if (esp_http_client_fetch_headers(client) >= 0)
+         char unit[3] = "";
+         float pv = 0,
+             load = 0;
+         time_t this = time(0);
+         if (last / 15 / 60 != this / 15 / 60)
+         {                      // Stats
+            last = this;
+            asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/overview?api_key=%s", sesite, sekey);
+            if ((j = fetch(url)))
             {
-               int len = esp_http_client_read_response(client, buf, max);
-               if (len > 0 && len <= max)
-               {
-                  char unit[3] = "";
-                  float pv = 0,
-                      load = 0;
-                  jo_t j = jo_parse_mem(buf, len);
-                  if (j)
-                  {
-                     if (jo_find(j, "*.unit") == JO_STRING)
-                        jo_strncpy(j, unit, sizeof(unit));
-                     if (jo_find(j, "*.PV.currentPower") == JO_NUMBER)
-                        pv = jo_read_float(j);
-                     if (jo_find(j, "*.LOAD.currentPower") == JO_NUMBER)
-                        load = jo_read_float(j);
-                     jo_free(&j);
-                     if (*unit && (pv || load))
-                     {
-                        // Log
-                        j = jo_object_alloc();
-                        jo_string(j, "unit", unit);
-                        jo_litf(j, "pv", "%.2f", pv);
-                        jo_litf(j, "load", "%.2f", load);
-                        revk_info("solaredge", &j);
-                        // Display
-                        gfx_lock();
-                        gfx_clear(0);
-                        gfx_pos(gfx_width() / 2, 0, GFX_T | GFX_C | GFX_V);
-                        gfx_text(-2, "Solar monitoring");
-                        gfx_text(-2, "Generation");
-                        gfx_text(5, "%.2f%s", pv, unit);
-                        gfx_text(-2, "Consumption");
-                        gfx_text(5, "%.2f%s", load, unit);
-                        if (load > pv)
-                        {
-                           gfx_text(-2, "Import");
-                           gfx_text(5, "%.2f%s", load - pv, unit);
-                        } else if (pv > load)
-                        {
-                           gfx_text(-2, "Export");
-                           gfx_text(5, "%.2f%s", pv - load, unit);
-                        }
-                        gfx_unlock();
-                     }
-                  }
-               }
+               if (jo_find(j, "*.lastDayData.energy") == JO_NUMBER)
+                  today = jo_read_float(j);
             }
-            esp_http_client_close(client);
+            free(url);
          }
-         REVK_ERR_CHECK(esp_http_client_cleanup(client));
+         asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/currentPowerFlow?api_key=%s", sesite, sekey);
+         if ((j = fetch(url)))
+         {
+            if (jo_find(j, "*.unit") == JO_STRING)
+               jo_strncpy(j, unit, sizeof(unit));
+            if (jo_find(j, "*.PV.currentPower") == JO_NUMBER)
+               pv = jo_read_float(j);
+            if (jo_find(j, "*.LOAD.currentPower") == JO_NUMBER)
+               load = jo_read_float(j);
+            jo_free(&j);
+         }
+         free(url);
+         // Log
+         j = jo_object_alloc();
+         jo_string(j, "unit", unit);
+         jo_litf(j, "pv", "%.2f", pv);
+         jo_litf(j, "load", "%.2f", load);
+         revk_info("solaredge", &j);
+         // Display
+         gfx_lock();
+         gfx_clear(0);
+         gfx_pos(gfx_width() / 2, 0, GFX_T | GFX_C | GFX_V);
+         gfx_text(-2, "%s", name);
+         gfx_text(-2, "Generation");
+         gfx_text(5, "%.2f%s", pv, unit);
+         gfx_text(-2, "Consumption");
+         gfx_text(5, "%.2f%s", load, unit);
+         gfx_text(-2, "Today");
+         gfx_text(5, "%.1fkWh", today / 1000);
+         gfx_unlock();
          sleep(60);
       }
 }
