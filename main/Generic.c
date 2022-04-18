@@ -1,11 +1,17 @@
 /* Generic app */
-/* Copyright ©2019 - 21 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0 */
+/* Copyright ©2019 - 22 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0 */
+/* This has a wide range of example stuff in it that does not in itself warrant a separate project */
+/* Including UART logging and debug for Daikin air-con */
+/* Including display text and QR code */
+/* Including SolarEdge monitor */
 
 static const char TAG[] = "Generic";
 
 #include "revk.h"
 #include "esp_sleep.h"
 #include "esp_task_wdt.h"
+#include "esp_http_client.h"
+#include "esp_crt_bundle.h"
 #include "vl53l0x.h"
 #include "vl53l1x.h"
 #include "gfx.h"
@@ -70,11 +76,13 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(gfxrst,)	\
 	io(gfxbusy,)	\
 	io(gfxena,)	\
+	u8(gfxflip,)	\
 	io(uart1rx,)	\
 	io(uart2rx,)	\
 	b(s21)		\
 	b(daikin)	\
-	u8(gfxflip,)	\
+	s(sekey)	\
+	u32(sesite,0)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -206,6 +214,104 @@ void uart_task(void *arg)
       }
       revk_info("uart", &j);
    }
+}
+
+void se_task(void *arg)
+{                               // Solar edge monitor
+   char *url = NULL;
+   asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/currentPowerFlow?api_key=%s", sesite, sekey);
+   int max = 5000;
+   char *buf = malloc(max);
+   if (url && buf)
+      while (1)
+      {
+         esp_http_client_config_t config = {
+            .url = url,
+            .crt_bundle_attach = esp_crt_bundle_attach,
+         };
+         esp_http_client_handle_t client = esp_http_client_init(&config);
+         if (client)
+         {
+            REVK_ERR_CHECK(esp_http_client_open(client, 0));
+            if (esp_http_client_fetch_headers(client) >= 0)
+            {
+               int len = esp_http_client_read_response(client, buf, max);
+               if (len > 0 && len <= max)
+               {
+                  char unit[10] = "";
+                  float pv = 0,
+                      load = 0;
+                  jo_type_t t;
+                  jo_t j = jo_parse_mem(buf, len);
+                  if (j && (t = jo_here(j)) == JO_OBJECT && (t = jo_next(j)) == JO_TAG && !jo_strcmp(j, "siteCurrentPowerFlow") && (t = jo_next(j)) == JO_OBJECT)
+                  {
+                     t = jo_next(j);
+                     char tag[20];
+                     while (t == JO_TAG)
+                     {
+                        jo_strncpy(j, tag, sizeof(tag));
+                        t = jo_next(j);
+                        if (!strcmp(tag, "unit"))
+                           jo_strncpy(j, unit, sizeof(unit));
+                        else if (t == JO_OBJECT)
+                        {       // Sub object of tag
+                           t = jo_next(j);      // In to sub object
+                           while (t == JO_TAG)
+                           {
+                              if (!jo_strcmp(j, "currentPower"))
+                              {
+                                 jo_next(j);
+                                 double v = jo_read_float(j);
+                                 if (!strcmp(tag, "PV"))
+                                    pv = v;
+                                 else if (!strcmp(tag, "LOAD"))
+                                    load = v;
+                              } else
+                                 jo_next(j);
+                              t = jo_skip(j);
+                           }
+                           t = jo_next(j);      // passed close of sub object
+                           continue;
+                        }
+                        t = jo_skip(j);
+                     }
+                  }
+                  jo_free(&j);
+                  if (*unit && (pv || load))
+                  {
+                     // Log
+                     j = jo_object_alloc();
+                     jo_string(j, "unit", unit);
+                     jo_litf(j, "pv", "%.3f", pv);
+                     jo_litf(j, "load", "%.3f", load);
+                     revk_info("solaredge", &j);
+                     // Display
+                     gfx_lock();
+                     gfx_clear(0);
+                     gfx_pos(gfx_width() / 2, 0, GFX_T | GFX_C | GFX_V);
+                     gfx_text(-2, "Solar monitoring");
+                     gfx_text(-2, "Generation");
+                     gfx_text(5, "%.2f", pv);
+                     gfx_text(-2, "Consumption");
+                     gfx_text(5, "%.2f", load);
+                     if (load > pv)
+                     {
+                        gfx_text(-2, "Import");
+                        gfx_text(5, "%.2f", load - pv);
+                     } else if (pv > load)
+                     {
+                        gfx_text(-2, "Export");
+                        gfx_text(5, "%.2f", pv - load);
+                     }
+                     gfx_unlock();
+                  }
+               }
+            }
+            esp_http_client_close(client);
+         }
+         REVK_ERR_CHECK(esp_http_client_cleanup(client));
+         sleep(60);
+      }
 }
 
 void input_task(void *arg)
@@ -662,6 +768,8 @@ void app_main()
       revk_task("uart1", uart_task, &uart1rx);
    if (uart2rx)
       revk_task("uart2", uart_task, &uart2rx);
+   if (*sekey && sesite)
+      revk_task("solaredge", se_task, 0);
 
    if (!period)
    {
@@ -671,6 +779,7 @@ void app_main()
          sleep(1);
       return;
    }
+   // Sleepy stuff
    if (!busy)
    {
       ESP_LOGI(TAG, "Wait for %d", awake);      /* wait a bit */
