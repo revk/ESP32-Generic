@@ -299,7 +299,7 @@ void se_task(void *arg)
          jo_string(j, "city", city);
          jo_litf(j, "pv", "%.2f", pv);
          jo_litf(j, "load", "%.2f", load);
-         jo_litf(j, "today", "%.1f", today / 1000);
+         jo_litf(j, "today", "%.3f", today / 1000);
          jo_string(j, "unit", unit);
          revk_info("solaredge", &j);
          // Display
