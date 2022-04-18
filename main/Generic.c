@@ -218,6 +218,7 @@ void uart_task(void *arg)
 
 void se_task(void *arg)
 {                               // Solar edge monitor
+   sleep(5);
    char *url = NULL;
    asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/currentPowerFlow?api_key=%s", sesite, sekey);
    int max = 5000;
@@ -241,69 +242,44 @@ void se_task(void *arg)
                   char unit[10] = "";
                   float pv = 0,
                       load = 0;
-                  jo_type_t t;
                   jo_t j = jo_parse_mem(buf, len);
-                  if (j && (t = jo_here(j)) == JO_OBJECT && (t = jo_next(j)) == JO_TAG && !jo_strcmp(j, "siteCurrentPowerFlow") && (t = jo_next(j)) == JO_OBJECT)
+                  if (j)
                   {
-                     t = jo_next(j);
-                     char tag[20];
-                     while (t == JO_TAG)
+                     if (jo_find(j, "siteCurrentPowerFlow/unit") == JO_STRING)
+                        jo_strncpy(j, unit, sizeof(unit));
+                     if (jo_find(j, "siteCurrentPowerFlow/PV/currentPower") == JO_NUMBER)
+                        pv = jo_read_float(j);
+                     if (jo_find(j, "siteCurrentPowerFlow/LOAD/currentPower") == JO_NUMBER)
+                        load = jo_read_float(j);
+                     jo_free(&j);
+                     if (*unit && (pv || load))
                      {
-                        jo_strncpy(j, tag, sizeof(tag));
-                        t = jo_next(j);
-                        if (!strcmp(tag, "unit"))
-                           jo_strncpy(j, unit, sizeof(unit));
-                        else if (t == JO_OBJECT)
-                        {       // Sub object of tag
-                           t = jo_next(j);      // In to sub object
-                           while (t == JO_TAG)
-                           {
-                              if (!jo_strcmp(j, "currentPower"))
-                              {
-                                 jo_next(j);
-                                 double v = jo_read_float(j);
-                                 if (!strcmp(tag, "PV"))
-                                    pv = v;
-                                 else if (!strcmp(tag, "LOAD"))
-                                    load = v;
-                              } else
-                                 jo_next(j);
-                              t = jo_skip(j);
-                           }
-                           t = jo_next(j);      // passed close of sub object
-                           continue;
+                        // Log
+                        j = jo_object_alloc();
+                        jo_string(j, "unit", unit);
+                        jo_litf(j, "pv", "%.2f", pv);
+                        jo_litf(j, "load", "%.2f", load);
+                        revk_info("solaredge", &j);
+                        // Display
+                        gfx_lock();
+                        gfx_clear(0);
+                        gfx_pos(gfx_width() / 2, 0, GFX_T | GFX_C | GFX_V);
+                        gfx_text(-2, "Solar monitoring");
+                        gfx_text(-2, "Generation");
+                        gfx_text(5, "%.2f%s", pv, unit);
+                        gfx_text(-2, "Consumption");
+                        gfx_text(5, "%.2f%s", load, unit);
+                        if (load > pv)
+                        {
+                           gfx_text(-2, "Import");
+                           gfx_text(5, "<%.2f%s", load - pv, unit);
+                        } else if (pv > load)
+                        {
+                           gfx_text(-2, "Export");
+                           gfx_text(5, ">%.2f%s", pv - load, unit);
                         }
-                        t = jo_skip(j);
+                        gfx_unlock();
                      }
-                  }
-                  jo_free(&j);
-                  if (*unit && (pv || load))
-                  {
-                     // Log
-                     j = jo_object_alloc();
-                     jo_string(j, "unit", unit);
-                     jo_litf(j, "pv", "%.3f", pv);
-                     jo_litf(j, "load", "%.3f", load);
-                     revk_info("solaredge", &j);
-                     // Display
-                     gfx_lock();
-                     gfx_clear(0);
-                     gfx_pos(gfx_width() / 2, 0, GFX_T | GFX_C | GFX_V);
-                     gfx_text(-2, "Solar monitoring");
-                     gfx_text(-2, "Generation");
-                     gfx_text(5, "%.2f", pv);
-                     gfx_text(-2, "Consumption");
-                     gfx_text(5, "%.2f", load);
-                     if (load > pv)
-                     {
-                        gfx_text(-2, "Import");
-                        gfx_text(5, "%.2f", load - pv);
-                     } else if (pv > load)
-                     {
-                        gfx_text(-2, "Export");
-                        gfx_text(5, "%.2f", pv - load);
-                     }
-                     gfx_unlock();
                   }
                }
             }
