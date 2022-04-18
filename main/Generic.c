@@ -272,11 +272,11 @@ void se_task(void *arg)
                         if (load > pv)
                         {
                            gfx_text(-2, "Import");
-                           gfx_text(5, "<%.2f%s", load - pv, unit);
+                           gfx_text(5, "%.2f%s", load - pv, unit);
                         } else if (pv > load)
                         {
                            gfx_text(-2, "Export");
-                           gfx_text(5, ">%.2f%s", pv - load, unit);
+                           gfx_text(5, "%.2f%s", pv - load, unit);
                         }
                         gfx_unlock();
                      }
