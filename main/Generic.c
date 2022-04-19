@@ -287,9 +287,9 @@ void se_task(void *arg)
             if (jo_find(j, "*.unit") == JO_STRING)
                jo_strncpy(j, unit, sizeof(unit));
             if (jo_find(j, "*.PV.currentPower") == JO_NUMBER)
-               pv = jo_read_float(j);
+               pv = jo_read_float(j) * 1000;
             if (jo_find(j, "*.LOAD.currentPower") == JO_NUMBER)
-               load = jo_read_float(j);
+               load = jo_read_float(j) * 1000;
             jo_free(&j);
          }
          free(url);
@@ -297,8 +297,8 @@ void se_task(void *arg)
          j = jo_object_alloc();
          jo_int(j, "site", sesite);
          jo_string(j, "city", city);
-         jo_litf(j, "pv", "%.2f", pv);
-         jo_litf(j, "load", "%.2f", load);
+         jo_litf(j, "pv", "%.2f", pv / 1000);
+         jo_litf(j, "load", "%.2f", load / 1000);
          jo_litf(j, "today", "%.3f", today / 1000);
          jo_string(j, "unit", unit);
          revk_info("solaredge", &j);
@@ -310,16 +310,22 @@ void se_task(void *arg)
          gfx_fill(gfx_width(), 1, 255);
          gfx_pos(gfx_x(), gfx_y() + 2, gfx_a());
          gfx_text(-2, "Generation");
-         gfx_text(5, "%.2f%s", pv, unit);
+         if (pv < 1000 && *unit == 'k')
+            gfx_text(5, "%.0f%s", pv, unit + 1);
+         else
+            gfx_text(5, "%.2f%s", pv / 1000, unit);
          gfx_text(-2, "Consumption");
-         gfx_text(5, "%.2f%s", load, unit);
+         if (load < 1000 && *unit == 'k')
+            gfx_text(5, "%.0f%s", load, unit + 1);
+         else
+            gfx_text(5, "%.2f%s", load / 1000, unit);
          gfx_fill(gfx_width(), 1, 255);
          gfx_pos(gfx_x(), gfx_y() + 2, gfx_a());
          gfx_text(-2, "Today");
-         if (today < 1000)
-            gfx_text(5, "%.0fWh", today);
+         if (today < 1000 && *unit == 'k')
+            gfx_text(5, "%.0f%sh", today, unit + 1);
          else
-            gfx_text(5, "%.1fkWh", today / 1000);
+            gfx_text(5, "%.1f%sh", today / 1000, unit);
          gfx_unlock();
          sleep(60);
       }
