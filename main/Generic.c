@@ -316,7 +316,10 @@ void se_task(void *arg)
          gfx_fill(gfx_width(), 1, 255);
          gfx_pos(gfx_x(), gfx_y() + 2, gfx_a());
          gfx_text(-2, "Today");
-         gfx_text(5, "%.1fkWh", today / 1000);
+         if (today < 1000)
+            gfx_text(5, "%.0fWh", today);
+         else
+            gfx_text(5, "%.1fkWh", today / 1000);
          gfx_unlock();
          sleep(60);
       }
