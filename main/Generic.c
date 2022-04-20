@@ -1,11 +1,17 @@
 /* Generic app */
-/* Copyright ©2019 - 21 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0 */
+/* Copyright Â©2019 - 2022 Adrian Kennard, Andrews & Arnold Ltd.See LICENCE file for details .GPL 3.0 */
+/* This has a wide range of example stuff in it that does not in itself warrant a separate project */
+/* Including UART logging and debug for Daikin air-con */
+/* Including display text and QR code */
+/* Including SolarEdge monitor */
 
 static const char TAG[] = "Generic";
 
 #include "revk.h"
 #include "esp_sleep.h"
 #include "esp_task_wdt.h"
+#include "esp_http_client.h"
+#include "esp_crt_bundle.h"
 #include "vl53l0x.h"
 #include "vl53l1x.h"
 #include "gfx.h"
@@ -70,11 +76,13 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(gfxrst,)	\
 	io(gfxbusy,)	\
 	io(gfxena,)	\
+	u8(gfxflip,)	\
 	io(uart1rx,)	\
 	io(uart2rx,)	\
 	b(s21)		\
 	b(daikin)	\
-	u8(gfxflip,)	\
+	s(sekey)	\
+	u32(sesite,0)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
@@ -95,6 +103,7 @@ char charger_present = 0;
 const char *rangererr = NULL;
 uint16_t range = 0;
 uint32_t voltage = 0;
+httpd_handle_t webserver = NULL;
 
 volatile uint8_t uarts = 1;
 void uart_task(void *arg)
@@ -207,6 +216,121 @@ void uart_task(void *arg)
    }
 }
 
+void se_task(void *arg)
+{                               // Solar edge monitor
+   char *url = NULL;
+   int max = 5000;
+   char *buf = malloc(max);
+   jo_t fetch(const char *url) {
+      jo_t j = NULL;
+      esp_http_client_config_t config = {
+         .url = url,
+         .crt_bundle_attach = esp_crt_bundle_attach,
+      };
+      esp_http_client_handle_t client = esp_http_client_init(&config);
+      if (!client)
+         return NULL;
+      if (!esp_http_client_open(client, 0))
+      {
+         if (esp_http_client_fetch_headers(client) >= 0)
+         {
+            int len = esp_http_client_read_response(client, buf, max);
+            if (len > 0 && len <= max)
+               j = jo_parse_mem(buf, len);
+         }
+         esp_http_client_close(client);
+      }
+      REVK_ERR_CHECK(esp_http_client_cleanup(client));
+      return j;
+   }
+   char city[17];
+   jo_t j;
+   asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/details?api_key=%s", sesite, sekey);
+   while (1)
+   {
+      sleep(5);
+      if (revk_link_down())
+         continue;
+      if ((j = fetch(url)))
+      {
+         if (jo_find(j, "*.location.city") == JO_STRING)
+            jo_strncpy(j, city, sizeof(city));
+         jo_free(&j);
+         break;
+      } else
+         sleep(60);
+   }
+   free(url);
+   time_t last = 0;
+   float today = 0;
+   if (url && buf)
+      while (1)
+      {
+         char unit[3] = "";
+         float pv = 0,
+             load = 0;
+         time_t this = time(0);
+         if (last / 15 / 60 != this / 15 / 60)
+         {                      // Stats
+            last = this;
+            asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/overview?api_key=%s", sesite, sekey);
+            if ((j = fetch(url)))
+            {
+               if (jo_find(j, "*.lastDayData.energy") == JO_NUMBER)
+                  today = jo_read_float(j);
+            }
+            free(url);
+         }
+         asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/currentPowerFlow?api_key=%s", sesite, sekey);
+         if ((j = fetch(url)))
+         {
+            if (jo_find(j, "*.unit") == JO_STRING)
+               jo_strncpy(j, unit, sizeof(unit));
+            if (jo_find(j, "*.PV.currentPower") == JO_NUMBER)
+               pv = jo_read_float(j) * 1000;
+            if (jo_find(j, "*.LOAD.currentPower") == JO_NUMBER)
+               load = jo_read_float(j) * 1000;
+            jo_free(&j);
+         }
+         free(url);
+         // Log
+         j = jo_object_alloc();
+         jo_int(j, "site", sesite);
+         jo_string(j, "city", city);
+         jo_litf(j, "pv", "%.2f", pv / 1000);
+         jo_litf(j, "load", "%.2f", load / 1000);
+         jo_litf(j, "today", "%.3f", today / 1000);
+         jo_string(j, "unit", unit);
+         revk_info("solaredge", &j);
+         // Display
+         gfx_lock();
+         gfx_clear(0);
+         gfx_pos(gfx_width() / 2, 0, GFX_T | GFX_C | GFX_V);
+         gfx_text(-2, "%s", city);
+         gfx_fill(gfx_width(), 1, 255);
+         gfx_pos(gfx_x(), gfx_y() + 2, gfx_a());
+         gfx_text(-2, "Generation");
+         if (pv < 1000 && *unit == 'k')
+            gfx_text(5, "%.0f%s", pv, unit + 1);
+         else
+            gfx_text(5, "%.2f%s", pv / 1000, unit);
+         gfx_text(-2, "Consumption");
+         if (load < 1000 && *unit == 'k')
+            gfx_text(5, "%.0f%s", load, unit + 1);
+         else
+            gfx_text(5, "%.2f%s", load / 1000, unit);
+         gfx_fill(gfx_width(), 1, 255);
+         gfx_pos(gfx_x(), gfx_y() + 2, gfx_a());
+         gfx_text(-2, "Today");
+         if (today < 1000 && *unit == 'k')
+            gfx_text(5, "%.0f%sh", today, unit + 1);
+         else
+            gfx_text(5, "%.1f%sh", today / 1000, unit);
+         gfx_unlock();
+         sleep(60);
+      }
+}
+
 void input_task(void *arg)
 {
    arg = arg;
@@ -295,6 +419,8 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       if (len > sizeof(value))
          return "Too long";
    }
+   if (!strcmp(suffix, "shutdown"))
+      httpd_stop(webserver);
    if (!strcmp(suffix, "upgrade") || !strcmp(suffix, "wait"))
    {
       busy = esp_timer_get_time() + 60000000ULL;
@@ -380,14 +506,16 @@ const char *app_callback(int client, const char *prefix, const char *target, con
 
 // --------------------------------------------------------------------------------
 // Web
+#ifdef	CONFIG_REVK_APCONFIG
+#error 	Clash with CONFIG_REVK_APCONFIG set
+#endif
 static esp_err_t web_root(httpd_req_t * req)
 {
-	 if (revk_link_down())
+   if (revk_link_down())
       return revk_web_config(req);      // Direct to web set up
    httpd_resp_sendstr_chunk(req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
    httpd_resp_sendstr_chunk(req, "<html><body style='font-family:sans-serif;background:#8cf;'><h1>");
-   if (*hostname)
-      httpd_resp_sendstr_chunk(req, hostname);
+   httpd_resp_sendstr_chunk(req, appname);
    httpd_resp_sendstr_chunk(req, "</h1>");
    httpd_resp_sendstr_chunk(req, NULL);
    return ESP_OK;
@@ -422,8 +550,7 @@ void app_main()
 
    // Web interface
    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-   httpd_handle_t server = NULL;
-   if (!httpd_start(&server, &config))
+   if (!httpd_start(&webserver, &config))
    {
       {
          httpd_uri_t uri = {
@@ -432,8 +559,18 @@ void app_main()
             .handler = web_root,
             .user_ctx = NULL
          };
-         REVK_ERR_CHECK(httpd_register_uri_handler(server, &uri));
+         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
       }
+      {
+         httpd_uri_t uri = {
+            .uri = "/wifi",
+            .method = HTTP_GET,
+            .handler = revk_web_config,
+            .user_ctx = NULL
+         };
+         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
+      }
+      revk_web_config_start(webserver);
    }
    if (gfxmosi || gfxdc || gfxsck)
    {
@@ -648,6 +785,8 @@ void app_main()
       revk_task("uart1", uart_task, &uart1rx);
    if (uart2rx)
       revk_task("uart2", uart_task, &uart2rx);
+   if (*sekey && sesite)
+      revk_task("solaredge", se_task, 0);
 
    if (!period)
    {
@@ -657,6 +796,7 @@ void app_main()
          sleep(1);
       return;
    }
+   // Sleepy stuff
    if (!busy)
    {
       ESP_LOGI(TAG, "Wait for %d", awake);      /* wait a bit */
