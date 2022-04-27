@@ -25,8 +25,8 @@ wroom:
 	components/ESP32-RevK/setbuildsuffix -S1-SSD1681
 	@make
 
-solo:
-	components/ESP32-RevK/setbuildsuffix -S1-SOLO-SSD1681
+solo:	# This is Shellys and no display
+	components/ESP32-RevK/setbuildsuffix -S1-SOLO
 	@make
 
 flash:
