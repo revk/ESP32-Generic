@@ -261,9 +261,9 @@ void se_task(void *arg)
          sleep(60);
    }
    free(url);
+#ifndef	CONFIG_GFX_NONE
    time_t last = 0;
    float today = 0;
-#ifndef	CONFIG_GFX_NONE
    if (url && buf)
       while (1)
       {
