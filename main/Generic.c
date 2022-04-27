@@ -263,6 +263,7 @@ void se_task(void *arg)
    free(url);
    time_t last = 0;
    float today = 0;
+#ifndef	CONFIG_GFX_NONE
    if (url && buf)
       while (1)
       {
@@ -329,6 +330,7 @@ void se_task(void *arg)
          gfx_unlock();
          sleep(60);
       }
+#endif
 }
 
 void input_task(void *arg)
@@ -375,6 +377,7 @@ void output_task(void *arg)
 
 const char *gfx_qr(const char *value)
 {
+#ifndef	CONFIG_GFX_NONE
    uint32_t width = 0;
  uint8_t *qr = qr_encode(strlen(value), value, widthp: &width, noquiet:1);
    if (!qr)
@@ -402,6 +405,7 @@ const char *gfx_qr(const char *value)
                   gfx_pixel(ox + x * s + dx, oy + y * s + dy, 0xFF);
    gfx_unlock();
    free(qr);
+#endif
    return NULL;
 }
 
