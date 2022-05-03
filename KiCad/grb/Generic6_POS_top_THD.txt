@@ -1,10 +1,8 @@
-### Module positions - created on 2022-05-02 09:33
+### Module positions - created on 2022-05-03 11:34
 ### Printed by pcb_positions plugin
 ## Unit = mm, Angle = deg.
-## Pcb Height 13.600mm, Pcb Width 17.800mm [based on Edge bounding box]
+## Pcb Height 15.290mm, Pcb Width 17.830mm [based on Edge bounding box]
 ## Side : top
 ## Board Aux Origin: 0.000mm ,0.000mm
 # Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
-J2            A                   PinHeader_1x05_P2.54mm_Vert.. 92.3900    -40.7750   92.3900    -40.7750      0.0    top       THD
-J3            B                   PinHeader_1x05_P2.54mm_Vert.. 107.6300   -50.9500   107.6300   -50.9500    180.0    top       THD
 ## End
