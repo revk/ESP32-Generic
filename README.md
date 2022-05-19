@@ -2,6 +2,8 @@
 
 Software and hardware for generic ESP32 usage. Software based on ESP32-RevK library.
 
+The software is all sorts of mish mash of stuff, mainly to demo things. Can work with an e-paper display to show messages. Has simple input reporting and output with pulses and counts, etc. Can even work DEFCON lights mode, or debug dump serial data each way to a Daikin air-con controller. Basically it ends up with any little project that I don't think deserves its own project yet.
+
 # Hardware
 
 Various KiCad designs, with 3D printed case designs.
