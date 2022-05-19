@@ -79,6 +79,7 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	u8(gfxflip,)	\
 	io(uart1rx,)	\
 	io(uart2rx,)	\
+	u8(defcon,0)	\
 	b(s21)		\
 	b(daikin)	\
 	s(sekey)	\
@@ -104,6 +105,7 @@ const char *rangererr = NULL;
 uint16_t range = 0;
 uint32_t voltage = 0;
 httpd_handle_t webserver = NULL;
+int8_t defcon_level = -1;
 
 volatile uint8_t uarts = 1;
 void uart_task(void *arg)
@@ -215,6 +217,51 @@ void uart_task(void *arg)
       revk_info("uart", &j);
    }
 }
+
+void defcon_task(void *arg)
+{
+   // Expects outputs to be configured
+   // 0=Beep
+   // 1-5=DEFCON lights White/Red/Yellow/Green/Blue
+   // 6=Click
+   // 7=Blink
+   // The defcon setting is lowest DEFCON setting that we don't beep for, e.g. 5 would be good not to beep when going to DEFCON 5 or above
+   int8_t level = -1;           // Current DEFCON level
+   while (1)
+   {
+      usleep(333333);
+      outputbits ^= (1 << 7);
+      if (level != defcon_level)
+      {
+         int8_t waslevel = level;
+         level = defcon_level;
+         // Off existing
+         outputbits = (outputbits & ~0x7F) | (1 << 6);
+         usleep(500000);
+         // Report
+         jo_t j = jo_object_alloc();
+         jo_int(j, "level", level);
+         revk_info("defcon", &j);
+         // On new
+         outputbits = (outputbits & ~0x7F) | (level > 5 ? 0 : level ? (1 << level) : 0x3E);
+         usleep(500000);
+         if (level < defcon)
+         {                      // Beeps
+            outputbits |= (1 << 0);
+            usleep(200000);
+            outputbits &= ~(1 << 0);
+            if (waslevel > level)
+            {
+               usleep(200000);
+               outputbits |= (1 << 0);
+               usleep(200000);
+               outputbits &= ~(1 << 0);
+            }
+         }
+      }
+   }
+}
+
 
 void se_task(void *arg)
 {                               // Solar edge monitor
@@ -351,7 +398,7 @@ void output_task(void *arg)
    arg = arg;
    while (1)
    {
-      usleep(1000LL);
+      usleep(1000);
       for (int i = 0; i < MAXGPIO; i++)
          if (output[i] && !(outputoverride & (1ULL << i)))
          {
@@ -361,9 +408,9 @@ void output_task(void *arg)
             if ((outputbits ^ outputraw) & (1ULL << i))
             {                   //Change output
                outputraw ^= (1ULL << i);
-               REVK_ERR_CHECK(gpio_hold_dis(p));
+               //REVK_ERR_CHECK(gpio_hold_dis(p));
                REVK_ERR_CHECK(gpio_set_level(p, ((output[i] & PORT_INV) ? 1 : 0) ^ ((outputbits >> i) & 1)));
-               REVK_ERR_CHECK(gpio_hold_en(p));
+               //REVK_ERR_CHECK(gpio_hold_en(p));
                if (outputbits & (1ULL << i))
                   outputremaining[i] = outputmark[i];   //Time
                else if (!outputcount[i] || !--outputcount[i])
@@ -415,6 +462,7 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       return NULL;              //Not for us or not a command from main MQTT
    char value[1000];
    int len = 0;
+   *value = 0;
    if (j)
    {
       len = jo_strncpy(j, value, sizeof(value));
@@ -444,6 +492,25 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       gfx_message(value);
       return "";
    }
+   if (defcon && isdigit(*suffix) && !suffix[1])
+   {                            // DEFCON state
+      // With value it is used to turn on/off a defcon state, the lowest set dictates the defcon level
+      // With no value, this sets the DEFCON state directly instead of using lowest of state set
+      uint8_t level = (*suffix - '0');
+      static uint8_t state = 0; // DEFCON state
+      if (*value)
+      {
+         if (*value == '1' || *value == 't' || *value == 'y')
+            state |= (1 << level);
+         else
+            state &= ~(1 << level);
+         int l;
+         for (l = 0; l < 8 && !(state & (1 << l)); l++);
+         defcon_level = l;
+      } else
+         defcon_level = level;
+      return "";
+   }
    if (!strncmp(suffix, "output", 6))
    {
       int i = atoi(suffix + 6);
@@ -457,16 +524,14 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       if (c)
       {
          if (!outputcount[i])
-         {
+         {                      // On
             outputcount[i] = c;
             outputbits |= (1ULL << i);
-            //On
          }
       } else
-      {
+      {                         // Off
          outputcount[i] = 0;
          outputbits &= ~(1ULL << i);
-         //Off
       }
       return "";
    }
@@ -596,7 +661,7 @@ void app_main()
          if (input[i])
          {
             int p = port_mask(input[i]);
-            REVK_ERR_CHECK(gpio_hold_dis(p));
+            //REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_reset_pin(p));
             REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_INPUT));
          }
@@ -611,7 +676,7 @@ void app_main()
          {
             int p = port_mask(power[i]);
             c.pin_bit_mask |= (1ULL << p);
-            REVK_ERR_CHECK(gpio_hold_dis(p));
+            //REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_set_level(p, (power[i] & PORT_INV) ? 0 : 1));
             REVK_ERR_CHECK(gpio_set_drive_capability(p, GPIO_DRIVE_CAP_3));
 
@@ -791,6 +856,8 @@ void app_main()
       revk_task("uart2", uart_task, &uart2rx);
    if (*sekey && sesite)
       revk_task("solaredge", se_task, 0);
+   if (defcon)
+      revk_task("defcon", defcon_task, 0);
 
    if (!period)
    {
