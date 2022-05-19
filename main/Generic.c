@@ -226,17 +226,18 @@ void defcon_task(void *arg)
    // 6=Click
    // 7=Blink
    // The defcon setting is lowest DEFCON setting that we don't beep for, e.g. 5 would be good not to beep when going to DEFCON 5 or above
+   outputcount[7] = -1;         // Blinking forever - set mark/space
+   outputbits |= (1 << 7);      // Start blinking
    int8_t level = -1;           // Current DEFCON level
    while (1)
    {
-      usleep(333333);
-      outputbits ^= (1 << 7);
+      usleep(10000);
       if (level != defcon_level)
       {
          int8_t waslevel = level;
          level = defcon_level;
          // Off existing
-         outputbits = (outputbits & ~0x7F) | (1 << 6);
+         outputbits = (outputbits & ~0x7F) | (1 << 6) | (1 << 7);
          usleep(500000);
          // Report
          jo_t j = jo_object_alloc();
@@ -256,8 +257,16 @@ void defcon_task(void *arg)
                outputbits |= (1 << 0);
                usleep(200000);
                outputbits &= ~(1 << 0);
+               if (!level)
+               {
+                  usleep(200000);
+                  outputbits |= (1 << 0);
+                  usleep(200000);
+                  outputbits &= ~(1 << 0);
+               }
             }
          }
+         sleep(1);
       }
    }
 }
@@ -413,7 +422,7 @@ void output_task(void *arg)
                //REVK_ERR_CHECK(gpio_hold_en(p));
                if (outputbits & (1ULL << i))
                   outputremaining[i] = outputmark[i];   //Time
-               else if (!outputcount[i] || !--outputcount[i])
+               else if (!outputcount[i] || (outputcount[i] != -1 && !--outputcount[i]))
                   outputremaining[i] = 0;
                else
                   outputremaining[i] = outputspace[i];  //Time
