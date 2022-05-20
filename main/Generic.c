@@ -244,7 +244,13 @@ void defcon_task(void *arg)
          jo_int(j, "level", level);
          revk_info("defcon", &j);
          // On new
-         outputbits = (outputbits & ~0x7F) | (level > 5 ? 0 : level ? (1 << level) : 0x3E);
+         outputbits = (outputbits & ~0x7F) | (level > 5 ? 0 : level ? (1 << level) : (1 << 1));
+         if (!level)
+            for (int i = 2; i <= 5; i++)
+            {
+               usleep(100000);
+               outputbits = (outputbits ^ (1 << 6)) | (1 << i);
+            }
          usleep(500000);
          if (level < defcon)
          {                      // Beeps
@@ -465,10 +471,27 @@ const char *gfx_qr(const char *value)
    return NULL;
 }
 
+char *setdefcon(int level, char *value)
+{                               // DEFCON state
+   // With value it is used to turn on/off a defcon state, the lowest set dictates the defcon level
+   // With no value, this sets the DEFCON state directly instead of using lowest of state set
+   static uint8_t state = 0;    // DEFCON state
+   if (*value)
+   {
+      if (*value == '1' || *value == 't' || *value == 'y')
+         state |= (1 << level);
+      else
+         state &= ~(1 << level);
+      int l;
+      for (l = 0; l < 8 && !(state & (1 << l)); l++);
+      defcon_level = l;
+   } else
+      defcon_level = level;
+   return "";
+}
+
 const char *app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
-   if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
-      return NULL;              //Not for us or not a command from main MQTT
    char value[1000];
    int len = 0;
    *value = 0;
@@ -479,6 +502,18 @@ const char *app_callback(int client, const char *prefix, const char *target, con
          return "Expecting JSON string";
       if (len > sizeof(value))
          return "Too long";
+   }
+   if (defcon && prefix && !strcmp(prefix, "DEFCON") && target && isdigit(*target) && !target[1])
+      return setdefcon(*target - '0', value);
+   if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
+      return NULL;              //Not for us or not a command from main MQTT
+   if (defcon && isdigit(*suffix) && !suffix[1])
+      return setdefcon(*suffix - '0', value);
+   if (!strcmp(suffix, "connect"))
+   {
+      if (defcon)
+         lwmqtt_subscribe(revk_mqtt(0), "DEFCON/#");
+
    }
    if (!strcmp(suffix, "shutdown"))
       httpd_stop(webserver);
@@ -499,25 +534,6 @@ const char *app_callback(int client, const char *prefix, const char *target, con
    if (!strcmp(suffix, "message"))
    {
       gfx_message(value);
-      return "";
-   }
-   if (defcon && isdigit(*suffix) && !suffix[1])
-   {                            // DEFCON state
-      // With value it is used to turn on/off a defcon state, the lowest set dictates the defcon level
-      // With no value, this sets the DEFCON state directly instead of using lowest of state set
-      uint8_t level = (*suffix - '0');
-      static uint8_t state = 0; // DEFCON state
-      if (*value)
-      {
-         if (*value == '1' || *value == 't' || *value == 'y')
-            state |= (1 << level);
-         else
-            state &= ~(1 << level);
-         int l;
-         for (l = 0; l < 8 && !(state & (1 << l)); l++);
-         defcon_level = l;
-      } else
-         defcon_level = level;
       return "";
    }
    if (!strncmp(suffix, "output", 6))
@@ -815,6 +831,8 @@ void app_main()
    }
    revk_task("input", input_task, 0);
    revk_task("output", output_task, 0);
+   if (defcon)
+      revk_task("defcon", defcon_task, 0);
    if (!revk_wait_wifi(10))
    {
       ESP_LOGE(TAG, "No WiFi");
@@ -865,8 +883,6 @@ void app_main()
       revk_task("uart2", uart_task, &uart2rx);
    if (*sekey && sesite)
       revk_task("solaredge", se_task, 0);
-   if (defcon)
-      revk_task("defcon", defcon_task, 0);
 
    if (!period)
    {
