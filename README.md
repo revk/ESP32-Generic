@@ -6,7 +6,7 @@ The software is all sorts of mish mash of stuff, mainly to demo things. Can work
 
 # Building
 
-Clone this recursive to get all the submodules, and it should build with just `make`. That actually runs cmake with runs the normal `idf.py`. `make menuconfig` can be used to fine tune the settings, but the defaults should be mostly sane. `make flash` should work to program.
+Git clone this `--recursive` to get all the submodules, and it should build with just `make`. That actually runs the normal `idf.py` to build. `make menuconfig` can be used to fine tune the settings, but the defaults should be mostly sane. `make flash` should work to program.
 
 # Hardware
 
