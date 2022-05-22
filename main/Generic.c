@@ -221,10 +221,10 @@ void uart_task(void *arg)
 void defcon_task(void *arg)
 {
    // Expects outputs to be configured
-   // 0=Beep
+   // 0=Beep - set mark/space
    // 1-5=DEFCON lights White/Red/Yellow/Green/Blue
    // 6=Click
-   // 7=Blink
+   // 7=Blink - set mark/space
    // The defcon setting is lowest DEFCON setting that we don't beep for, e.g. 5 would be good not to beep when going to DEFCON 5 or above
    outputcount[7] = -1;         // Blinking forever - set mark/space
    outputbits |= (1 << 7);      // Start blinking
@@ -234,45 +234,31 @@ void defcon_task(void *arg)
       usleep(10000);
       if (level != defcon_level)
       {
-         int8_t waslevel = level;
-         level = defcon_level;
-         // Off existing
-         outputbits = (outputbits & ~0x7F) | (1 << 6) | (1 << 7);
-         usleep(500000);
-         // Report
-         jo_t j = jo_object_alloc();
-         jo_int(j, "level", level);
-         revk_info("defcon", &j);
-         // On new
-         outputbits = (outputbits & ~0x7F) | (level > 5 ? 0 : level ? (1 << level) : (1 << 1));
-         if (!level)
-            for (int i = 2; i <= 5; i++)
-            {
-               usleep(100000);
-               outputbits = (outputbits ^ (1 << 6)) | (1 << i);
-            }
-         usleep(500000);
-         if (level < defcon)
-         {                      // Beeps
-            outputbits |= (1 << 0);
-            usleep(200000);
-            outputbits &= ~(1 << 0);
-            if (waslevel > level)
-            {
-               usleep(200000);
-               outputbits |= (1 << 0);
-               usleep(200000);
-               outputbits &= ~(1 << 0);
-               if (!level)
+         usleep(100000);
+         if (level != defcon_level)
+         {
+            int8_t waslevel = level;
+            level = defcon_level;
+            // Off existing
+            outputbits = (outputbits & ~0x7F) | (1 << 6) | (1 << 7);
+            usleep(500000);
+            // Report
+            jo_t j = jo_object_alloc();
+            jo_int(j, "level", level);
+            revk_info("defcon", &j);
+            // Beep count
+            if (level < defcon)
+               outputcount[0] = waslevel < level ? 1 : level ? 2 : 3;
+            // On new
+            outputbits = (outputbits & ~0x7F) | (level > 5 ? 0 : level ? (1 << level) : (1 << 1)) | (outputcount[0] ? (1 << 0) : 0);
+            if (!level)
+               for (int i = 2; i <= 5; i++)
                {
-                  usleep(200000);
-                  outputbits |= (1 << 0);
-                  usleep(200000);
-                  outputbits &= ~(1 << 0);
+                  usleep(100000);
+                  outputbits = (outputbits ^ (1 << 6)) | (1 << i);
                }
-            }
+            sleep(1);
          }
-         sleep(1);
       }
    }
 }
