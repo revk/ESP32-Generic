@@ -11,6 +11,7 @@ static const char TAG[] = "Generic";
 #include "esp_sleep.h"
 #include "esp_task_wdt.h"
 #include "esp_http_client.h"
+#include "esp_http_server.h"
 #include "esp_crt_bundle.h"
 #include "vl53l0x.h"
 #include "vl53l1x.h"
@@ -216,6 +217,53 @@ void uart_task(void *arg)
       }
       revk_info("uart", &j);
    }
+}
+
+static void web_head(httpd_req_t * req, const char *title)
+{
+   httpd_resp_set_type(req, "text/html; charset=utf-8");
+   httpd_resp_sendstr_chunk(req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
+   httpd_resp_sendstr_chunk(req, "<html><head><title>");
+   if (title)
+      httpd_resp_sendstr_chunk(req, title);
+   httpd_resp_sendstr_chunk(req, "</title></head><style>"       //
+                            "body{font-family:sans-serif;background:#8cf;}"     //
+                            "</style><body><h1>");
+   if (title)
+      httpd_resp_sendstr_chunk(req, title);
+   httpd_resp_sendstr_chunk(req, "</h1>");
+}
+
+static esp_err_t web_foot(httpd_req_t * req)
+{
+   httpd_resp_sendstr_chunk(req, "<hr><address>");
+   char temp[20];
+   snprintf(temp, sizeof(temp), "%012llX", revk_binid);
+   httpd_resp_sendstr_chunk(req, temp);
+   httpd_resp_sendstr_chunk(req, "</address></body></html>");
+   httpd_resp_sendstr_chunk(req, NULL);
+   return ESP_OK;
+}
+
+static esp_err_t web_icon(httpd_req_t * req)
+{                               // serve image -  maybe make more generic file serve
+   extern const char start[] asm("_binary_apple_touch_icon_png_start");
+   extern const char end[] asm("_binary_apple_touch_icon_png_end");
+   httpd_resp_set_type(req, "image/png");
+   httpd_resp_send(req, start, end - start);
+   return ESP_OK;
+}
+
+static esp_err_t web_root(httpd_req_t * req)
+{
+   if (revk_link_down())
+      return revk_web_config(req);      // Direct to web set up
+   web_head(req, *hostname ? hostname : appname);
+   if(defcon)
+   { // Defcon controls
+
+   }
+   return web_foot(req);
 }
 
 void defcon_task(void *arg)
@@ -589,17 +637,6 @@ const char *app_callback(int client, const char *prefix, const char *target, con
 #ifdef	CONFIG_REVK_APCONFIG
 #error 	Clash with CONFIG_REVK_APCONFIG set
 #endif
-static esp_err_t web_root(httpd_req_t * req)
-{
-   if (revk_link_down())
-      return revk_web_config(req);      // Direct to web set up
-   httpd_resp_sendstr_chunk(req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
-   httpd_resp_sendstr_chunk(req, "<html><body style='font-family:sans-serif;background:#8cf;'><h1>");
-   httpd_resp_sendstr_chunk(req, appname);
-   httpd_resp_sendstr_chunk(req, "</h1>");
-   httpd_resp_sendstr_chunk(req, NULL);
-   return ESP_OK;
-}
 
 void app_main()
 {
@@ -643,6 +680,15 @@ void app_main()
       }
       {
          httpd_uri_t uri = {
+            .uri = "/apple-touch-icon.png",
+            .method = HTTP_GET,
+            .handler = web_icon,
+            .user_ctx = NULL
+         };
+         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
+      }
+      {
+         httpd_uri_t uri = {
             .uri = "/wifi",
             .method = HTTP_GET,
             .handler = revk_web_config,
@@ -652,6 +698,7 @@ void app_main()
       }
       revk_web_config_start(webserver);
    }
+
    if (gfxmosi || gfxdc || gfxsck)
    {
     const char *e = gfx_init(port: HSPI_HOST, cs: port_mask(gfxcs), sck: port_mask(gfxsck), mosi: port_mask(gfxmosi), dc: port_mask(gfxdc), rst: port_mask(gfxrst), busy: port_mask(gfxbusy), ena: port_mask(gfxena), flip:gfxflip);
