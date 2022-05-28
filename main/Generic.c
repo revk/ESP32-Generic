@@ -4,6 +4,7 @@
 /* Including UART logging and debug for Daikin air-con */
 /* Including display text and QR code */
 /* Including SolarEdge monitor */
+/* Including DEFCON mode - DEFCON/x on mqtt, or ?x on http, where x=1-5 for normal, 0 for special all on, 6-8 for all off, 9 for all off and quiet and no blink */
 
 static const char TAG[] = "Generic";
 
@@ -227,13 +228,13 @@ static void web_head(httpd_req_t * req, const char *title)
    if (title)
       httpd_resp_sendstr_chunk(req, title);
    httpd_resp_sendstr_chunk(req, "</title></head><style>"       //
-		   	    "a.defcon{text-decoration:none;border:1px solid black;border-radius:50%;margin:2px;padding:3px;display:inline-block;width:1em;text-align:center;}" //
-			    "a.on{border:3px solid black;}" //
-			    "a.d1{background-color:white;}"//
-			    "a.d2{background-color:red;}"//
-			    "a.d3{background-color:yellow;}"//
-			    "a.d4{background-color:green;color:white;}"//
-			    "a.d5{background-color:blue;color:white;}"//
+                            "a.defcon{text-decoration:none;border:1px solid black;border-radius:50%;margin:2px;padding:3px;display:inline-block;width:1em;text-align:center;}"  //
+                            "a.on{border:3px solid black;}"     //
+                            "a.d1{background-color:white;}"     //
+                            "a.d2{background-color:red;}"       //
+                            "a.d3{background-color:yellow;}"    //
+                            "a.d4{background-color:green;color:white;}" //
+                            "a.d5{background-color:blue;color:white;}"  //
                             "body{font-family:sans-serif;background:#8cf;}"     //
                             "</style><body><h1>");
    if (title)
@@ -275,6 +276,10 @@ static esp_err_t web_root(httpd_req_t * req)
          httpd_req_get_url_query_str(req, q, sizeof(q));
          if (isdigit(*q))
             defcon_level = *q - '0';
+         else if (*q == '+' && defcon_level < 9)
+            defcon_level++;
+         else if (*q == '-' && defcon_level > 0)
+            defcon_level--;
       }
       for (int i = 0; i <= 6; i++)
       {
@@ -312,25 +317,32 @@ void defcon_task(void *arg)
          usleep(100000);
          if (level != defcon_level)
          {
+            uint8_t click = (1 << 6);
+            uint8_t blink = (1 << 7);
+            if (level >= 9 || defcon_level >= 9)
+               click = 0;
+            if (defcon_level >= 9)
+               blink = 0;
             int8_t waslevel = level;
             level = defcon_level;
             // Off existing
-            outputbits = (outputbits & ~0x7F) | (1 << 6) | (1 << 7);
+            outputbits = (outputbits & ~0x7F) | click | blink;
+            outputcount[7] = (blink ? -1 : 0);
             usleep(500000);
             // Report
             jo_t j = jo_object_alloc();
             jo_int(j, "level", level);
             revk_info("defcon", &j);
             // Beep count
-            if (level < defcon)
-               outputcount[0] = waslevel < level ? 1 : level ? 2 : 3;
+            if (level < defcon && click)
+               outputcount[0] = waslevel < level ? 1 : level ? 2 : 3;   // To/from level 9 is silent
             // On new
             outputbits = (outputbits & ~0x7F) | (level > 5 ? 0 : level ? (1 << level) : (1 << 1)) | (outputcount[0] ? (1 << 0) : 0);
             if (!level)
                for (int i = 2; i <= 5; i++)
                {
                   usleep(100000);
-                  outputbits = (outputbits ^ (1 << 6)) | (1 << i);
+                  outputbits = (outputbits ^ click) | (1 << i);
                }
             sleep(1);
          }
