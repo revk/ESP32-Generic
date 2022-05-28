@@ -227,6 +227,13 @@ static void web_head(httpd_req_t * req, const char *title)
    if (title)
       httpd_resp_sendstr_chunk(req, title);
    httpd_resp_sendstr_chunk(req, "</title></head><style>"       //
+		   	    "a{text-decoration:none;border:1px solid black;border-radius:50%;margin:2px;padding:3px;display:inline-block;width:1em;text-align:center;}" //
+			    "a.on{border:3px solid black;}" //
+			    "a.d1{background-color:white;}"//
+			    "a.d2{background-color:red;}"//
+			    "a.d3{background-color:yellow;}"//
+			    "a.d4{background-color:green;color:white;}"//
+			    "a.d5{background-color:blue;color:white;}"//
                             "body{font-family:sans-serif;background:#8cf;}"     //
                             "</style><body><h1>");
    if (title)
@@ -259,9 +266,29 @@ static esp_err_t web_root(httpd_req_t * req)
    if (revk_link_down())
       return revk_web_config(req);      // Direct to web set up
    web_head(req, *hostname ? hostname : appname);
-   if(defcon)
-   { // Defcon controls
-
+   if (defcon)
+   {                            // Defcon controls
+      size_t len = httpd_req_get_url_query_len(req);
+      char q[2] = { };
+      if (len == 1)
+      {
+         httpd_req_get_url_query_str(req, q, sizeof(q));
+         if (isdigit(*q))
+            defcon_level = *q - '0';
+      }
+      for (int i = 0; i <= 6; i++)
+      {
+         q[0] = '0' + i;
+         httpd_resp_sendstr_chunk(req, "<a href='?");
+         httpd_resp_sendstr_chunk(req, q);
+         httpd_resp_sendstr_chunk(req, "' class='d");
+         httpd_resp_sendstr_chunk(req, q);
+         if (i == defcon_level)
+            httpd_resp_sendstr_chunk(req, " on");
+         httpd_resp_sendstr_chunk(req, "'>");
+         httpd_resp_sendstr_chunk(req, q);
+         httpd_resp_sendstr_chunk(req, "</a>");
+      }
    }
    return web_foot(req);
 }
