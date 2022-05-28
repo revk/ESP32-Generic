@@ -227,7 +227,7 @@ static void web_head(httpd_req_t * req, const char *title)
    if (title)
       httpd_resp_sendstr_chunk(req, title);
    httpd_resp_sendstr_chunk(req, "</title></head><style>"       //
-		   	    "a{text-decoration:none;border:1px solid black;border-radius:50%;margin:2px;padding:3px;display:inline-block;width:1em;text-align:center;}" //
+		   	    "a.defcon{text-decoration:none;border:1px solid black;border-radius:50%;margin:2px;padding:3px;display:inline-block;width:1em;text-align:center;}" //
 			    "a.on{border:3px solid black;}" //
 			    "a.d1{background-color:white;}"//
 			    "a.d2{background-color:red;}"//
@@ -247,7 +247,7 @@ static esp_err_t web_foot(httpd_req_t * req)
    char temp[20];
    snprintf(temp, sizeof(temp), "%012llX", revk_binid);
    httpd_resp_sendstr_chunk(req, temp);
-   httpd_resp_sendstr_chunk(req, "</address></body></html>");
+   httpd_resp_sendstr_chunk(req, " <a href='wifi'>WiFi Setup</a></address></body></html>");
    httpd_resp_sendstr_chunk(req, NULL);
    return ESP_OK;
 }
@@ -281,7 +281,7 @@ static esp_err_t web_root(httpd_req_t * req)
          q[0] = '0' + i;
          httpd_resp_sendstr_chunk(req, "<a href='?");
          httpd_resp_sendstr_chunk(req, q);
-         httpd_resp_sendstr_chunk(req, "' class='d");
+         httpd_resp_sendstr_chunk(req, "' class='defcon d");
          httpd_resp_sendstr_chunk(req, q);
          if (i == defcon_level)
             httpd_resp_sendstr_chunk(req, " on");
