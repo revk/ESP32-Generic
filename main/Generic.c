@@ -11,6 +11,7 @@ static const char TAG[] = "Generic";
 #include "esp_sleep.h"
 #include "esp_task_wdt.h"
 #include "esp_http_client.h"
+#include "esp_http_server.h"
 #include "esp_crt_bundle.h"
 #include "vl53l0x.h"
 #include "vl53l1x.h"
@@ -79,6 +80,7 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	u8(gfxflip,)	\
 	io(uart1rx,)	\
 	io(uart2rx,)	\
+	u8(defcon,0)	\
 	b(s21)		\
 	b(daikin)	\
 	s(sekey)	\
@@ -104,6 +106,7 @@ const char *rangererr = NULL;
 uint16_t range = 0;
 uint32_t voltage = 0;
 httpd_handle_t webserver = NULL;
+int8_t defcon_level = -1;
 
 volatile uint8_t uarts = 1;
 void uart_task(void *arg)
@@ -215,6 +218,99 @@ void uart_task(void *arg)
       revk_info("uart", &j);
    }
 }
+
+static void web_head(httpd_req_t * req, const char *title)
+{
+   httpd_resp_set_type(req, "text/html; charset=utf-8");
+   httpd_resp_sendstr_chunk(req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
+   httpd_resp_sendstr_chunk(req, "<html><head><title>");
+   if (title)
+      httpd_resp_sendstr_chunk(req, title);
+   httpd_resp_sendstr_chunk(req, "</title></head><style>"       //
+                            "body{font-family:sans-serif;background:#8cf;}"     //
+                            "</style><body><h1>");
+   if (title)
+      httpd_resp_sendstr_chunk(req, title);
+   httpd_resp_sendstr_chunk(req, "</h1>");
+}
+
+static esp_err_t web_foot(httpd_req_t * req)
+{
+   httpd_resp_sendstr_chunk(req, "<hr><address>");
+   char temp[20];
+   snprintf(temp, sizeof(temp), "%012llX", revk_binid);
+   httpd_resp_sendstr_chunk(req, temp);
+   httpd_resp_sendstr_chunk(req, "</address></body></html>");
+   httpd_resp_sendstr_chunk(req, NULL);
+   return ESP_OK;
+}
+
+static esp_err_t web_icon(httpd_req_t * req)
+{                               // serve image -  maybe make more generic file serve
+   extern const char start[] asm("_binary_apple_touch_icon_png_start");
+   extern const char end[] asm("_binary_apple_touch_icon_png_end");
+   httpd_resp_set_type(req, "image/png");
+   httpd_resp_send(req, start, end - start);
+   return ESP_OK;
+}
+
+static esp_err_t web_root(httpd_req_t * req)
+{
+   if (revk_link_down())
+      return revk_web_config(req);      // Direct to web set up
+   web_head(req, *hostname ? hostname : appname);
+   if(defcon)
+   { // Defcon controls
+
+   }
+   return web_foot(req);
+}
+
+void defcon_task(void *arg)
+{
+   // Expects outputs to be configured
+   // 0=Beep - set mark/space
+   // 1-5=DEFCON lights White/Red/Yellow/Green/Blue
+   // 6=Click
+   // 7=Blink - set mark/space
+   // The defcon setting is lowest DEFCON setting that we don't beep for, e.g. 5 would be good not to beep when going to DEFCON 5 or above
+   outputcount[7] = -1;         // Blinking forever - set mark/space
+   outputbits |= (1 << 7);      // Start blinking
+   int8_t level = -1;           // Current DEFCON level
+   while (1)
+   {
+      usleep(10000);
+      if (level != defcon_level)
+      {
+         usleep(100000);
+         if (level != defcon_level)
+         {
+            int8_t waslevel = level;
+            level = defcon_level;
+            // Off existing
+            outputbits = (outputbits & ~0x7F) | (1 << 6) | (1 << 7);
+            usleep(500000);
+            // Report
+            jo_t j = jo_object_alloc();
+            jo_int(j, "level", level);
+            revk_info("defcon", &j);
+            // Beep count
+            if (level < defcon)
+               outputcount[0] = waslevel < level ? 1 : level ? 2 : 3;
+            // On new
+            outputbits = (outputbits & ~0x7F) | (level > 5 ? 0 : level ? (1 << level) : (1 << 1)) | (outputcount[0] ? (1 << 0) : 0);
+            if (!level)
+               for (int i = 2; i <= 5; i++)
+               {
+                  usleep(100000);
+                  outputbits = (outputbits ^ (1 << 6)) | (1 << i);
+               }
+            sleep(1);
+         }
+      }
+   }
+}
+
 
 void se_task(void *arg)
 {                               // Solar edge monitor
@@ -351,7 +447,7 @@ void output_task(void *arg)
    arg = arg;
    while (1)
    {
-      usleep(1000LL);
+      usleep(1000);
       for (int i = 0; i < MAXGPIO; i++)
          if (output[i] && !(outputoverride & (1ULL << i)))
          {
@@ -361,12 +457,12 @@ void output_task(void *arg)
             if ((outputbits ^ outputraw) & (1ULL << i))
             {                   //Change output
                outputraw ^= (1ULL << i);
-               REVK_ERR_CHECK(gpio_hold_dis(p));
+               //REVK_ERR_CHECK(gpio_hold_dis(p));
                REVK_ERR_CHECK(gpio_set_level(p, ((output[i] & PORT_INV) ? 1 : 0) ^ ((outputbits >> i) & 1)));
-               REVK_ERR_CHECK(gpio_hold_en(p));
+               //REVK_ERR_CHECK(gpio_hold_en(p));
                if (outputbits & (1ULL << i))
                   outputremaining[i] = outputmark[i];   //Time
-               else if (!outputcount[i] || !--outputcount[i])
+               else if (!outputcount[i] || (outputcount[i] != -1 && !--outputcount[i]))
                   outputremaining[i] = 0;
                else
                   outputremaining[i] = outputspace[i];  //Time
@@ -409,12 +505,30 @@ const char *gfx_qr(const char *value)
    return NULL;
 }
 
+char *setdefcon(int level, char *value)
+{                               // DEFCON state
+   // With value it is used to turn on/off a defcon state, the lowest set dictates the defcon level
+   // With no value, this sets the DEFCON state directly instead of using lowest of state set
+   static uint8_t state = 0;    // DEFCON state
+   if (*value)
+   {
+      if (*value == '1' || *value == 't' || *value == 'y')
+         state |= (1 << level);
+      else
+         state &= ~(1 << level);
+      int l;
+      for (l = 0; l < 8 && !(state & (1 << l)); l++);
+      defcon_level = l;
+   } else
+      defcon_level = level;
+   return "";
+}
+
 const char *app_callback(int client, const char *prefix, const char *target, const char *suffix, jo_t j)
 {
-   if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
-      return NULL;              //Not for us or not a command from main MQTT
    char value[1000];
    int len = 0;
+   *value = 0;
    if (j)
    {
       len = jo_strncpy(j, value, sizeof(value));
@@ -422,6 +536,18 @@ const char *app_callback(int client, const char *prefix, const char *target, con
          return "Expecting JSON string";
       if (len > sizeof(value))
          return "Too long";
+   }
+   if (defcon && prefix && !strcmp(prefix, "DEFCON") && target && isdigit(*target) && !target[1])
+      return setdefcon(*target - '0', value);
+   if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
+      return NULL;              //Not for us or not a command from main MQTT
+   if (defcon && isdigit(*suffix) && !suffix[1])
+      return setdefcon(*suffix - '0', value);
+   if (!strcmp(suffix, "connect"))
+   {
+      if (defcon)
+         lwmqtt_subscribe(revk_mqtt(0), "DEFCON/#");
+
    }
    if (!strcmp(suffix, "shutdown"))
       httpd_stop(webserver);
@@ -457,16 +583,14 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       if (c)
       {
          if (!outputcount[i])
-         {
+         {                      // On
             outputcount[i] = c;
             outputbits |= (1ULL << i);
-            //On
          }
       } else
-      {
+      {                         // Off
          outputcount[i] = 0;
          outputbits &= ~(1ULL << i);
-         //Off
       }
       return "";
    }
@@ -513,17 +637,6 @@ const char *app_callback(int client, const char *prefix, const char *target, con
 #ifdef	CONFIG_REVK_APCONFIG
 #error 	Clash with CONFIG_REVK_APCONFIG set
 #endif
-static esp_err_t web_root(httpd_req_t * req)
-{
-   if (revk_link_down())
-      return revk_web_config(req);      // Direct to web set up
-   httpd_resp_sendstr_chunk(req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
-   httpd_resp_sendstr_chunk(req, "<html><body style='font-family:sans-serif;background:#8cf;'><h1>");
-   httpd_resp_sendstr_chunk(req, appname);
-   httpd_resp_sendstr_chunk(req, "</h1>");
-   httpd_resp_sendstr_chunk(req, NULL);
-   return ESP_OK;
-}
 
 void app_main()
 {
@@ -567,6 +680,15 @@ void app_main()
       }
       {
          httpd_uri_t uri = {
+            .uri = "/apple-touch-icon.png",
+            .method = HTTP_GET,
+            .handler = web_icon,
+            .user_ctx = NULL
+         };
+         REVK_ERR_CHECK(httpd_register_uri_handler(webserver, &uri));
+      }
+      {
+         httpd_uri_t uri = {
             .uri = "/wifi",
             .method = HTTP_GET,
             .handler = revk_web_config,
@@ -576,6 +698,7 @@ void app_main()
       }
       revk_web_config_start(webserver);
    }
+
    if (gfxmosi || gfxdc || gfxsck)
    {
     const char *e = gfx_init(port: HSPI_HOST, cs: port_mask(gfxcs), sck: port_mask(gfxsck), mosi: port_mask(gfxmosi), dc: port_mask(gfxdc), rst: port_mask(gfxrst), busy: port_mask(gfxbusy), ena: port_mask(gfxena), flip:gfxflip);
@@ -596,7 +719,7 @@ void app_main()
          if (input[i])
          {
             int p = port_mask(input[i]);
-            REVK_ERR_CHECK(gpio_hold_dis(p));
+            //REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_reset_pin(p));
             REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_INPUT));
          }
@@ -611,7 +734,7 @@ void app_main()
          {
             int p = port_mask(power[i]);
             c.pin_bit_mask |= (1ULL << p);
-            REVK_ERR_CHECK(gpio_hold_dis(p));
+            //REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_set_level(p, (power[i] & PORT_INV) ? 0 : 1));
             REVK_ERR_CHECK(gpio_set_drive_capability(p, GPIO_DRIVE_CAP_3));
 
@@ -741,6 +864,8 @@ void app_main()
    }
    revk_task("input", input_task, 0);
    revk_task("output", output_task, 0);
+   if (defcon)
+      revk_task("defcon", defcon_task, 0);
    if (!revk_wait_wifi(10))
    {
       ESP_LOGE(TAG, "No WiFi");

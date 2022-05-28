@@ -2,6 +2,12 @@
 
 Software and hardware for generic ESP32 usage. Software based on ESP32-RevK library.
 
+The software is all sorts of mish mash of stuff, mainly to demo things. Can work with an e-paper display to show messages. Has simple input reporting and output with pulses and counts, etc. Can even work DEFCON lights mode, or debug dump serial data each way to a Daikin air-con controller. Basically it ends up with any little project that I don't think deserves its own project yet.
+
+# Building
+
+Git clone this `--recursive` to get all the submodules, and it should build with just `make`. That actually runs the normal `idf.py` to build. `make menuconfig` can be used to fine tune the settings, but the defaults should be mostly sane. `make flash` should work to program.
+
 # Hardware
 
 Various KiCad designs, with 3D printed case designs.
