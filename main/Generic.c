@@ -82,6 +82,7 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	io(uart1rx,)	\
 	io(uart2rx,)	\
 	u8(defcon,0)	\
+	u8(defconblink,9)	\
 	b(s21)		\
 	b(daikin)	\
 	s(sekey)	\
@@ -107,7 +108,7 @@ const char *rangererr = NULL;
 uint16_t range = 0;
 uint32_t voltage = 0;
 httpd_handle_t webserver = NULL;
-int8_t defcon_level = -1;
+int8_t defcon_level = 9;
 
 volatile uint8_t uarts = 1;
 void uart_task(void *arg)
@@ -281,19 +282,20 @@ static esp_err_t web_root(httpd_req_t * req)
          else if (*q == '-' && defcon_level > 0)
             defcon_level--;
       }
-      for (int i = 0; i <= 6; i++)
-      {
-         q[0] = '0' + i;
-         httpd_resp_sendstr_chunk(req, "<a href='?");
-         httpd_resp_sendstr_chunk(req, q);
-         httpd_resp_sendstr_chunk(req, "' class='defcon d");
-         httpd_resp_sendstr_chunk(req, q);
-         if (i == defcon_level)
-            httpd_resp_sendstr_chunk(req, " on");
-         httpd_resp_sendstr_chunk(req, "'>");
-         httpd_resp_sendstr_chunk(req, q);
-         httpd_resp_sendstr_chunk(req, "</a>");
-      }
+      for (int i = 0; i <= 9; i++)
+         if (i <= 6 || i == 9)
+         {
+            q[0] = '0' + i;
+            httpd_resp_sendstr_chunk(req, "<a href='?");
+            httpd_resp_sendstr_chunk(req, q);
+            httpd_resp_sendstr_chunk(req, "' class='defcon d");
+            httpd_resp_sendstr_chunk(req, q);
+            if (i == defcon_level)
+               httpd_resp_sendstr_chunk(req, " on");
+            httpd_resp_sendstr_chunk(req, "'>");
+            httpd_resp_sendstr_chunk(req, i == 9 ? "X" : q);
+            httpd_resp_sendstr_chunk(req, "</a>");
+         }
    }
    return web_foot(req);
 }
@@ -321,7 +323,7 @@ void defcon_task(void *arg)
             uint8_t blink = (1 << 7);
             if (level >= 9 || defcon_level >= 9)
                click = 0;
-            if (defcon_level >= 9)
+            if (defcon_level >= defconblink)
                blink = 0;
             int8_t waslevel = level;
             level = defcon_level;
