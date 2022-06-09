@@ -7,13 +7,11 @@ PROJECT_NAME := Generic
 SUFFIX := $(shell components/ESP32-RevK/buildsuffix)
 MODELS := Generic LowPower Generic2 Generic3 Generic4 Generic5
 
-all:
+all:	
 	@echo Make: $(PROJECT_NAME)$(SUFFIX).bin
 	@idf.py build
 	@cp build/$(PROJECT_NAME).bin $(PROJECT_NAME)$(SUFFIX).bin
 	@echo Done: $(PROJECT_NAME)$(SUFFIX).bin
-
-tools: envlog envgraph taspowerlog taspowersvg
 
 set:    wroom solo pico
 

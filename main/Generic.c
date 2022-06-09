@@ -48,6 +48,7 @@ static uint32_t outputmark[MAXGPIO];    //Output mark time(ms)
 static uint32_t outputspace[MAXGPIO];   //Output mark time(ms)
 static uint8_t power[MAXGPIO];  //Fixed output GPIOs
 int holding = 0;
+int refresh = 0;
 
 // Dynamic
 static uint64_t volatile outputbits = 0;        // Requested output
@@ -473,13 +474,33 @@ void se_task(void *arg)
 void input_task(void *arg)
 {
    arg = arg;
+   uint64_t last = 0;
    while (1)
    {
       usleep(1000LL);
+      uint64_t this = 0;
+      int max = 0;
       for (int i = 0; i < MAXGPIO; i++)
          if (input[i])
          {
+            if (gpio_get_level(port_mask(input[i])) ^ ((input[i] ^ PORT_INV) ? 1 : 0))
+               this |= (1ULL << i);
+            max = i;
          }
+      if (this != last || refresh)
+      {
+         last = this;
+         refresh = 0;
+         jo_t j = jo_object_alloc();
+         jo_array(j, "input");
+         for (int i = 0; i <= max; i++)
+            if (input[i])
+               jo_bool(j, NULL, (gpio_get_level(port_mask(input[i])) ^ ((input[i] ^ PORT_INV) ? 1 : 0)));
+            else
+               jo_null(j, NULL);
+         jo_close(j);
+         revk_info(NULL, &j);
+      }
    }
 }
 
@@ -588,7 +609,7 @@ const char *app_callback(int client, const char *prefix, const char *target, con
    {
       if (defcon)
          lwmqtt_subscribe(revk_mqtt(0), "DEFCON/#");
-
+      refresh = 1;
    }
    if (!strcmp(suffix, "shutdown"))
       httpd_stop(webserver);
@@ -754,36 +775,36 @@ void app_main()
          gfx_qr("HTTPS://GENERIC.REVK.UK");
    }
    {
-    gpio_config_t c = { mode:GPIO_MODE_OUTPUT };
+    gpio_config_t o = { mode:GPIO_MODE_OUTPUT };
+    gpio_config_t u = { mode: GPIO_MODE_INPUT, pull_down_en:GPIO_PULLDOWN_ENABLE };
       for (int i = 0; i < MAXGPIO; i++)
       {
          if (input[i])
          {
             int p = port_mask(input[i]);
-            //REVK_ERR_CHECK(gpio_hold_dis(p));
-            REVK_ERR_CHECK(gpio_reset_pin(p));
-            REVK_ERR_CHECK(gpio_set_direction(p, GPIO_MODE_INPUT));
+            u.pin_bit_mask |= (1ULL << p);
          }
          if (output[i])
          {
             int p = port_mask(output[i]);
-            c.pin_bit_mask |= (1ULL << p);
+            o.pin_bit_mask |= (1ULL << p);
             REVK_ERR_CHECK(gpio_set_level(p, (output[i] & PORT_INV) ? 1 : 0));
             holding++;
          }
          if (power[i])
          {
             int p = port_mask(power[i]);
-            c.pin_bit_mask |= (1ULL << p);
+            o.pin_bit_mask |= (1ULL << p);
             //REVK_ERR_CHECK(gpio_hold_dis(p));
             REVK_ERR_CHECK(gpio_set_level(p, (power[i] & PORT_INV) ? 0 : 1));
             REVK_ERR_CHECK(gpio_set_drive_capability(p, GPIO_DRIVE_CAP_3));
-
             holding++;
          }
       }
-      if (c.pin_bit_mask)
-         REVK_ERR_CHECK(gpio_config(&c));
+      if (o.pin_bit_mask)
+         REVK_ERR_CHECK(gpio_config(&o));
+      if (u.pin_bit_mask)
+         REVK_ERR_CHECK(gpio_config(&u));
    }
    if (esp_reset_reason() != ESP_RST_DEEPSLEEP && awake < 60)
       awake = 60;
@@ -939,15 +960,6 @@ void app_main()
          jo_bool(j, "charger", 1);
       else if (usb_present)
          jo_bool(j, "usb", 1);
-      int i;
-      for (i = 0; i < MAXGPIO && !input[i]; i++);
-      if (i < MAXGPIO)
-      {
-         jo_array(j, "input");
-         for (i = 0; i < MAXGPIO; i++)
-            jo_bool(j, NULL, (gpio_get_level(port_mask(input[i])) ^ ((input[i] ^ PORT_INV) ? 1 : 0)));
-         jo_close(j);
-      }
       revk_info(NULL, &j);
    }
 
