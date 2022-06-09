@@ -39,11 +39,12 @@ static const char TAG[] = "Generic";
 #endif
 
 #define	MAXGPIO	36
-#define BITFIELDS "-"
-#define PORT_INV 0x40
-#define port_mask(p) ((p)&63)
-static uint8_t input[MAXGPIO];  //Input GPIOs
-static uint8_t output[MAXGPIO]; //Output GPIOs
+#define BITFIELDS "-^"
+#define PORT_INV 0x4000
+#define PORT_PU 0x2000
+#define port_mask(p) ((p)&0xFF)
+static uint16_t input[MAXGPIO]; //Input GPIOs
+static uint16_t output[MAXGPIO];        //Output GPIOs
 static uint32_t outputmark[MAXGPIO];    //Output mark time(ms)
 static uint32_t outputspace[MAXGPIO];   //Output mark time(ms)
 static uint8_t power[MAXGPIO];  //Fixed output GPIOs
@@ -776,13 +777,17 @@ void app_main()
    }
    {
     gpio_config_t o = { mode:GPIO_MODE_OUTPUT };
-    gpio_config_t u = { mode: GPIO_MODE_INPUT, pull_down_en:GPIO_PULLDOWN_ENABLE };
+    gpio_config_t u = { mode: GPIO_MODE_INPUT, pull_up_en:GPIO_PULLUP_ENABLE };
+    gpio_config_t d = { mode: GPIO_MODE_INPUT, pull_down_en:GPIO_PULLDOWN_ENABLE };
       for (int i = 0; i < MAXGPIO; i++)
       {
          if (input[i])
          {
             int p = port_mask(input[i]);
-            u.pin_bit_mask |= (1ULL << p);
+            if (input[i] & PORT_PU)
+               u.pin_bit_mask |= (1ULL << p);
+            else
+               d.pin_bit_mask |= (1ULL << p);
          }
          if (output[i])
          {
@@ -805,6 +810,8 @@ void app_main()
          REVK_ERR_CHECK(gpio_config(&o));
       if (u.pin_bit_mask)
          REVK_ERR_CHECK(gpio_config(&u));
+      if (d.pin_bit_mask)
+         REVK_ERR_CHECK(gpio_config(&d));
    }
    if (esp_reset_reason() != ESP_RST_DEEPSLEEP && awake < 60)
       awake = 60;
