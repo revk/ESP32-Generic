@@ -39,12 +39,11 @@ static const char TAG[] = "Generic";
 #endif
 
 #define	MAXGPIO	36
-#define BITFIELDS "-^"
-#define PORT_INV 0x4000
-#define PORT_PU 0x2000
-#define port_mask(p) ((p)&0xFF)
-static uint16_t input[MAXGPIO]; //Input GPIOs
-static uint16_t output[MAXGPIO];        //Output GPIOs
+#define BITFIELDS "-"
+#define PORT_INV 0x40
+#define port_mask(p) ((p)&0x3F)
+static uint8_t input[MAXGPIO]; //Input GPIOs
+static uint8_t output[MAXGPIO];        //Output GPIOs
 static uint32_t outputmark[MAXGPIO];    //Output mark time(ms)
 static uint32_t outputspace[MAXGPIO];   //Output mark time(ms)
 static uint8_t power[MAXGPIO];  //Fixed output GPIOs
@@ -784,7 +783,7 @@ void app_main()
          if (input[i])
          {
             int p = port_mask(input[i]);
-            if (input[i] & PORT_PU)
+            if (input[i] & PORT_INV)
                u.pin_bit_mask |= (1ULL << p);
             else
                d.pin_bit_mask |= (1ULL << p);
