@@ -21,10 +21,9 @@ static const char TAG[] = "Generic";
 #include <hal/spi_types.h>
 #include <driver/gpio.h>
 #include <driver/uart.h>
-#include <driver/adc.h>
 #include <driver/ledc.h>
-#include <esp_adc_cal.h>
 #include <driver/i2c.h>
+#include <esp_adc/adc_cali.h>
 
 #ifdef	CONFIG_LWIP_DHCP_DOES_ARP_CHECK
 #warning CONFIG_LWIP_DHCP_DOES_ARP_CHECK means DHCP is slow
@@ -357,7 +356,7 @@ static esp_err_t web_root(httpd_req_t * req)
       if (len == 1)
       {
          httpd_req_get_url_query_str(req, q, sizeof(q));
-         if (isdigit(*q))
+         if (isdigit((int) *q))
             defcon_level = *q - '0';
          else if (*q == '+' && defcon_level < 9)
             defcon_level++;
@@ -464,7 +463,7 @@ void se_task(void *arg)
    }
    char city[17];
    jo_t j;
-   asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/details?api_key=%s", sesite, sekey);
+   asprintf(&url, "https://monitoringapi.solaredge.com/site/%ld/details?api_key=%s", sesite, sekey);
    while (1)
    {
       sleep(5);
@@ -493,7 +492,7 @@ void se_task(void *arg)
          if (last / 15 / 60 != this / 15 / 60)
          {                      // Stats
             last = this;
-            asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/overview?api_key=%s", sesite, sekey);
+            asprintf(&url, "https://monitoringapi.solaredge.com/site/%ld/overview?api_key=%s", sesite, sekey);
             if ((j = fetch(url)))
             {
                if (jo_find(j, "*.lastDayData.energy") == JO_NUMBER)
@@ -501,7 +500,7 @@ void se_task(void *arg)
             }
             free(url);
          }
-         asprintf(&url, "https://monitoringapi.solaredge.com/site/%d/currentPowerFlow?api_key=%s", sesite, sekey);
+         asprintf(&url, "https://monitoringapi.solaredge.com/site/%ld/currentPowerFlow?api_key=%s", sesite, sekey);
          if ((j = fetch(url)))
          {
             if (jo_find(j, "*.unit") == JO_STRING)
@@ -617,7 +616,7 @@ void output_task(void *arg)
 const char *gfx_qr(const char *value)
 {
 #ifndef	CONFIG_GFX_NONE
-   uint32_t width = 0;
+   unsigned int width = 0;
  uint8_t *qr = qr_encode(strlen(value), value, widthp: &width, noquiet:1);
    if (!qr)
       return "Failed to encode";
@@ -680,11 +679,11 @@ const char *app_callback(int client, const char *prefix, const char *target, con
       if (len > sizeof(value))
          return "Too long";
    }
-   if (defcon && prefix && !strcmp(prefix, "DEFCON") && target && isdigit(*target) && !target[1])
+   if (defcon && prefix && !strcmp(prefix, "DEFCON") && target && isdigit((int) *target) && !target[1])
       return setdefcon(*target - '0', value);
    if (client || !prefix || target || strcmp(prefix, prefixcommand) || !suffix)
       return NULL;              //Not for us or not a command from main MQTT
-   if (defcon && isdigit(*suffix) && !suffix[1])
+   if (defcon && isdigit((int) *suffix) && !suffix[1])
       return setdefcon(*suffix - '0', value);
    if (!strcmp(suffix, "connect"))
    {
@@ -896,7 +895,7 @@ void app_main()
    if (esp_reset_reason() != ESP_RST_DEEPSLEEP && awake < 60)
       awake = 60;
    if (period)
-      ESP_LOGI(TAG, "Start %ld", now % period);
+      ESP_LOGI(TAG, "Start %lld", now % period);
    if (usb)
    {
       gpio_reset_pin(port_mask(usb));
@@ -1097,7 +1096,7 @@ void app_main()
    // Sleepy stuff
    if (!busy)
    {
-      ESP_LOGI(TAG, "Wait for %d", awake);      /* wait a bit */
+      ESP_LOGI(TAG, "Wait for %ld", awake);     /* wait a bit */
       if (awake)
          sleep(awake);
       else
