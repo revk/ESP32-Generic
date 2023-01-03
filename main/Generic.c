@@ -24,6 +24,7 @@ static const char TAG[] = "Generic";
 #include <driver/adc.h>
 #include <driver/ledc.h>
 #include <esp_adc_cal.h>
+#include <driver/i2c.h>
 
 #ifdef	CONFIG_LWIP_DHCP_DOES_ARP_CHECK
 #warning CONFIG_LWIP_DHCP_DOES_ARP_CHECK means DHCP is slow
@@ -39,11 +40,12 @@ static const char TAG[] = "Generic";
 #endif
 
 #define	MAXGPIO	36
-#define BITFIELDS "-"
-#define PORT_INV 0x40
-#define port_mask(p) ((p)&0x3F)
-static uint8_t input[MAXGPIO]; //Input GPIOs
-static uint8_t output[MAXGPIO];        //Output GPIOs
+#define BITFIELDS "-^"
+#define PORT_INV 0x4000
+#define PORT_PU 0x2000
+#define port_mask(p) ((p)&0xFF) // 16 bit
+static uint16_t input[MAXGPIO]; //Input GPIOs
+static uint16_t output[MAXGPIO];        //Output GPIOs
 static uint32_t outputmark[MAXGPIO];    //Output mark time(ms)
 static uint32_t outputspace[MAXGPIO];   //Output mark time(ms)
 static uint8_t power[MAXGPIO];  //Fixed output GPIOs
@@ -88,13 +90,17 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	b(daikin)	\
 	s(sekey)	\
 	u32(sesite,0)	\
+	u8(i2c,0)	\
+	io(scl,)	\
+	io(sda,)	\
+	u8(als,0x10)	\
 
 #define u32(n,d)        uint32_t n;
 #define s8(n,d) int8_t n;
 #define u8(n,d) uint8_t n;
 #define b(n) uint8_t n;
 #define s(n) char * n;
-#define io(n,d)           uint8_t n;
+#define io(n,d)           uint16_t n;
 settings
 #undef io
 #undef u32
@@ -219,6 +225,81 @@ void uart_task(void *arg)
          jo_base16(j, "data", buf, len);
       }
       revk_info("uart", &j);
+   }
+}
+
+static void als_task(void *arg)
+{
+   ESP_LOGI(TAG, "ALS start %d:%02X", i2c, als);
+   uint16_t r(uint8_t cmd) {
+      uint8_t l,
+       h;
+      i2c_cmd_handle_t t = i2c_cmd_link_create();
+      i2c_master_start(t);
+      i2c_master_write_byte(t, (als << 1) | I2C_MASTER_WRITE, true);
+      i2c_master_write_byte(t, cmd, true);
+      i2c_master_start(t);
+      i2c_master_write_byte(t, (als << 1) | I2C_MASTER_READ, true);
+      i2c_master_read_byte(t, &l, I2C_MASTER_ACK);
+      i2c_master_read_byte(t, &h, I2C_MASTER_LAST_NACK);
+      i2c_master_stop(t);
+      esp_err_t err = i2c_master_cmd_begin(i2c, t, 10 / portTICK_PERIOD_MS);
+      i2c_cmd_link_delete(t);
+      if (err)
+      {
+         ESP_LOGE(TAG, "ALS %02X read fail %s", cmd, esp_err_to_name(err));
+         jo_t j = jo_object_alloc();
+         jo_string(j, "error", "Failed to ALS read");
+         jo_int(j, "cmd", cmd);
+         jo_int(j, "sda", port_mask(sda));
+         jo_int(j, "scl", port_mask(scl));
+         jo_int(j, "address", als);
+         jo_string(j, "description", esp_err_to_name(err));
+         revk_error("als", &j);
+         return 0;
+      }
+      return (h << 8) + l;
+   }
+   void w(uint8_t cmd, uint16_t val) {
+      i2c_cmd_handle_t t = i2c_cmd_link_create();
+      i2c_master_start(t);
+      i2c_master_write_byte(t, (als << 1) | I2C_MASTER_WRITE, true);
+      i2c_master_write_byte(t, cmd, true);
+      i2c_master_write_byte(t, val & 0xFF, true);
+      i2c_master_write_byte(t, val >> 8, true);
+      i2c_master_stop(t);
+      esp_err_t err = i2c_master_cmd_begin(i2c, t, 10 / portTICK_PERIOD_MS);
+      i2c_cmd_link_delete(t);
+      if (err)
+      {
+         ESP_LOGE(TAG, "ALS %02X write %04X fail %s", cmd, val, esp_err_to_name(err));
+         jo_t j = jo_object_alloc();
+         jo_string(j, "error", "Failed to ALS read");
+         jo_int(j, "cmd", cmd);
+         jo_int(j, "sda", port_mask(sda));
+         jo_int(j, "scl", port_mask(scl));
+         jo_int(j, "address", als);
+         jo_string(j, "description", esp_err_to_name(err));
+         revk_error("als", &j);
+         return;
+      }
+   }
+   {                            // Check ID
+      uint16_t id = r(0x09);
+      if ((id & 0xFF) != 0x35)
+      {
+         ESP_LOGE(TAG, "ALS Bad ID %04X", id);
+         vTaskDelete(NULL);
+         return;
+      }
+   }
+   w(0x00, 0x0040);
+   ESP_LOGI(TAG, "ALS mode=%04X ", r(0x00));
+   while (1)
+   {
+
+      ESP_LOGI(TAG, "ALS W=%04X ALS=%04X", r(0x04), r(0x05));
+      sleep(1);
    }
 }
 
@@ -975,6 +1056,35 @@ void app_main()
       revk_task("uart2", uart_task, &uart2rx);
    if (*sekey && sesite)
       revk_task("solaredge", se_task, 0);
+   if (scl && sda)
+   {
+      esp_err_t err;
+      err = i2c_driver_install(i2c, I2C_MODE_MASTER, 0, 0, 0);
+      if (!err)
+      {
+         i2c_config_t config = {
+            .mode = I2C_MODE_MASTER,
+            .sda_io_num = port_mask(sda),
+            .scl_io_num = port_mask(scl),
+            .sda_pullup_en = true,
+            .scl_pullup_en = true,
+            .master.clk_speed = 400000,
+         };
+         err = i2c_param_config(i2c, &config);
+         if (err)
+            i2c_driver_delete(i2c);
+      }
+      if (err)
+      {
+         jo_t j = jo_object_alloc();
+         jo_string(j, "error", "Failed to start I2C");
+         jo_string(j, "description", esp_err_to_name(err));
+         revk_error("i2c", &j);
+         scl = sda = 0;
+      }
+   }
+   if (scl && sda && als)
+      revk_task("als", als_task, 0);
 
    if (!period)
    {
