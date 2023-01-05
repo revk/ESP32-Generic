@@ -2,7 +2,7 @@
 <export version="E">
   <design>
     <source>/Users/adrian/git/ESP32-Generic/KiCad/USBA.kicad_sch</source>
-    <date>Tuesday, 03 January 2023 at 12:33:51</date>
+    <date>Tuesday, 03 January 2023 at 15:04:16</date>
     <tool>Eeschema (6.0.9-0)</tool>
     <textvar name="DATE">2023-01-03</textvar>
     <sheet number="1" name="/" tstamps="/">
@@ -82,6 +82,19 @@
       <property name="Sheetfile" value="USBA.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
       <tstamps>b705a427-c17c-4bd4-b113-ef18317d0b97</tstamps>
+    </comp>
+    <comp ref="C5">
+      <value>10nF</value>
+      <footprint>RevK:C_0603</footprint>
+      <fields>
+        <field name="Part No">0603-10nF-50V</field>
+      </fields>
+      <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
+      <property name="Part No" value="0603-10nF-50V"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="USBA.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b51431db-2560-4de9-83f6-1c1814dc0cbf</tstamps>
     </comp>
     <comp ref="D1">
       <value>RGB</value>
@@ -197,6 +210,7 @@
     </comp>
     <comp ref="R6">
       <value>10k</value>
+      <footprint>RevK:R_0603</footprint>
       <libsource lib="Device" part="R" description="Resistor"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="USBA.kicad_sch"/>
@@ -465,6 +479,7 @@
       <node ref="U1" pin="34" pinfunction="IO22" pintype="bidirectional"/>
     </net>
     <net code="4" name="EN">
+      <node ref="C5" pin="2" pintype="passive"/>
       <node ref="R6" pin="2" pintype="passive"/>
       <node ref="U1" pin="8" pinfunction="EN" pintype="input"/>
     </net>
@@ -474,6 +489,7 @@
     </net>
     <net code="6" name="GND">
       <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C5" pin="1" pintype="passive"/>
       <node ref="J1" pin="4" pinfunction="GND" pintype="power_in"/>
       <node ref="J1" pin="5" pinfunction="Shield" pintype="passive"/>
       <node ref="R5" pin="1" pintype="passive"/>

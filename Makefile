@@ -5,7 +5,7 @@
 
 PROJECT_NAME := Generic
 SUFFIX := $(shell components/ESP32-RevK/buildsuffix)
-MODELS := Generic LowPower Generic2 Generic3 Generic4 Generic5
+MODELS := Generic LowPower Generic2 Generic3 Generic4 Generic5 USBA
 
 all:	
 	@echo Make: $(PROJECT_NAME)$(SUFFIX).bin
@@ -76,11 +76,15 @@ PCBCase/case: PCBCase/case.c
 
 scad:	$(patsubst %,KiCad/%.scad,$(MODELS))
 stl:	$(patsubst %,KiCad/%.stl,$(MODELS))
+zip:	$(patsubst %,KiCad/%.zip,$(MODELS))
 
 %.stl: %.scad
 	echo "Making $@"
 	/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD $< -o $@
 	echo "Made $@"
+
+%.zip:	%.kicad_pcb
+	zip -D $@ $(subst .kicad_pcb,-B_Cu.gbr,$<) $(subst .kicad_pcb,-F_Cu.gbr,$<) $(subst .kicad_pcb,-B_Mask.gbr,$<) $(subst .kicad_pcb,-F_Mask.gbr,$<) $(subst .kicad_pcb,-B_Silkscreen.gbr,$<) $(subst .kicad_pcb,-F_Silkscreen.gbr,$<) $(subst .kicad_pcb,-PTH.drl,$<) $(subst .kicad_pcb,-NPTH.drl,$<)
 
 KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
@@ -98,5 +102,8 @@ KiCad/Generic5.scad: KiCad/Generic5.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2.6
 
 KiCad/LowPower.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
+	PCBCase/case -o $@ $< --edge=2 --base=2
+
+KiCad/USBA.scad: KiCad/USBA.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
