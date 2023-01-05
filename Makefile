@@ -76,7 +76,7 @@ PCBCase/case: PCBCase/case.c
 
 scad:	$(patsubst %,KiCad/%.scad,$(MODELS))
 stl:	$(patsubst %,KiCad/%.stl,$(MODELS))
-zip:	$(patsubst %,KiCad/%.zip,$(MODELS))
+zip:    $(patsubst KiCad/%.kicad_pcb,KiCad/%.zip,$(wildcard KiCad/*.kicad_pcb))
 
 %.stl: %.scad
 	echo "Making $@"
