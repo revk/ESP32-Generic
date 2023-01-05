@@ -83,6 +83,12 @@ zip:    $(patsubst KiCad/%.kicad_pcb,KiCad/%.zip,$(wildcard KiCad/*.kicad_pcb))
 	/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD $< -o $@
 	echo "Made $@"
 
+%-B_Cu.gbr: %.kicad_pcb
+	$(error Save plots $<)
+
+%-PTH.drl: %.kicad_pcb
+	$(error Save drill $<)
+
 %.zip:	%-B_Cu.gbr %-F_Cu.gbr %-B_Mask.gbr %-F_Mask.gbr %-B_Silkscreen.gbr %-F_Silkscreen.gbr %-Edge_Cuts.gbr %-NPTH.drl %-PTH.drl
 	zip -D $@ $^
 
