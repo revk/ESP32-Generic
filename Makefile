@@ -5,7 +5,6 @@
 
 PROJECT_NAME := Generic
 SUFFIX := $(shell components/ESP32-RevK/buildsuffix)
-MODELS := Generic LowPower Generic2 Generic3 Generic4 Generic5 USBA
 
 all:	
 	@echo Make: $(PROJECT_NAME)$(SUFFIX).bin
@@ -74,42 +73,31 @@ ftdizap/ftdizap: ftdizap/ftdizap.c
 PCBCase/case: PCBCase/case.c
 	make -C PCBCase
 
-scad:	$(patsubst %,KiCad/%.scad,$(MODELS))
-stl:	$(patsubst %,KiCad/%.stl,$(MODELS))
-zip:    $(patsubst KiCad/%.kicad_pcb,KiCad/%.zip,$(wildcard KiCad/*.kicad_pcb))
-
 %.stl: %.scad
 	echo "Making $@"
 	/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD $< -o $@
 	echo "Made $@"
 
-%-B_Cu.gbr: %.kicad_pcb
-	$(error Save plots $<)
+stl:	PCB/Generic/Generic.stl PCB/Generic2/Generic2.stl PCB/Generic3/Generic3.stl PCB/Generic4/Generic4.stl PCB/Generic5/Generic5.stl PCB/LowPower/LowPower.stl PCB/USBA/USBA.stl
 
-%-PTH.drl: %.kicad_pcb
-	$(error Save drill $<)
-
-%.zip:	%-B_Cu.gbr %-F_Cu.gbr %-B_Mask.gbr %-F_Mask.gbr %-B_Silkscreen.gbr %-F_Silkscreen.gbr %-Edge_Cuts.gbr %-NPTH.drl %-PTH.drl
-	zip -D $@ $^
-
-KiCad/Generic.scad: KiCad/Generic.kicad_pcb PCBCase/case Makefile
+PCB/Generic/Generic.scad: PCB/Generic/Generic.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
-KiCad/Generic2.scad: KiCad/Generic2.kicad_pcb PCBCase/case Makefile
+PCB/Generic2/Generic2.scad: PCB/Generic2/Generic2.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
-KiCad/Generic3.scad: KiCad/Generic3.kicad_pcb PCBCase/case Makefile
+PCB/Generic3/Generic3.scad: PCB/Generic3/Generic3.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
-KiCad/Generic4.scad: KiCad/Generic4.kicad_pcb PCBCase/case Makefile
+PCB/Generic4/Generic4.scad: PCB/Generic4/Generic4.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2.6
 
-KiCad/Generic5.scad: KiCad/Generic5.kicad_pcb PCBCase/case Makefile
+PCB/Generic5/Generic5.scad: PCB/Generic5/Generic5.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2.6
 
-KiCad/LowPower.scad: KiCad/LowPower.kicad_pcb PCBCase/case Makefile
+PCB/LowPower/LowPower.scad: PCB/LowPower/LowPower.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
-KiCad/USBA.scad: KiCad/USBA.kicad_pcb PCBCase/case Makefile
+PCB/USBA/USBA.scad: PCB/USBA/USBA.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
 
