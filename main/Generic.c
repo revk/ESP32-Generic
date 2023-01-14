@@ -864,7 +864,7 @@ void app_main()
          if (input[i])
          {
             int p = port_mask(input[i]);
-            if (input[i] & PORT_PU)
+            if (input[i] & PORT_INV)
                u.pin_bit_mask |= (1ULL << p);
             else
                d.pin_bit_mask |= (1ULL << p);
