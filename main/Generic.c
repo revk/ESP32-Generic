@@ -21,9 +21,7 @@ static const char TAG[] = "Generic";
 #include <hal/spi_types.h>
 #include <driver/gpio.h>
 #include <driver/uart.h>
-#include <driver/adc.h>
 #include <driver/ledc.h>
-#include <esp_adc_cal.h>
 #include <driver/i2c.h>
 
 #ifdef	CONFIG_LWIP_DHCP_DOES_ARP_CHECK
@@ -64,10 +62,6 @@ static uint32_t outputcount[MAXGPIO] = { };     //Output count
 	u32(awake,0)	\
 	io(usb,)	\
 	io(charger,)	\
-	io(adcon,)	\
-	u8(adc,)		\
-	u32(adcr1,18000)	\
-	u32(adcr2,1000)	\
 	b(ranger0x)	\
 	io(rangergnd,)	\
 	io(rangerpwr,)	\
@@ -357,7 +351,7 @@ static esp_err_t web_root(httpd_req_t * req)
       if (len == 1)
       {
          httpd_req_get_url_query_str(req, q, sizeof(q));
-         if (isdigit(*q))
+         if (isdigit((int)*q))
             defcon_level = *q - '0';
          else if (*q == '+' && defcon_level < 9)
             defcon_level++;
@@ -938,6 +932,7 @@ void app_main()
          //No point waiting, powered via USB port
       }
    }
+#if 0
    if (adcon)
    {
       REVK_ERR_CHECK(gpio_reset_pin(port_mask(adcon)));
@@ -962,6 +957,7 @@ void app_main()
       if (!usb_present)
          gpio_set_level(port_mask(adcon), (adcon & PORT_INV) ? 1 : 0);  /* off */
    }
+#endif
    if (rangergnd)
    {
       gpio_reset_pin(port_mask(rangergnd));
