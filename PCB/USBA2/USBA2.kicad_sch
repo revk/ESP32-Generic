@@ -1664,7 +1664,7 @@
     (property "LCSC Part #" "C2980306" (id 8) (at 106.68 72.39 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "JLCPCB Rotation Offset" "180" (id 9) (at 106.68 72.39 0)
+    (property "JLCPCB Rotation Offset" "0" (id 9) (at 106.68 72.39 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 02701587-1769-41d3-b26b-37110cfaa4f7))
