@@ -1,6 +1,6 @@
 # USBA board
 
-A small PCB design to plug in directly to an old school USB socket for power. Does not correct to USB data - maybe I'll do one that does some time.
+A small PCB design to plug in directly to an old school USB socket for power. Does not connect to USB data - maybe I'll do one that does some time.
 
 Includes power supply and RGB LED.
 
