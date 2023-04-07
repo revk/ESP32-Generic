@@ -33,9 +33,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.6,
-          "height": 0.67,
-          "width": 1.0
+          "drill": 0.75,
+          "height": 0.94,
+          "width": 0.94
         },
         "silk_line_width": 0.12,
         "silk_text_italic": false,
@@ -124,6 +124,7 @@
         0.125,
         0.2,
         0.25,
+        0.4,
         0.5
       ],
       "via_dimensions": [
@@ -351,7 +352,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "Generic5.kicad_pro",
+    "filename": "LED.kicad_pro",
     "version": 1
   },
   "net_settings": {

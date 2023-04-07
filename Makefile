@@ -78,7 +78,7 @@ PCBCase/case: PCBCase/case.c
 	/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD $< -o $@
 	echo "Made $@"
 
-stl:	PCB/Generic/Generic.stl PCB/Generic2/Generic2.stl PCB/Generic3/Generic3.stl PCB/Generic4/Generic4.stl PCB/Generic5/Generic5.stl PCB/LowPower/LowPower.stl PCB/USBA/USBA.stl
+stl:	PCB/Generic/Generic.stl PCB/Generic2/Generic2.stl PCB/Generic3/Generic3.stl PCB/Generic4/Generic4.stl PCB/LED/LED.stl PCB/LowPower/LowPower.stl PCB/USBA/USBA.stl
 
 PCB/Generic/Generic.scad: PCB/Generic/Generic.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2
@@ -92,7 +92,7 @@ PCB/Generic3/Generic3.scad: PCB/Generic3/Generic3.kicad_pcb PCBCase/case Makefil
 PCB/Generic4/Generic4.scad: PCB/Generic4/Generic4.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2.6
 
-PCB/Generic5/Generic5.scad: PCB/Generic5/Generic5.kicad_pcb PCBCase/case Makefile
+PCB/LED/LED.scad: PCB/LED/LED.kicad_pcb PCBCase/case Makefile
 	PCBCase/case -o $@ $< --edge=2 --base=2.6
 
 PCB/LowPower/LowPower.scad: PCB/LowPower/LowPower.kicad_pcb PCBCase/case Makefile
