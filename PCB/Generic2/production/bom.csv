@@ -1,4 +1,4 @@
-Designator,Footprint,Quantity,Value,LCSC Part #
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
 C1,C_0603,1,100nF,
 "C2, C3",C_0603,2,47pF,
 C4,C_0603,1,10nF,
