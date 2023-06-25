@@ -4835,6 +4835,14 @@
       (solder_mask_margin 0.5) (clearance 0.5) (tstamp e10211cf-9dcb-46ad-ae7d-a01b22f191b4))
   )
 
+  (gr_line (start 86.5 76.2) (end 156.5 76.2)
+    (stroke (width 0.1) (type default)) (layer "B.SilkS") (tstamp 4a68205d-ac2b-4f46-91bb-737251b73801))
+  (gr_line (start 86.5 100) (end 156.5 100)
+    (stroke (width 0.1) (type default)) (layer "B.SilkS") (tstamp ee7f9afd-e6b6-4784-b83a-f745fb3e361a))
+  (gr_line (start 86.5 100) (end 156.5 100)
+    (stroke (width 0.1) (type default)) (layer "F.SilkS") (tstamp 66413cd7-4cfe-4ab8-827b-badca6d2ded2))
+  (gr_line (start 86.5 76.2) (end 156.5 76.2)
+    (stroke (width 0.1) (type default)) (layer "F.SilkS") (tstamp 8b0c2b34-9e06-4db5-9296-59907a27dc9e))
   (gr_line (start 86.5 100) (end 156.5 100)
     (stroke (width 0.1) (type default)) (layer "Eco1.User") (tstamp 5868cec9-6e5d-43f1-a37e-819a2e79fbaf))
   (gr_line (start 86.5 76.2) (end 156.5 76.2)
@@ -18163,7 +18171,7 @@
   )
   (gr_text "This is an assembled printed circuit board.\nThis is a component, with no case or leads.\nSnap off any extra blank panels.\nUse this part for your own projects as you wish.\n\nMade in China for Andrews & Arnold Ltd." (at 104.914584 117) (layer "F.SilkS") (tstamp b1b9fbc0-bf6d-4a74-a210-313cda0cf6c6)
     (effects (font (face "Raleway") (size 1.2 1.2) (thickness 0.15)) (justify left bottom))
-    (render_cache "This is an assembled printed circuit board.\nThis is a component, with no case or leads.\nSnap off any extra blank panels.\nUse this part for your own projects as you wish.\n\nMade in China for Andrews & Arnold Ltd." -0
+    (render_cache "This is an assembled printed circuit board.\nThis is a component, with no case or leads.\nSnap off any extra blank panels.\nUse this part for your own projects as you wish.\n\nMade in China for Andrews & Arnold Ltd." 0
       (polygon
         (pts
           (xy 105.915784 105.622182)          (xy 105.488456 105.622182)          (xy 105.488456 106.716)          (xy 105.370341 106.716)
@@ -28158,7 +28166,7 @@
   )
   (gr_text "PCB-USBA" (at 121.5 103) (layer "F.SilkS") (tstamp e4cb11e5-11a5-4296-90ea-c5c175f3029d)
     (effects (font (face "OCR-B") (size 2 2) (thickness 0.15)))
-    (render_cache "PCB-USBA" -0
+    (render_cache "PCB-USBA" 0
       (polygon
         (pts
           (xy 115.152892 101.861064)          (xy 115.189056 101.86297)          (xy 115.224442 101.86613)          (xy 115.259024 101.870528)
