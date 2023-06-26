@@ -2052,7 +2052,7 @@
     (property "Reference" "R1" (at 214.503 60.1253 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10k" (at 212.725 62.23 90)
+    (property "Value" "4k7" (at 212.725 62.23 90)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "RevK:R_0402" (at 210.947 60.96 90)
