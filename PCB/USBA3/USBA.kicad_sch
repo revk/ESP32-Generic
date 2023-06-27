@@ -510,35 +510,6 @@
         )
       )
     )
-    (symbol "Mechanical:Fiducial" (in_bom yes) (on_board yes)
-      (property "Reference" "FID" (at 0 5.08 0)
-        (effects (font (size 1.27 1.27)))
-      )
-      (property "Value" "Fiducial" (at 0 3.175 0)
-        (effects (font (size 1.27 1.27)))
-      )
-      (property "Footprint" "" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "Datasheet" "~" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_keywords" "fiducial marker" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_description" "Fiducial Marker" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_fp_filters" "Fiducial*" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (symbol "Fiducial_0_1"
-        (circle (center 0 0) (radius 1.27)
-          (stroke (width 0.508) (type default))
-          (fill (type background))
-        )
-      )
-    )
     (symbol "RevK:Barcode" (pin_names (offset 1.016)) (in_bom no) (on_board yes)
       (property "Reference" "U" (at 0 -3.175 0)
         (effects (font (size 1.27 1.27)) hide)
@@ -1072,6 +1043,58 @@
         (pin power_out line (at -11.43 0 0) (length 2.54)
           (name "VOUT" (effects (font (size 1.27 1.27))))
           (number "8" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
+    (symbol "RevK:PCB" (in_bom no) (on_board yes)
+      (property "Reference" "PCB" (at 0 -10.16 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Value" "70x70" (at 0 0 0)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Footprint" "RevK:PCB7070" (at 0 5.715 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "PCB_0_1"
+        (rectangle (start -4.445 4.445) (end 4.445 -4.445)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (circle (center -3.81 -3.81) (radius 0.0001)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (circle (center -3.81 3.81) (radius 0.0001)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy -4.445 -3.175)
+            (xy 4.445 -3.175)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy -4.445 3.175)
+            (xy 4.445 3.175)
+          )
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (circle (center 3.81 -3.81) (radius 0.0001)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (circle (center 3.81 3.81) (radius 0.0001)
+          (stroke (width 0) (type default))
+          (fill (type none))
         )
       )
     )
@@ -1718,64 +1741,6 @@
     )
   )
 
-  (symbol (lib_id "Mechanical:Fiducial") (at 257.175 150.495 0) (unit 1)
-    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid 30c519d1-93b2-4c30-ab76-3163a3bc4cad)
-    (property "Reference" "FID2" (at 259.334 149.471 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "Fiducial" (at 259.334 151.519 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 257.175 150.495 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 257.175 150.495 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "USBA"
-        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-          (reference "FID2") (unit 1)
-        )
-      )
-      (project "Faikin"
-        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
-          (reference "FID6") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Mechanical:Fiducial") (at 257.175 155.575 0) (unit 1)
-    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid 481660ff-49eb-4996-bac9-8bcca649bfcf)
-    (property "Reference" "FID3" (at 259.334 154.551 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "Fiducial" (at 259.334 156.599 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 257.175 155.575 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 257.175 155.575 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "USBA"
-        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-          (reference "FID3") (unit 1)
-        )
-      )
-      (project "Faikin"
-        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
-          (reference "FID7") (unit 1)
-        )
-      )
-    )
-  )
-
   (symbol (lib_id "power:+3.3V") (at 165.735 127.635 90) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 49b3cb6e-94bb-47cb-83fa-3a9d53fa13d2)
@@ -1806,35 +1771,6 @@
       (project "Generic"
         (path "/babeabf2-f3b0-4ed5-8d9e-0215947e6cf3"
           (reference "#PWR024") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Mechanical:Fiducial") (at 269.24 155.575 0) (unit 1)
-    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid 4d9991b2-6c31-4b19-a8cb-cc15e21eeb89)
-    (property "Reference" "FID7" (at 271.399 154.551 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "Fiducial" (at 271.399 156.599 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 269.24 155.575 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 269.24 155.575 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "USBA"
-        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-          (reference "FID7") (unit 1)
-        )
-      )
-      (project "Faikin"
-        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
-          (reference "FID3") (unit 1)
         )
       )
     )
@@ -2012,35 +1948,6 @@
       (project "USBA"
         (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
           (reference "#PWR0102") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Mechanical:Fiducial") (at 269.24 150.495 0) (unit 1)
-    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid 70470dad-d09a-443f-b9b9-4ed002add4b8)
-    (property "Reference" "FID6" (at 271.399 149.471 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "Fiducial" (at 271.399 151.519 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 269.24 150.495 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 269.24 150.495 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "USBA"
-        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-          (reference "FID6") (unit 1)
-        )
-      )
-      (project "Faikin"
-        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
-          (reference "FID2") (unit 1)
         )
       )
     )
@@ -2249,6 +2156,30 @@
     )
   )
 
+  (symbol (lib_id "RevK:PCB") (at 250.19 172.72 0) (unit 1)
+    (in_bom no) (on_board yes) (dnp no)
+    (uuid 9590347c-69d1-4106-8780-d4e874284467)
+    (property "Reference" "PCB1" (at 250.19 182.88 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "70x70" (at 250.19 172.72 0)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "RevK:PCB7070" (at 250.19 167.005 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 250.19 172.72 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (instances
+      (project "USBA"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "PCB1") (unit 1)
+        )
+      )
+    )
+  )
+
   (symbol (lib_id "RevK:Hidden") (at 198.12 127 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid 9ba85c99-8c97-475e-b58e-bca91d2b465b)
@@ -2315,35 +2246,6 @@
       (project "Reference"
         (path "/825c70b0-4860-42b7-97dc-86bfa46e06fd"
           (reference "R6") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Mechanical:Fiducial") (at 269.24 160.655 0) (unit 1)
-    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid 9c4df051-3491-4b73-a102-ac0eccb47617)
-    (property "Reference" "FID8" (at 271.399 159.631 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "Fiducial" (at 271.399 161.679 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 269.24 160.655 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 269.24 160.655 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "USBA"
-        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-          (reference "FID8") (unit 1)
-        )
-      )
-      (project "Faikin"
-        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
-          (reference "FID4") (unit 1)
         )
       )
     )
@@ -2426,35 +2328,6 @@
       (project "USBA"
         (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
           (reference "#PWR05") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Mechanical:Fiducial") (at 257.175 160.655 0) (unit 1)
-    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid b39cb15c-7b91-4437-8d09-e8215a13d4b1)
-    (property "Reference" "FID4" (at 259.334 159.631 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "Fiducial" (at 259.334 161.679 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 257.175 160.655 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 257.175 160.655 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "USBA"
-        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-          (reference "FID4") (unit 1)
-        )
-      )
-      (project "Faikin"
-        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
-          (reference "FID8") (unit 1)
         )
       )
     )
@@ -2667,35 +2540,6 @@
     )
   )
 
-  (symbol (lib_id "Mechanical:Fiducial") (at 269.24 145.415 0) (unit 1)
-    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid eec4fb90-e52f-48f3-bc79-9ba9edd930a6)
-    (property "Reference" "FID5" (at 271.399 144.391 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "Fiducial" (at 271.399 146.439 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 269.24 145.415 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 269.24 145.415 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "USBA"
-        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-          (reference "FID5") (unit 1)
-        )
-      )
-      (project "Faikin"
-        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
-          (reference "FID1") (unit 1)
-        )
-      )
-    )
-  )
-
   (symbol (lib_id "RevK:Hidden") (at 198.12 128.905 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid ef958985-1270-421d-96d2-6b7afb752c89)
@@ -2726,35 +2570,6 @@
       (project "Generic"
         (path "/babeabf2-f3b0-4ed5-8d9e-0215947e6cf3"
           (reference "R12") (unit 1)
-        )
-      )
-    )
-  )
-
-  (symbol (lib_id "Mechanical:Fiducial") (at 257.175 145.415 0) (unit 1)
-    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid f0a1fb28-d1e9-4410-8e9f-cd1604cd6825)
-    (property "Reference" "FID1" (at 259.334 144.391 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Value" "Fiducial" (at 259.334 146.439 0)
-      (effects (font (size 1.27 1.27)) (justify left))
-    )
-    (property "Footprint" "Fiducial:Fiducial_1mm_Mask2mm" (at 257.175 145.415 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 257.175 145.415 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (instances
-      (project "USBA"
-        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-          (reference "FID1") (unit 1)
-        )
-      )
-      (project "Faikin"
-        (path "/46c350bb-7de4-4e81-aafd-4af55e37aab0"
-          (reference "FID5") (unit 1)
         )
       )
     )
