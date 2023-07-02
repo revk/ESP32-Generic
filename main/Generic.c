@@ -9,7 +9,8 @@
 static const char TAG[] = "Generic";
 
 #include "revk.h"
-#include "esp_sleep.h"
+#include "esp_system.h"
+#include "esp_timer.h"
 #include "esp_task_wdt.h"
 #include "esp_http_client.h"
 #include "esp_http_server.h"
@@ -23,7 +24,9 @@ static const char TAG[] = "Generic";
 #include <driver/uart.h>
 #include <driver/ledc.h>
 #include <driver/i2c.h>
+#if 0
 #include <esp_adc/adc_cali.h>
+#endif
 
 #ifdef	CONFIG_LWIP_DHCP_DOES_ARP_CHECK
 #warning CONFIG_LWIP_DHCP_DOES_ARP_CHECK means DHCP is slow
@@ -353,7 +356,6 @@ static esp_err_t web_root(httpd_req_t * req)
       if (len == 1)
       {
          httpd_req_get_url_query_str(req, q, sizeof(q));
-         if (isdigit((int) *q))
          if (isdigit((int)*q))
             defcon_level = *q - '0';
          else if (*q == '+' && defcon_level < 9)
