@@ -1,3 +1,5 @@
-Designator,Footprint,Quantity,Value,LCSC Part #
-J1,PinHeader_2x04_P2.54mm_Vertical,1,Header,
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
+C1,C_0603,1,1uF,
+J1,PinHeader_2x04_P2.54mm_Vertical,1,Header,v
+R1,R_0603,1,12k,
 U1,ESP32-PICO-MINI-02,1,ESP32-PICO-MINI-02,

@@ -1,3 +1,5 @@
-Designator,Mid X,Mid Y,Rotation,Layer
-J1,149.41,-107.6,90.0,bottom
+﻿Designator,Mid X,Mid Y,Rotation,Layer
+C1,151.2824,-104.5972,270.0,top
+J1,145.6,-106.33,180.0,bottom
+R1,139.954,-104.648,90.0,top
 U1,145.6,-115.4,180.0,top
