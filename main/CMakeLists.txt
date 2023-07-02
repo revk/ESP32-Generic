@@ -1,3 +1,7 @@
 set (COMPONENT_SRCS "Generic.c")
+<<<<<<< HEAD
 set (COMPONENT_REQUIRES "ESP32-RevK" "ESP32-VL53L0X" "ESP32-VL53L1X" "ESP32-GFX" "esp_adc" "QR")
+=======
+set (COMPONENT_REQUIRES "ESP32-RevK" "ESP32-VL53L0X" "ESP32-VL53L1X" "ESP32-GFX" "QR")
+>>>>>>> 2963b11ed3f56724d76bea7c7a37f97b0fb5f6f5
 register_component ()

@@ -1,6 +1,6 @@
 // Generated case design for PCB/Generic4/Generic4.kicad_pcb
 // By https://github.com/revk/PCBCase
-// Generated 2023-01-09 08:45:20
+// Generated 2023-04-07 10:15:27
 // title:	Generic ESP32-PICO-MINI Module
 // date:	${DATE}
 // rev:	1
@@ -22,41 +22,40 @@ hullcap=1.000000;
 hulledge=1.000000;
 useredge=false;
 
-module pcb(h=pcbthickness,r=0){linear_extrude(height=h)offset(r=r)polygon(points=[[13.200000,0.000000],[13.200000,19.500000],[0.000000,19.500000],[0.000000,0.000000]],paths=[[0,1,2,3]]);}
-
 module outline(h=pcbthickness,r=0){linear_extrude(height=h)offset(r=r)polygon(points=[[13.200000,0.000000],[13.200000,19.500000],[0.000000,19.500000],[0.000000,0.000000]],paths=[[0,1,2,3]]);}
+
+module pcb(h=pcbthickness,r=0){linear_extrude(height=h)offset(r=r)polygon(points=[[13.200000,0.000000],[13.200000,19.500000],[0.000000,19.500000],[0.000000,0.000000]],paths=[[0,1,2,3]]);}
 spacing=29.200000;
 pcbwidth=13.200000;
 pcblength=19.500000;
 // Populated PCB
 module board(pushed=false,hulled=false){
-translate([6.600000,13.906750,0.800000])translate([0.000000,2.700000,0.000000])rotate([90.000000,0.000000,0.000000])m0(pushed,hulled); // RevK:ESP32-PICO-MINI-02 ESP32-PICO-MINI-02
-translate([6.600000,6.660000,0.800000])translate([0.000000,-3.600000,2.500000])rotate([-0.000000,0.000000,180.000000])m1(pushed,hulled); // RevK:Molex_MiniSPOX_H4RA 22057045
-translate([11.150000,13.375000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m2(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
-translate([5.800000,10.900000,0.000000])rotate([0,0,180.000000])rotate([180,0,0])m3(pushed,hulled); // RevK:C_0603 C_0603_1608Metric
-translate([9.125000,18.600000,0.000000])rotate([180,0,0])m2(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
-translate([9.300000,13.400000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m2(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
-translate([12.450000,13.400000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m2(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
-translate([3.000000,10.900000,0.000000])rotate([180,0,0])m2(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
-translate([11.500000,16.500000,0.000000])rotate([180,0,0])translate([0.000000,-0.400000,0.000000])m4(pushed,hulled); // RevK:LED-RGB-1.6x1.6 LED_0603_1608Metric
-translate([11.500000,16.500000,0.000000])rotate([180,0,0])translate([0.000000,0.400000,0.000000])m4(pushed,hulled); // RevK:LED-RGB-1.6x1.6 LED_0603_1608Metric
-translate([1.300000,7.800000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m3(pushed,hulled); // RevK:C_0603 C_0603_1608Metric
-translate([6.450000,16.500000,0.000000])rotate([0,0,180.000000])rotate([180,0,0])rotate([-0.000000,0.000000,90.000000])m5(pushed,hulled); // RevK:SOT-23-Thin-6-Reg SOT-23-6
-translate([11.600000,18.600000,0.000000])rotate([0,0,180.000000])rotate([180,0,0])m2(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
+translate([6.600000,13.906750,0.800000])m0(pushed,hulled); // RevK:ESP32-PICO-MINI-02 ESP32-PICO-MINI-02 (back)
+translate([6.600000,6.660000,0.800000])translate([0.000000,-3.600000,2.500000])rotate([-0.000000,-0.000000,-180.000000])m2(pushed,hulled); // RevK:Molex_MiniSPOX_H4RA 22057045 (back)
+translate([11.150000,13.375000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m7(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
+translate([5.800000,10.900000,0.000000])rotate([0,0,180.000000])rotate([180,0,0])m10(pushed,hulled); // RevK:C_0603 C_0603_1608Metric
+translate([9.125000,18.600000,0.000000])rotate([180,0,0])m7(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
+translate([9.300000,13.400000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m7(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
+translate([12.450000,13.400000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m7(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
+translate([3.000000,10.900000,0.000000])rotate([180,0,0])m7(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
+translate([11.500000,16.500000,0.000000])rotate([180,0,0])translate([0.000000,-0.400000,0.000000])m13(pushed,hulled); // RevK:LED-RGB-1.6x1.6 LED_0603_1608Metric
+translate([11.500000,16.500000,0.000000])rotate([180,0,0])translate([0.000000,0.400000,0.000000])m13(pushed,hulled); // RevK:LED-RGB-1.6x1.6 LED_0603_1608Metric
+translate([1.300000,7.800000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m10(pushed,hulled); // RevK:C_0603 C_0603_1608Metric
+translate([6.450000,16.500000,0.000000])rotate([0,0,180.000000])rotate([180,0,0])rotate([-0.000000,-0.000000,-90.000000])m15(pushed,hulled); // RevK:SOT-23-Thin-6-Reg SOT-23-6
+translate([11.600000,18.600000,0.000000])rotate([0,0,180.000000])rotate([180,0,0])m7(pushed,hulled); // RevK:R_0603 R_0603_1608Metric
 }
 
 module b(cx,cy,z,w,l,h){translate([cx-w/2,cy-l/2,z])cube([w,l,h]);}
 module m0(pushed=false,hulled=false)
 { // RevK:ESP32-PICO-MINI-02 ESP32-PICO-MINI-02
-rotate([90,0,0])
-translate([-13.2/2,-16.6/2,0])
+translate([-13.2/2,-16.6/2+2.7,0])
 {
 	if(!hulled)cube([13.2,16.6,0.8]);
 	cube([13.2,11.2,2.4]);
 }
 }
 
-module m1(pushed=false,hulled=false)
+module m2(pushed=false,hulled=false)
 { // RevK:Molex_MiniSPOX_H4RA 22057045
 N=4;
 A=2.4+N*2.5;
@@ -78,18 +77,18 @@ translate([-A/2,-2.94,-2.5])
 
 }
 
-module m2(pushed=false,hulled=false)
+module m7(pushed=false,hulled=false)
 { // RevK:R_0603 R_0603_1608Metric
 b(0,0,0,2.8,0.95,0.5); // Pad size
 }
 
-module m3(pushed=false,hulled=false)
+module m10(pushed=false,hulled=false)
 { // RevK:C_0603 C_0603_1608Metric
 b(0,0,0,1.6,0.95,0.2); // Pad size
 b(0,0,0,1.6,0.8,1); // Chip
 }
 
-module m4(pushed=false,hulled=false)
+module m13(pushed=false,hulled=false)
 { // RevK:LED-RGB-1.6x1.6 LED_0603_1608Metric
 b(0,0,0,1.6,0.8,0.25);
 b(0,0,0,1.2,0.8,0.55);
@@ -97,7 +96,7 @@ b(0,0,0,0.8,0.8,0.95);
 if(!hulled&&pushed)b(0,0,0,1,1,20);
 }
 
-module m5(pushed=false,hulled=false)
+module m15(pushed=false,hulled=false)
 { // RevK:SOT-23-Thin-6-Reg SOT-23-6
 b(0,0,0,3.05,3.05,0.5);
 b(0,0,0,1.45,3.05,1.1);
@@ -192,7 +191,16 @@ module pyramid()
 
 module wall(d=0)
 { // The case wall
-    	translate([0,0,-casebase-d])pcbh(height+d*2,margin/2+d);
+	translate([0,0,-casebase-d])
+	{
+		if(useredge)
+			intersection()
+			{
+				pcb(height+d*2,margin/2+d);
+				pcbh(height+d*2,margin/2+d);
+			}
+		else pcbh(height+d*2,margin/2+d);
+	}
 }
 
 module cutf()
