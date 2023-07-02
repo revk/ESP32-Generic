@@ -1248,7 +1248,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp b04f2d09-6115-40dc-aa85-7fdcfc86af25)
     )
-    (fp_text value "40k2" (at 0 1.1 90 unlocked) (layer "F.Fab") hide
+    (fp_text value "39k2" (at 0 1.1 90 unlocked) (layer "F.Fab") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp b2482e06-5ea8-4475-ba66-de84ea725822)
     )
