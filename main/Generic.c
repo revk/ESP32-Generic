@@ -1102,8 +1102,7 @@ void app_main()
       volatile int c=0;
       void cb(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, int data_len)
       {
-	      ESP_LOGI(TAG,"ESP NOW CB len=%d",data_len);
-	      c=2;
+	      //c=2;
       }
       REVK_ERR_CHECK(esp_now_register_recv_cb(&cb));
       while (1)
