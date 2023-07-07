@@ -25,6 +25,7 @@ static const char TAG[] = "Generic";
 #include <driver/uart.h>
 #include <driver/ledc.h>
 #include <driver/i2c.h>
+#include <esp_now.h>
 #if 0
 #include <esp_adc/adc_cali.h>
 #endif
@@ -1092,8 +1093,27 @@ void app_main()
    {
       //We run forever, not sleeping
       ESP_LOGE(TAG, "Idle");
+      REVK_ERR_CHECK(esp_now_init());
+      esp_now_peer_info_t peer={
+	      .peer_addr={0xFF,0xFF,0xFF,0xFF,0xFF,0xFF},
+	      .ifidx=WIFI_IF_STA,
+      };
+      REVK_ERR_CHECK(esp_now_add_peer(&peer));
+      volatile int c=0;
+      void cb(const esp_now_recv_info_t *esp_now_info, const uint8_t *data, int data_len)
+      {
+	      ESP_LOGI(TAG,"ESP NOW CB len=%d",data_len);
+	      c=2;
+      }
+      REVK_ERR_CHECK(esp_now_register_recv_cb(&cb));
       while (1)
+      {
+	      time_t now=time(0);
+	      REVK_ERR_CHECK(esp_now_send(peer.peer_addr,(void*)&now,sizeof(now)));
          sleep(1);
+	 if(c)c--;
+	 revk_blink(0,0,c?"G":"R");
+      }
       return;
    }
    // Sleepy stuff
