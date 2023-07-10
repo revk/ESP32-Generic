@@ -311,12 +311,8 @@ als_task (void *arg)
 static void
 web_head (httpd_req_t * req, const char *title)
 {
-   httpd_resp_set_type (req, "text/html; charset=utf-8");
-   httpd_resp_sendstr_chunk (req, "<meta name='viewport' content='width=device-width, initial-scale=1'>");
-   httpd_resp_sendstr_chunk (req, "<html><head><title>");
-   if (title)
-      httpd_resp_sendstr_chunk (req, title);
-   httpd_resp_sendstr_chunk (req, "</title></head><style>"      //
+   revk_web_head (req, title);
+   httpd_resp_sendstr_chunk (req, "<style>"     //
                              "a.defcon{text-decoration:none;border:1px solid black;border-radius:50%;margin:2px;padding:3px;display:inline-block;width:1em;text-align:center;}" //
                              "a.on{border:3px solid black;}"    //
                              "a.d1{background-color:white;}"    //
@@ -329,18 +325,6 @@ web_head (httpd_req_t * req, const char *title)
    if (title)
       httpd_resp_sendstr_chunk (req, title);
    httpd_resp_sendstr_chunk (req, "</h1>");
-}
-
-static esp_err_t
-web_foot (httpd_req_t * req)
-{
-   httpd_resp_sendstr_chunk (req, "<hr><address>");
-   char temp[20];
-   snprintf (temp, sizeof (temp), "%012llX", revk_binid);
-   httpd_resp_sendstr_chunk (req, temp);
-   httpd_resp_sendstr_chunk (req, " <a href='wifi'>WiFi Setup</a></address></body></html>");
-   httpd_resp_sendstr_chunk (req, NULL);
-   return ESP_OK;
 }
 
 static esp_err_t
@@ -357,7 +341,7 @@ static esp_err_t
 web_root (httpd_req_t * req)
 {
    if (revk_link_down ())
-      return revk_web_config (req);     // Direct to web set up
+      return revk_web_settings (req);   // Direct to web set up
    web_head (req, *hostname ? hostname : appname);
    if (defcon)
    {                            // Defcon controls
@@ -388,7 +372,7 @@ web_root (httpd_req_t * req)
             httpd_resp_sendstr_chunk (req, "</a>");
          }
    }
-   return web_foot (req);
+   return revk_web_foot (req, 0, 1);
 }
 
 void
@@ -848,16 +832,7 @@ app_main ()
          };
          REVK_ERR_CHECK (httpd_register_uri_handler (webserver, &uri));
       }
-      {
-         httpd_uri_t uri = {
-            .uri = "/wifi",
-            .method = HTTP_GET,
-            .handler = revk_web_config,
-            .user_ctx = NULL
-         };
-         REVK_ERR_CHECK (httpd_register_uri_handler (webserver, &uri));
-      }
-      revk_web_config_start (webserver);
+      revk_web_settings_add (webserver);
    }
 
    if (gfxmosi || gfxdc || gfxsck)
@@ -1032,10 +1007,10 @@ app_main ()
          }
       }
    }
-   revk_task ("input", input_task, 0);
-   revk_task ("output", output_task, 0);
+   revk_task ("input", input_task, NULL, 4);
+   revk_task ("output", output_task, NULL, 4);
    if (defcon)
-      revk_task ("defcon", defcon_task, 0);
+      revk_task ("defcon", defcon_task, NULL, 4);
    if (!revk_wait_wifi (10))
    {
       ESP_LOGE (TAG, "No WiFi");
@@ -1073,11 +1048,11 @@ app_main ()
    }
 
    if (uart1rx)
-      revk_task ("uart1", uart_task, &uart1rx);
+      revk_task ("uart1", uart_task, &uart1rx, 4);
    if (uart2rx)
-      revk_task ("uart2", uart_task, &uart2rx);
+      revk_task ("uart2", uart_task, &uart2rx, 4);
    if (*sekey && sesite)
-      revk_task ("solaredge", se_task, 0);
+      revk_task ("solaredge", se_task, NULL, 4);
    if (scl && sda)
    {
       esp_err_t err;
@@ -1106,7 +1081,7 @@ app_main ()
       }
    }
    if (scl && sda && als)
-      revk_task ("als", als_task, 0);
+      revk_task ("als", als_task, NULL, 4);
 
    if (!period)
    {
