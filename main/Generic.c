@@ -1087,6 +1087,7 @@ app_main ()
    {
       //We run forever, not sleeping
       ESP_LOGE (TAG, "Idle");
+#if 0
       REVK_ERR_CHECK (esp_now_init ());
       esp_now_peer_info_t peer = {
          .peer_addr = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF},
@@ -1108,6 +1109,9 @@ app_main ()
             c--;
          revk_blink (0, 0, c ? "G" : "R");
       }
+#else
+      while(1)sleep(1);
+#endif
       return;
    }
    // Sleepy stuff
