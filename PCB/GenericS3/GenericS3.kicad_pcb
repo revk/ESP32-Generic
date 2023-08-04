@@ -1231,9 +1231,10 @@
     (at 108.95 107.55 90)
     (property "Sheetfile" "GenericS3.kicad_sch")
     (property "Sheetname" "")
+    (property "exclude_from_bom" "")
     (path "/30640bb4-8e65-426d-869c-500b0da3149e")
     (zone_connect 1)
-    (attr through_hole)
+    (attr through_hole exclude_from_bom)
     (fp_text reference "J3" (at 0 6.4 90 unlocked) (layer "F.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 175720ce-5961-4495-9e86-97b251f8fe03)
