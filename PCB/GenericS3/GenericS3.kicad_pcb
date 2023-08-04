@@ -2207,7 +2207,7 @@
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 64f6c2b3-945e-487e-8ef6-2afbbfb7f3c6)
     )
-    (fp_text user "⏚" (at 6.5 0 unlocked) (layer "B.SilkS") hide
+    (fp_text user "⏚" (at 5.38 -1.81 unlocked) (layer "B.SilkS")
         (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
       (tstamp 11669988-92a4-4edd-aee8-33c5968a1a69)
     )
@@ -3093,7 +3093,7 @@
         )
       )
     )
-    (fp_text user "⏚" (at 6.5 0 unlocked) (layer "F.SilkS") hide
+    (fp_text user "⏚" (at 5.38 -1.81 unlocked) (layer "F.SilkS")
         (effects (font (size 1 1) (thickness 0.15)))
       (tstamp 777f9821-1ce5-42b8-8443-5d80a781bc29)
     )
