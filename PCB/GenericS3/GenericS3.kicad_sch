@@ -1745,6 +1745,31 @@
     )
   )
 
+  (symbol (lib_id "RevK:Square") (at 176.53 100.33 0) (unit 1)
+    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 34ea4ecc-df14-403b-8d1f-3a8a9c60bdcc)
+    (property "Reference" "P46" (at 182.88 100.33 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+" (at 179.7812 100.33 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "RevK:Square" (at 176.53 102.87 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 176.53 100.33 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 76b1d823-866f-45d1-aa13-9fcdb117d4c7))
+    (instances
+      (project "GenericS3"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "P46") (unit 1)
+        )
+      )
+    )
+  )
+
   (symbol (lib_id "RevK:Square") (at 160.655 96.52 0) (unit 1)
     (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 3aaa4b22-04b7-4ab2-921c-ab3effe05065)
@@ -2071,6 +2096,31 @@
     )
   )
 
+  (symbol (lib_id "RevK:Square") (at 176.53 96.52 0) (unit 1)
+    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 624ff1ec-92ba-46db-a497-c7a9a8b9bc01)
+    (property "Reference" "P45" (at 182.88 96.52 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+" (at 179.7812 96.52 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "RevK:Square" (at 176.53 99.06 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 176.53 96.52 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 43137293-1ba8-4bad-946f-8654062386a8))
+    (instances
+      (project "GenericS3"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "P45") (unit 1)
+        )
+      )
+    )
+  )
+
   (symbol (lib_id "RevK:Round") (at 93.98 83.185 180) (unit 1)
     (in_bom no) (on_board yes) (dnp no)
     (uuid 6ceb2f84-2ce9-401d-a084-13fb351700c2)
@@ -2143,6 +2193,31 @@
       (project "GenericS3"
         (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
           (reference "V1") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "RevK:Square") (at 176.53 92.71 0) (unit 1)
+    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 7363dc2c-e69d-485c-a1f7-3db6a42ccced)
+    (property "Reference" "P44" (at 182.88 92.71 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+" (at 179.7812 92.71 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "RevK:Square" (at 176.53 95.25 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 176.53 92.71 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 23a61279-47a0-4a85-9b1c-0e1be6e32de0))
+    (instances
+      (project "GenericS3"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "P44") (unit 1)
         )
       )
     )
@@ -2409,6 +2484,66 @@
     )
   )
 
+  (symbol (lib_id "RevK:Square") (at 176.53 88.9 0) (unit 1)
+    (in_bom no) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 8a415393-ac61-40f6-a229-9fd731c61a62)
+    (property "Reference" "P43" (at 182.88 88.9 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+" (at 179.7812 88.9 0)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "RevK:Square" (at 176.53 91.44 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 176.53 88.9 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 5694f8dd-8bf6-4156-a942-fa2db068d38e))
+    (instances
+      (project "GenericS3"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "P43") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:+3.3V") (at 176.53 96.52 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 8a4dda42-cb27-4ce0-95c9-4c908bf6016a)
+    (property "Reference" "#PWR020" (at 180.34 96.52 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3.3V" (at 173.355 96.52 90)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "" (at 176.53 96.52 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 176.53 96.52 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid b0e30350-0f33-4f23-a424-fec700e67901))
+    (instances
+      (project "GenericS3"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "#PWR020") (unit 1)
+        )
+      )
+      (project "Reference"
+        (path "/825c70b0-4860-42b7-97dc-86bfa46e06fd"
+          (reference "#PWR02") (unit 1)
+        )
+      )
+      (project "Generic"
+        (path "/babeabf2-f3b0-4ed5-8d9e-0215947e6cf3"
+          (reference "#PWR024") (unit 1)
+        )
+      )
+    )
+  )
+
   (symbol (lib_id "RevK:PCB") (at 250.19 172.72 0) (unit 1)
     (in_bom no) (on_board yes) (dnp no)
     (uuid 9590347c-69d1-4106-8780-d4e874284467)
@@ -2668,6 +2803,41 @@
       (project "GenericS3"
         (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
           (reference "#PWR08") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:+3.3V") (at 176.53 100.33 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid b8d16d0a-c9be-408d-8fb6-4b3f774e4f67)
+    (property "Reference" "#PWR021" (at 180.34 100.33 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3.3V" (at 173.355 100.33 90)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "" (at 176.53 100.33 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 176.53 100.33 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid d2becef0-16f2-4c72-9a27-ab9a6609f82b))
+    (instances
+      (project "GenericS3"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "#PWR021") (unit 1)
+        )
+      )
+      (project "Reference"
+        (path "/825c70b0-4860-42b7-97dc-86bfa46e06fd"
+          (reference "#PWR02") (unit 1)
+        )
+      )
+      (project "Generic"
+        (path "/babeabf2-f3b0-4ed5-8d9e-0215947e6cf3"
+          (reference "#PWR024") (unit 1)
         )
       )
     )
@@ -3172,6 +3342,41 @@
     )
   )
 
+  (symbol (lib_id "power:+3.3V") (at 176.53 88.9 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid d5924b35-2f25-452a-95de-215c825a1f81)
+    (property "Reference" "#PWR018" (at 180.34 88.9 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3.3V" (at 173.355 88.9 90)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "" (at 176.53 88.9 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 176.53 88.9 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid 97902890-3fca-4521-8050-86d26841faa4))
+    (instances
+      (project "GenericS3"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "#PWR018") (unit 1)
+        )
+      )
+      (project "Reference"
+        (path "/825c70b0-4860-42b7-97dc-86bfa46e06fd"
+          (reference "#PWR02") (unit 1)
+        )
+      )
+      (project "Generic"
+        (path "/babeabf2-f3b0-4ed5-8d9e-0215947e6cf3"
+          (reference "#PWR024") (unit 1)
+        )
+      )
+    )
+  )
+
   (symbol (lib_id "Device:R") (at 138.43 103.505 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no)
     (uuid dccd507c-f089-4a06-a197-6fe586992e7e)
@@ -3435,6 +3640,41 @@
       (project "GenericS3"
         (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
           (reference "#PWR013") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:+3.3V") (at 176.53 92.71 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid ed1c1e22-e878-44f7-9e09-60a2013680b9)
+    (property "Reference" "#PWR019" (at 180.34 92.71 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "+3.3V" (at 173.355 92.71 90)
+      (effects (font (size 1.27 1.27)) (justify left))
+    )
+    (property "Footprint" "" (at 176.53 92.71 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 176.53 92.71 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid bcf18e51-61dc-42c2-8082-1c34524f87ef))
+    (instances
+      (project "GenericS3"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "#PWR019") (unit 1)
+        )
+      )
+      (project "Reference"
+        (path "/825c70b0-4860-42b7-97dc-86bfa46e06fd"
+          (reference "#PWR02") (unit 1)
+        )
+      )
+      (project "Generic"
+        (path "/babeabf2-f3b0-4ed5-8d9e-0215947e6cf3"
+          (reference "#PWR024") (unit 1)
         )
       )
     )
