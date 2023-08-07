@@ -837,7 +837,7 @@ app_main ()
 
    if (gfxmosi || gfxdc || gfxsck)
    {
-    const char *e = gfx_init (port: HSPI_HOST, cs: port_mask (gfxcs), sck: port_mask (gfxsck), mosi: port_mask (gfxmosi), dc: port_mask (gfxdc), rst: port_mask (gfxrst), busy: port_mask (gfxbusy), ena: port_mask (gfxena), flip:gfxflip);
+    const char *e = gfx_init (cs: port_mask (gfxcs), sck: port_mask (gfxsck), mosi: port_mask (gfxmosi), dc: port_mask (gfxdc), rst: port_mask (gfxrst), busy: port_mask (gfxbusy), ena: port_mask (gfxena), flip:gfxflip);
       if (e)
       {
          ESP_LOGE (TAG, "gfx %s", e);

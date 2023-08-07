@@ -12,7 +12,11 @@ all:
 	@cp build/$(PROJECT_NAME).bin $(PROJECT_NAME)$(SUFFIX).bin
 	@echo Done: $(PROJECT_NAME)$(SUFFIX).bin
 
-set:    wroom solo pico
+set:    wroom solo pico s3
+
+s3:
+	components/ESP32-RevK/setbuildsuffix -S3-MINI-N4-R2
+	@make
 
 pico:
 	components/ESP32-RevK/setbuildsuffix -S1-PICO-SSD1681
