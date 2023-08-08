@@ -15,7 +15,7 @@ all:
 set:    wroom solo pico s3
 
 s3:
-	components/ESP32-RevK/setbuildsuffix -S3-MINI-N4-R2
+	components/ESP32-RevK/setbuildsuffix -S3-MINI-N4-R2-GFXNONE
 	@make
 
 pico:
