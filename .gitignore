@@ -10,3 +10,5 @@
 secure_boot_signing_key.pem
 build/*
 sdkconfig
+managed_components
+dependencies.lock

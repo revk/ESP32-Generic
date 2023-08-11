@@ -26,6 +26,7 @@ static const char TAG[] = "Generic";
 #include <driver/ledc.h>
 #include <driver/i2c.h>
 #include <esp_now.h>
+#include <ds18b20.h>
 #if 0
 #include <esp_adc/adc_cali.h>
 #endif
