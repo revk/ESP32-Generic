@@ -53,7 +53,7 @@ static const char TAG[] = "Generic";
 #define port_mask(p) ((p)&0xFF) // 16 bit
 static uint16_t input[MAXGPIO]; //Input GPIOs
 static uint16_t output[MAXGPIO];        //Output GPIOs
-static uint16_t power[MAXGPIO];  //Fixed output GPIOs
+static uint16_t power[MAXGPIO]; //Fixed output GPIOs
 static uint32_t outputmark[MAXGPIO];    //Output mark time(ms)
 static uint32_t outputspace[MAXGPIO];   //Output mark time(ms)
 int holding = 0;
@@ -121,38 +121,40 @@ uint32_t voltage = 0;
 httpd_handle_t webserver = NULL;
 int8_t defcon_level = 9;
 
-void ds18b20_task(void *arg)
+void
+ds18b20_task (void *arg)
 {
-	ESP_LOGE(TAG,"DS18B20 %d",port_mask(ds18b20));
-	onewire_bus_config_t bus_config={port_mask(ds18b20)};
-	onewire_bus_rmt_config_t rmt_config={20};
-	onewire_bus_handle_t bus_handle={0};
-	REVK_ERR_CHECK(onewire_new_bus_rmt(&bus_config,&rmt_config,&bus_handle));
-	onewire_device_iter_handle_t iter={0};
-	REVK_ERR_CHECK(onewire_new_device_iter(bus_handle,&iter));
-	onewire_device_t dev={};
-	int found=0;
-	while(!onewire_device_iter_get_next(iter,&dev))
-	{
-		ESP_LOGE(TAG,"Found %llX",dev.address);
-		found++;
-	}
-	if(!found) vTaskDelete (NULL);
-		ds18b20_config_t config={};
-		ds18b20_device_handle_t handle={0};
-		REVK_ERR_CHECK(ds18b20_new_device(&dev, &config,&handle));
-		REVK_ERR_CHECK(ds18b20_set_resolution(handle,DS18B20_RESOLUTION_12B));
-	while(1)
-	{
-		sleep(1);
-		float temp=NAN;
-		REVK_ERR_CHECK(ds18b20_trigger_temperature_conversion(handle));
-		REVK_ERR_CHECK(ds18b20_get_temperature(handle,&temp));
+   ESP_LOGE (TAG, "DS18B20 %d", port_mask (ds18b20));
+   onewire_bus_config_t bus_config = { port_mask (ds18b20) };
+   onewire_bus_rmt_config_t rmt_config = { 20 };
+   onewire_bus_handle_t bus_handle = { 0 };
+   REVK_ERR_CHECK (onewire_new_bus_rmt (&bus_config, &rmt_config, &bus_handle));
+   onewire_device_iter_handle_t iter = { 0 };
+   REVK_ERR_CHECK (onewire_new_device_iter (bus_handle, &iter));
+   onewire_device_t dev = { };
+   int found = 0;
+   while (!onewire_device_iter_get_next (iter, &dev))
+   {
+      ESP_LOGE (TAG, "Found %llX", dev.address);
+      found++;
+   }
+   if (!found)
+      vTaskDelete (NULL);
+   ds18b20_config_t config = { };
+   ds18b20_device_handle_t handle = { 0 };
+   REVK_ERR_CHECK (ds18b20_new_device (&dev, &config, &handle));
+   REVK_ERR_CHECK (ds18b20_set_resolution (handle, DS18B20_RESOLUTION_12B));
+   while (1)
+   {
+      sleep (1);
+      float temp = NAN;
+      REVK_ERR_CHECK (ds18b20_trigger_temperature_conversion (handle));
+      REVK_ERR_CHECK (ds18b20_get_temperature (handle, &temp));
       jo_t j = jo_object_alloc ();
-      jo_litf(j,"ds18b20","%016lX",dev.address);
-      jo_litf (j, "temp","%.2f",temp);
+      jo_litf (j, "ds18b20", "%016lX", dev.address);
+      jo_litf (j, "temp", "%.2f", temp);
       revk_info ("uart", &j);
-	}
+   }
 }
 
 volatile uint8_t uarts = 1;
@@ -895,38 +897,38 @@ app_main ()
          if (input[i])
          {
             int p = port_mask (input[i]);
-	    if(gpio_ok(p)&2)
-	    {
-		    ESP_LOGE(TAG,"Input %d%s",p,(input[i] & PORT_INV)?"¬":"");
-            if (input[i] & PORT_INV)
-               u.pin_bit_mask |= (1ULL << p);
-            else
-               d.pin_bit_mask |= (1ULL << p);
-	    }
+            if (gpio_ok (p) & 2)
+            {
+               ESP_LOGE (TAG, "Input %d%s", p, (input[i] & PORT_INV) ? "¬" : "");
+               if (input[i] & PORT_INV)
+                  u.pin_bit_mask |= (1ULL << p);
+               else
+                  d.pin_bit_mask |= (1ULL << p);
+            }
          }
          if (output[i])
          {
             int p = port_mask (output[i]);
-	    if(gpio_ok(p)&1)
-	    {
-		    ESP_LOGE(TAG,"Output %d%s",p,(output[i] & PORT_INV)?"¬":"");
-            o.pin_bit_mask |= (1ULL << p);
-            REVK_ERR_CHECK (gpio_set_level (p, (output[i] & PORT_INV) ? 1 : 0));
-            holding++;
-	    }
+            if (gpio_ok (p) & 1)
+            {
+               ESP_LOGE (TAG, "Output %d%s", p, (output[i] & PORT_INV) ? "¬" : "");
+               o.pin_bit_mask |= (1ULL << p);
+               REVK_ERR_CHECK (gpio_set_level (p, (output[i] & PORT_INV) ? 1 : 0));
+               holding++;
+            }
          }
          if (power[i])
          {
             int p = port_mask (power[i]);
-	    if(gpio_ok(p)&1)
-	    {
-		    ESP_LOGE(TAG,"Power %d%s",p,(power[i] & PORT_INV) ?"-":"+");
-            o.pin_bit_mask |= (1ULL << p);
-            //REVK_ERR_CHECK(gpio_hold_dis(p));
-            REVK_ERR_CHECK (gpio_set_level (p, (power[i] & PORT_INV) ? 0 : 1));
-            //REVK_ERR_CHECK (gpio_set_drive_capability (p, GPIO_DRIVE_CAP_3));
-            holding++;
-	    }
+            if (gpio_ok (p) & 1)
+            {
+               ESP_LOGE (TAG, "Power %d%s", p, (power[i] & PORT_INV) ? "-" : "+");
+               o.pin_bit_mask |= (1ULL << p);
+               //REVK_ERR_CHECK(gpio_hold_dis(p));
+               REVK_ERR_CHECK (gpio_set_level (p, (power[i] & PORT_INV) ? 0 : 1));
+               //REVK_ERR_CHECK (gpio_set_drive_capability (p, GPIO_DRIVE_CAP_3));
+               holding++;
+            }
          }
       }
       if (o.pin_bit_mask)
@@ -1062,7 +1064,8 @@ app_main ()
    if (defcon)
       revk_task ("defcon", defcon_task, NULL, 4);
 
-if(ds18b20)revk_task("ds18b20",ds18b20_task,NULL,4);
+   if (ds18b20)
+      revk_task ("ds18b20", ds18b20_task, NULL, 4);
 
    if (!revk_wait_wifi (10))
    {
@@ -1163,7 +1166,8 @@ if(ds18b20)revk_task("ds18b20",ds18b20_task,NULL,4);
          revk_blink (0, 0, c ? "G" : "R");
       }
 #else
-      while(1)sleep(1);
+      while (1)
+         sleep (1);
 #endif
       return;
    }
