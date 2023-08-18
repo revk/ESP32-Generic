@@ -10,8 +10,6 @@ Includes power supply and RGB LED.
 
 Use a [Tasmotizer board](https://github.com/revk/Tasmotizer-PCB) to program using the 5 pads.
 
-![Front](Front.png)
+![Front](Front.jpg)
 
-![Back](Back.png)
-
-![Example](Example.png)
+![Plug](Plug.jpg)
