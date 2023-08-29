@@ -7,7 +7,7 @@
 *.old
 */*.old
 */*/*.old
-secure_boot_signing_key.pem
+*.pem
 build/*
 sdkconfig
 managed_components
