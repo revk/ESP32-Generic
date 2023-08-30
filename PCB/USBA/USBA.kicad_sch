@@ -1355,7 +1355,6 @@
   (no_connect (at 93.98 65.405) (uuid 3c33aecd-cb31-47a6-923d-b235d002255f))
   (no_connect (at 124.46 75.565) (uuid 3cb7f532-f5d7-4366-82b8-964864ca0074))
   (no_connect (at 93.98 57.785) (uuid 518929f5-385b-4732-a8a4-554649c60ec9))
-  (no_connect (at 124.46 98.425) (uuid 53a0658e-a254-4a8c-96bc-79be800e35b2))
   (no_connect (at 161.29 133.35) (uuid 55a143b0-5476-4d0e-ac11-0ce8dc559ab2))
   (no_connect (at 124.46 83.185) (uuid 823dda1a-a39f-4056-b212-e2ee0cb2116d))
   (no_connect (at 93.98 55.245) (uuid 842bc3df-1fe9-4f07-bc8c-d40c886e7ff8))
@@ -1653,6 +1652,31 @@
       (project "USBA"
         (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
           (reference "J3") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "power:GND") (at 124.46 98.425 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid 05abd4df-6acd-4979-bff5-393c31647cc1)
+    (property "Reference" "#PWR021" (at 130.81 98.425 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Value" "GND" (at 127.635 98.425 90)
+      (effects (font (size 1.27 1.27)) (justify right))
+    )
+    (property "Footprint" "" (at 124.46 98.425 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "" (at 124.46 98.425 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid fd9cac8a-874e-4e9b-8ca8-880593b54eec))
+    (instances
+      (project "USBA"
+        (path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+          (reference "#PWR021") (unit 1)
         )
       )
     )
