@@ -3554,6 +3554,9 @@
     (stroke (width 0.05) (type default)) (layer "User.2") (tstamp 682f75df-73af-4d2a-8fd9-5f297845632a))
   (gr_line (start 87.875 107) (end 112.6 107)
     (stroke (width 0.05) (type default)) (layer "User.2") (tstamp cd366939-26c9-4d08-9e21-4acadc7bed23))
+  (gr_text "Maybe reverse side plug" (at 95.5 90.9) (layer "F.Cu") (tstamp 0a4ad7e8-9aff-4b4a-b640-4611ab9e254e)
+    (effects (font (size 1.5 1.5) (thickness 0.3) bold) (justify left bottom))
+  )
   (gr_text "RGB:12 SCL:34 SDA:48 BTN:42" (at 88.9 106.4) (layer "B.SilkS") (tstamp 355dae50-3f3e-4349-817d-e11f53944166)
     (effects (font (face "OCR-B") (size 0.7 0.7) (thickness 0.1)) (justify right mirror))
     (render_cache "RGB:12 SCL:34 SDA:48 BTN:42" 0
