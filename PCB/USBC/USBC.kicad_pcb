@@ -2416,10 +2416,11 @@
     (at 100.15 99.3 -90)
     (property "Sheetfile" "USBC.kicad_sch")
     (property "Sheetname" "")
+    (property "exclude_from_bom" "")
     (property "ki_description" "USB Type A connector")
     (property "ki_keywords" "connector USB")
     (path "/02cb54c8-55d3-4cc1-835d-7f0cf7182c82")
-    (attr through_hole allow_soldermask_bridges)
+    (attr through_hole exclude_from_pos_files exclude_from_bom allow_soldermask_bridges)
     (fp_text reference "J3" (at 0 3.1 90 unlocked) (layer "B.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
       (tstamp d2edbf53-2c66-4cb7-9831-c18df1cdb897)
