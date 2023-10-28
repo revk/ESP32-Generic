@@ -3,11 +3,11 @@
 A small PCB design to plug in directly to an old school USB socket for power.
 Serial via USB direct to ESP32-S3.
 
-Includes power supply and WS2812B RGB LED, and then output to drive a chain of such LEDs.
+- Includes power supply and WS2812B RGB LED, and then output to drive a chain of such LEDs.
+- Includes I2C device (a light sensor) for testing with I2C.
+- Includes pads for a button to be fitted to the back.
 
-Includes I2C device (a light sensor) for testing with I2C.
-
-[Buy](https://www.amazon.co.uk/dp/B0CG3S8JX3) Note some boards may be simpler RGB LED and env sensor I2C.
+[Buy](https://www.amazon.co.uk/dp/B0CG3S8JX3) Note some older boards may be simpler RGB LED and env sensor I2C and no button pads.
 
 ## Programming
 
