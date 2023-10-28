@@ -3028,7 +3028,7 @@
     (property "Sim.Enable" "0")
     (property "exclude_from_bom" "")
     (path "/3adf0c78-5fec-4d7c-aaf3-bb6a0cfe97f2")
-    (attr exclude_from_bom allow_soldermask_bridges)
+    (attr exclude_from_pos_files exclude_from_bom allow_soldermask_bridges)
     (fp_text reference "V2" (at -29 -0.2 180 unlocked) (layer "B.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)) (justify left top mirror))
       (tstamp 1cb0fd84-c9a2-4dae-a266-1064d1bf57d4)
@@ -3183,7 +3183,7 @@
     (property "Sim.Enable" "0")
     (property "exclude_from_bom" "")
     (path "/70b9874a-566c-4a6a-9523-648bb3a7140b")
-    (attr exclude_from_bom allow_soldermask_bridges)
+    (attr exclude_from_pos_files exclude_from_bom allow_soldermask_bridges)
     (fp_text reference "V1" (at -29 -0.2 unlocked) (layer "B.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)) (justify left top mirror))
       (tstamp 6781800b-a1aa-4c60-8cb2-b9a55fab363e)
@@ -3259,7 +3259,7 @@
     (property "Sheetname" "")
     (property "exclude_from_bom" "")
     (path "/3b971050-a39a-471f-9ec2-37e85a93df47")
-    (attr through_hole exclude_from_bom allow_soldermask_bridges)
+    (attr through_hole exclude_from_pos_files exclude_from_bom allow_soldermask_bridges)
     (fp_text reference "J2" (at 0 3.1 90 unlocked) (layer "B.SilkS") hide
         (effects (font (size 1 1) (thickness 0.15)) (justify mirror))
       (tstamp 6d46f3fa-babe-4b7b-b32f-852b89f67278)
