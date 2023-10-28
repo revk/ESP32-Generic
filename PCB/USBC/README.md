@@ -12,5 +12,5 @@ Includes I2C device (a light sensor) for testing with I2C.
 
 Can be directly programmed using esptool, i.e. `idf.py flash` via the USB headers, or using the 5 pin serial pads on the back of the board.
 
-![a 10 21 24](https://github.com/revk/ESP32-Generic/assets/996983/d017cf6b-085a-4da2-a82f-901047603031)
-![a 11 17 18](https://github.com/revk/ESP32-Generic/assets/996983/92ac682a-49fa-42f7-9dca-0eda9d88f71f)
+![a 11 17 18](https://github.com/revk/ESP32-Generic/assets/996983/1138a731-c4a7-4d21-b609-63e9eddaf6c9)
+![b 11 17 18](https://github.com/revk/ESP32-Generic/assets/996983/0293e38e-137f-4add-be47-ddafda3131c3)
