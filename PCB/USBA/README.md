@@ -3,10 +3,11 @@
 A small PCB design to plug in directly to an old school USB socket for power.
 Serial via USB direct to ESP32-S3.
 
-Includes power supply and RGB LED.
-Includes temp/humidity sensor (temp will need calibration for being next to processor).
+Includes power supply and WS2812B RGB LED, and then output to drive a chain of such LEDs.
 
-[Buy](https://www.amazon.co.uk/dp/B0CG3S8JX3)
+Includes I2C device (a light sensor) for testing with I2C.
+
+[Buy](https://www.amazon.co.uk/dp/B0CG3S8JX3) Note some boards may be simpler RGB LED and env sensor I2C.
 
 ## Programming
 
