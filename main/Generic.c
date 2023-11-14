@@ -660,21 +660,19 @@ gfx_qr (const char *value)
  uint8_t *qr = qr_encode (strlen (value), value, widthp: &width, noquiet:1);
    if (!qr)
       return "Failed to encode";
-   if (!width || width > CONFIG_GFX_WIDTH)
+   int w = gfx_width ();
+   int h = gfx_height ();
+   if (!width || width > w || width>h)
    {
       free (qr);
       return "Too wide";
    }
    gfx_lock ();
    gfx_clear (0);
-#if CONFIG_GFX_WIDTH > CONFIG_GFX_HEIGH
-   const int w = CONFIG_GFX_HEIGHT;
-#else
-   const int w = CONFIG_GFX_WIDTH;
-#endif
-   int s = w / width;
-   int ox = (CONFIG_GFX_WIDTH - width * s) / 2;
-   int oy = (CONFIG_GFX_HEIGHT - width * s) / 2;
+   int s = (w > h ? h : w) / width;
+   ESP_LOGE (TAG, "QR %d/%d %d", w, h, s);
+   int ox = (w - width * s) / 2;
+   int oy = (h - width * s) / 2;
    for (int y = 0; y < width; y++)
       for (int x = 0; x < width; x++)
          if (qr[width * y + x] & QR_TAG_BLACK)
@@ -878,6 +876,8 @@ app_main ()
    if (gfxmosi || gfxdc || gfxsck)
    {
     const char *e = gfx_init (cs: port_mask (gfxcs), sck: port_mask (gfxsck), mosi: port_mask (gfxmosi), dc: port_mask (gfxdc), rst: port_mask (gfxrst), busy: port_mask (gfxbusy), ena: port_mask (gfxena), flip:gfxflip);
+      if (!e)
+         e = gfx_qr ("HTTPS://GENERIC.REVK.UK");
       if (e)
       {
          ESP_LOGE (TAG, "gfx %s", e);
@@ -885,8 +885,7 @@ app_main ()
          jo_string (j, "error", "Failed to start");
          jo_string (j, "description", e);
          revk_error ("gfx", &j);
-      } else
-         gfx_qr ("HTTPS://GENERIC.REVK.UK");
+      }
    }
    {
     gpio_config_t o = { mode:GPIO_MODE_OUTPUT };
@@ -1167,7 +1166,21 @@ app_main ()
       }
 #else
       while (1)
+      {
+         if (gfxmosi || gfxdc || gfxsck)
+         {
+            char temp[100];
+            time_t now = time (0);
+            struct tm t;
+            localtime_r (&now, &t);
+            gfx_lock ();
+            gfx_pos (gfx_width()/2, gfx_height()/2, GFX_M | GFX_C);
+            strftime (temp, sizeof (temp), "%FT%H:%M:%S%z", &t);
+            gfx_text (6, "%s", temp);
+            gfx_unlock ();
+	 }
          sleep (1);
+      }
 #endif
       return;
    }
