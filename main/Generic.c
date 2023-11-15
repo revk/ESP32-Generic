@@ -1177,9 +1177,11 @@ app_main ()
             localtime_r (&now, &t);
             gfx_lock ();
             gfx_clear (0);
-            strftime (temp, sizeof (temp), "%FT%H:%M:%S", &t);
             gfx_pos (gfx_width () / 2, gfx_height () / 2, GFX_B | GFX_C | GFX_V);
             gfx_text (6, "%lu", now);
+            strftime (temp, sizeof (temp), "%T", &t);
+            gfx_text (6, "%s", temp);
+            strftime (temp, sizeof (temp), "%F", &t);
             gfx_text (6, "%s", temp);
             gfx_unlock ();
             sleep (10 - (t.tm_sec % 10));
