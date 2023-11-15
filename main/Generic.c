@@ -662,7 +662,7 @@ gfx_qr (const char *value)
       return "Failed to encode";
    int w = gfx_width ();
    int h = gfx_height ();
-   if (!width || width > w || width>h)
+   if (!width || width > w || width > h)
    {
       free (qr);
       return "Too wide";
@@ -680,6 +680,8 @@ gfx_qr (const char *value)
                for (int dx = 0; dx < s; dx++)
                   gfx_pixel (ox + x * s + dx, oy + y * s + dy, 0xFF);
    gfx_unlock ();
+   gfx_pos (0, 0, GFX_T | GFX_L);
+   gfx_text (1, "%s", value);
    free (qr);
 #endif
    return NULL;
@@ -875,9 +877,9 @@ app_main ()
 
    if (gfxmosi || gfxdc || gfxsck)
    {
-    const char *e = gfx_init (cs: port_mask (gfxcs), sck: port_mask (gfxsck), mosi: port_mask (gfxmosi), dc: port_mask (gfxdc), rst: port_mask (gfxrst), busy: port_mask (gfxbusy), ena: port_mask (gfxena), flip:gfxflip);
+    const char *e = gfx_init (cs: port_mask (gfxcs), sck: port_mask (gfxsck), mosi: port_mask (gfxmosi), dc: port_mask (gfxdc), rst: port_mask (gfxrst), busy: port_mask (gfxbusy), ena: port_mask (gfxena), flip: gfxflip, direct:1);
       if (!e)
-         e = gfx_qr ("HTTPS://GENERIC.REVK.UK");
+         e = gfx_qr ("HTTPS://WWW.ME.UK");
       if (e)
       {
          ESP_LOGE (TAG, "gfx %s", e);
@@ -1174,11 +1176,12 @@ app_main ()
             struct tm t;
             localtime_r (&now, &t);
             gfx_lock ();
-            gfx_pos (gfx_width()/2, gfx_height()/2, GFX_M | GFX_C);
-            strftime (temp, sizeof (temp), "%FT%H:%M:%S%z", &t);
+            gfx_clear (0);
+            strftime (temp, sizeof (temp), "%FT%H:%M:%S", &t);
+            gfx_pos (gfx_width () / 2, gfx_height () / 2, GFX_M | GFX_C | GFX_V);
             gfx_text (6, "%s", temp);
             gfx_unlock ();
-	 }
+         }
          sleep (1);
       }
 #endif
