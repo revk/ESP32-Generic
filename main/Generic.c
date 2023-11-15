@@ -1179,8 +1179,8 @@ app_main ()
             gfx_clear (0);
             strftime (temp, sizeof (temp), "%FT%H:%M:%S", &t);
             gfx_pos (gfx_width () / 2, gfx_height () / 2, GFX_B | GFX_C | GFX_V);
+            gfx_text (6, "%lu", now);
             gfx_text (6, "%s", temp);
-            gfx_text (1, "%lu", now);
             gfx_unlock ();
             sleep (10 - (t.tm_sec % 10));
          } else
