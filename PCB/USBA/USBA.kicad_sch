@@ -3596,7 +3596,7 @@
 		(uuid "be45109e-f6b9-41ae-8316-1ac52926d1cc")
 	)
 	(no_connect
-		(at 93.98 60.325)
+		(at 93.98 85.725)
 		(uuid "c900db37-a406-4cef-b7e2-99b3cc345245")
 	)
 	(no_connect
@@ -3987,7 +3987,7 @@
 	)
 	(global_label "LED1"
 		(shape output)
-		(at 93.98 85.725 180)
+		(at 93.98 60.325 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -3997,7 +3997,7 @@
 		)
 		(uuid "efa56610-1780-422e-9ff2-e80fde19d92d")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 86.9924 85.725 0)
+			(at 86.9924 60.325 0)
 			(effects
 				(font
 					(size 1.27 1.27)
