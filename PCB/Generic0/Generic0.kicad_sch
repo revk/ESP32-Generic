@@ -1140,7 +1140,7 @@
     (property "Datasheet" "~" (id 3) (at 71.12 121.92 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "LCSC Part #" "C409798" (id 4) (at 71.12 120.65 0)
+    (property "MPN" "C409798" (id 4) (at 71.12 120.65 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid 3529f1cd-6c83-4ae3-ad21-2eabe2075c41))
