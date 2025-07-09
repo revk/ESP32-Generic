@@ -10,4 +10,4 @@ This is an open source project, but bear in mind you cannot sell boards bearing 
 
 <img src='LowPower.png' width=32%><img src='LowPower-90.png' width=32%><img src='LowPower-bottom.png' width=32%>
 
-*Auto generated 2025-07-02T14:01:34*
+*Auto generated 2025-07-09T16:36:36*
