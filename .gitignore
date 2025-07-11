@@ -13,3 +13,5 @@ sdkconfig
 managed_components
 dependencies.lock
 backups
+*-backups
+fp-info-cache

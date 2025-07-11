@@ -4618,7 +4618,7 @@
 	)
 	(global_label "DC"
 		(shape output)
-		(at 118.745 41.91 180)
+		(at 111.125 107.95 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -4628,7 +4628,7 @@
 		)
 		(uuid "bb976059-d8f9-40c2-9cba-a27e3f637ca7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 113.874 41.91 0)
+			(at 106.254 107.95 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6442,7 +6442,7 @@
 				)
 			)
 		)
-		(property "Value" "D"
+		(property "Value" "DKS22"
 			(at 139.7 50.1396 0)
 			(effects
 				(font
@@ -6450,7 +6450,7 @@
 				)
 			)
 		)
-		(property "Footprint" "RevK:D_SOD-123"
+		(property "Footprint" "RevK:D_SOD-123L"
 			(at 139.7 53.34 0)
 			(effects
 				(font
@@ -6477,7 +6477,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "C1884542"
+		(property "MPN" "C727072"
 			(at 139.7 53.34 0)
 			(effects
 				(font
@@ -7473,7 +7473,7 @@
 	)
 	(symbol
 		(lib_id "RevK:PowerIn")
-		(at 123.825 39.37 0)
+		(at 123.825 105.41 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7481,7 +7481,7 @@
 		(dnp no)
 		(uuid "71d0a121-8a7b-4644-90d9-6f98323338b4")
 		(property "Reference" "J4"
-			(at 125.095 36.83 0)
+			(at 125.095 102.87 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7490,7 +7490,7 @@
 			)
 		)
 		(property "Value" "DC"
-			(at 133.985 40.005 0)
+			(at 133.985 106.045 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7499,7 +7499,7 @@
 			)
 		)
 		(property "Footprint" "RevK:WAGO-2060-452-998-404"
-			(at 123.825 39.37 0)
+			(at 123.825 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7508,7 +7508,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 123.825 39.37 0)
+			(at 123.825 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7517,7 +7517,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 123.825 39.37 0)
+			(at 123.825 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7526,7 +7526,7 @@
 			)
 		)
 		(property "MPN" "C2765055"
-			(at 123.825 39.37 0)
+			(at 123.825 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7544,6 +7544,82 @@
 			(project "GenericS3"
 				(path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
 					(reference "J4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D")
+		(at 114.935 107.95 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "71fd6a90-fbc9-4470-997a-9d92df28b1b5")
+		(property "Reference" "D2"
+			(at 114.935 113.4618 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "DKS22"
+			(at 114.935 111.1504 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "RevK:D_SOD-123L"
+			(at 114.935 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 114.935 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Diode"
+			(at 114.935 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "C727072"
+			(at 114.935 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "27acb6da-73dc-48f8-8355-e87752608240")
+		)
+		(pin "2"
+			(uuid "701229ce-f3ea-4d53-a4f1-4ca6180b85ae")
+		)
+		(instances
+			(project "GenericS3"
+				(path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -8985,7 +9061,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 118.745 39.37 270)
+		(at 118.745 105.41 270)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -8993,7 +9069,7 @@
 		(dnp no)
 		(uuid "b5e8a192-3bf1-414d-8d3c-8ca5a0c4c983")
 		(property "Reference" "#PWR017"
-			(at 112.395 39.37 0)
+			(at 112.395 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9002,7 +9078,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 115.4938 39.497 90)
+			(at 115.4938 105.537 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9011,7 +9087,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 118.745 39.37 0)
+			(at 118.745 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9020,7 +9096,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 118.745 39.37 0)
+			(at 118.745 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9029,7 +9105,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 118.745 39.37 0)
+			(at 118.745 105.41 0)
 			(effects
 				(font
 					(size 1.27 1.27)
