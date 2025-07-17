@@ -150,7 +150,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Device:D"
+		(symbol "Device:D_Schottky"
 			(pin_numbers
 				(hide yes)
 			)
@@ -169,7 +169,7 @@
 					)
 				)
 			)
-			(property "Value" "D"
+			(property "Value" "D_Schottky"
 				(at 0 -2.54 0)
 				(effects
 					(font
@@ -195,7 +195,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Diode"
+			(property "Description" "Schottky diode"
 				(at 0 0 0)
 				(effects
 					(font
@@ -204,25 +204,7 @@
 					(hide yes)
 				)
 			)
-			(property "Sim.Device" "D"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Sim.Pins" "1=K 2=A"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "diode"
+			(property "ki_keywords" "diode Schottky"
 				(at 0 0 0)
 				(effects
 					(font
@@ -240,10 +222,10 @@
 					(hide yes)
 				)
 			)
-			(symbol "D_0_1"
+			(symbol "D_Schottky_0_1"
 				(polyline
 					(pts
-						(xy -1.27 1.27) (xy -1.27 -1.27)
+						(xy -1.905 0.635) (xy -1.905 1.27) (xy -1.27 1.27) (xy -1.27 -1.27) (xy -0.635 -1.27) (xy -0.635 -0.635)
 					)
 					(stroke
 						(width 0.254)
@@ -278,7 +260,7 @@
 					)
 				)
 			)
-			(symbol "D_1_1"
+			(symbol "D_Schottky_1_1"
 				(pin passive line
 					(at -3.81 0 0)
 					(length 2.54)
@@ -2430,7 +2412,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "RevK:TPS562243"
+		(symbol "RevK:TPS562246"
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
@@ -2443,7 +2425,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "TPS562243"
+			(property "Value" "TPS562246"
 				(at -2.54 6.35 0)
 				(effects
 					(font
@@ -2462,7 +2444,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://www.ti.com/lit/gpn/tps562243"
+			(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps562246.pdf"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2480,7 +2462,7 @@
 					(hide yes)
 				)
 			)
-			(property "MPN" "C42295941"
+			(property "MPN" "C41833479"
 				(at 0 0 0)
 				(effects
 					(font
@@ -2507,7 +2489,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "TPS562243_0_1"
+			(symbol "TPS562246_0_1"
 				(rectangle
 					(start -7.62 5.08)
 					(end 7.62 -5.08)
@@ -2520,7 +2502,7 @@
 					)
 				)
 			)
-			(symbol "TPS562243_1_1"
+			(symbol "TPS562246_1_1"
 				(pin power_in line
 					(at -10.16 2.54 0)
 					(length 2.54)
@@ -5016,7 +4998,7 @@
 		)
 	)
 	(symbol
-		(lib_id "RevK:TPS562243")
+		(lib_id "RevK:TPS562246")
 		(at 222.25 140.335 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -5033,7 +5015,7 @@
 				)
 			)
 		)
-		(property "Value" "TPS562243"
+		(property "Value" "TPS562246"
 			(at 222.25 133.5348 0)
 			(effects
 				(font
@@ -5051,7 +5033,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.ti.com/lit/gpn/tps562243"
+		(property "Datasheet" "https://www.ti.com/lit/ds/symlink/tps562246.pdf"
 			(at 222.25 140.335 0)
 			(effects
 				(font
@@ -5069,7 +5051,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "C42295941"
+		(property "MPN" "C41833479"
 			(at 222.25 140.335 0)
 			(effects
 				(font
@@ -6426,106 +6408,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:D")
-		(at 139.7 53.34 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "45ffeff1-5023-4c1e-9604-071aefbf1e83")
-		(property "Reference" "D1"
-			(at 139.7 47.8282 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "DKS22"
-			(at 139.7 50.1396 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "RevK:D_SOD-123L"
-			(at 139.7 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 139.7 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Diode"
-			(at 139.7 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "C727072"
-			(at 139.7 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Device" "D"
-			(at 139.7 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Sim.Pins" "1=K 2=A"
-			(at 139.7 53.34 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1d2ba03b-cc3e-44ec-9e0f-673d29d4c862")
-		)
-		(pin "2"
-			(uuid "56c3105a-7791-4a37-a730-77da350b56bd")
-		)
-		(instances
-			(project "Access"
-				(path "/2a267270-6585-45e3-a633-b53049f10066"
-					(reference "D8")
-					(unit 1)
-				)
-			)
-			(project "GenericS3"
-				(path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-					(reference "D1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "RevK:Round")
 		(at 38.1 65.405 180)
 		(unit 1)
@@ -7550,82 +7432,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:D")
-		(at 114.935 107.95 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "71fd6a90-fbc9-4470-997a-9d92df28b1b5")
-		(property "Reference" "D2"
-			(at 114.935 113.4618 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "DKS22"
-			(at 114.935 111.1504 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "RevK:D_SOD-123L"
-			(at 114.935 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 114.935 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Diode"
-			(at 114.935 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "MPN" "C727072"
-			(at 114.935 107.95 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "27acb6da-73dc-48f8-8355-e87752608240")
-		)
-		(pin "2"
-			(uuid "701229ce-f3ea-4d53-a4f1-4ca6180b85ae")
-		)
-		(instances
-			(project "GenericS3"
-				(path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
-					(reference "D2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "RevK:Square")
 		(at 62.865 106.68 0)
 		(unit 1)
@@ -8567,6 +8373,83 @@
 			(project "GenericS3"
 				(path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
 					(reference "P4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 139.7 53.34 180)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "a7a59e5c-cb3b-4032-836c-cd45ad8b8389")
+		(property "Reference" "D1"
+			(at 140.0175 47.9255 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "DKS22"
+			(at 140.0175 50.3498 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "RevK:D_SOD-123FL"
+			(at 139.7 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 139.7 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 139.7 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "C727072"
+			(at 139.7 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "378811d3-4622-4335-995f-50833647d207")
+		)
+		(pin "1"
+			(uuid "3efa353d-1698-4449-9a89-41e3d1f56c2b")
+		)
+		(instances
+			(project ""
+				(path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -10365,6 +10248,82 @@
 			(project "GenericS3"
 				(path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
 					(reference "P16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 114.935 107.95 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "d2cda327-b282-436a-bb14-5d01f9484f01")
+		(property "Reference" "D2"
+			(at 114.554 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "DKS22"
+			(at 114.554 112.9143 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "RevK:D_SOD-123FL"
+			(at 114.935 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 114.935 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 114.935 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "C727072"
+			(at 114.935 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "00a9244f-f546-471f-a371-b00afaa222af")
+		)
+		(pin "1"
+			(uuid "3c41d7b1-f38a-401a-b64f-1c2b2bb911bf")
+		)
+		(instances
+			(project "GenericS3"
+				(path "/2d210a96-f81f-42a9-8bf4-1b43c11086f3"
+					(reference "D2")
 					(unit 1)
 				)
 			)
