@@ -649,7 +649,7 @@
   (footprint "RevK:MHS190RGBCT" (layer "B.Cu")
     (tedit 0) (tstamp 9a6294f5-83f2-423d-91c2-6cfd1df081e7)
     (at 104.7 40.3 180)
-    (property "LCSC Part #" "C409798")
+    (property "MPN" "C409798")
     (property "Sheetfile" "Generic0.kicad_sch")
     (property "Sheetname" "")
     (path "/7fd305ec-20c0-4d2b-9d9a-871b0fdec611")

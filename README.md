@@ -12,6 +12,15 @@ Git clone this `--recursive` to get all the submodules, and it should build with
 
 Various KiCad designs, with 3D printed case designs.
 
+## Generic S3 board
+
+- USB-C flash/debug/power
+- DC 5V-17V
+- All GPIOs
+- WS2812 on GPIO 0
+
+<img src=PCB/GenericS3/GenericS3.png>
+
 ## ESP01 Style ESP32 board
 
 - Even smaller than ESP01 (13.2mm x 23.4mm including antenna)

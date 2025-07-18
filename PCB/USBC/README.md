@@ -1,16 +1,14 @@
-# USBC board
+# USBC
 
-A small PCB design to plug in directly to a USB-C socket. Ideal as a wall socket as this is a right angle connector.
+These files are for use in [KiCad](https://www.kicad.org).
 
-Serial via USB direct to ESP32-S3.
+## Trademark
 
-Includes power supply and five WS2812B RGB LEDs, and then output to drive a chain of such LEDs.
+This is an open source project, but bear in mind you cannot sell boards bearing the Andrews & Arnold Ltd name, the A&A logo, the registered trademark AJK logo, or the GS1 allocated EANs assigned to Andrews & Arnold Ltd.
 
-Includes I2C device (a light sensor) for testing with I2C.
+## Images
 
-## Programming
+<img src='USBC.png' width=32%><img src='USBC-90.png' width=32%><img src='USBC-bottom.png' width=32%>
+<img src='USBC-panel.png' width=49%><img src='USBC-panel-bottom.png' width=49%>
 
-Can be directly programmed using esptool, i.e. `idf.py flash` via the USB headers, or using the 5 pin serial pads on the back of the board.
-
-![a 11 17 18](https://github.com/revk/ESP32-Generic/assets/996983/1138a731-c4a7-4d21-b609-63e9eddaf6c9)
-![b 11 17 18](https://github.com/revk/ESP32-Generic/assets/996983/0293e38e-137f-4add-be47-ddafda3131c3)
+*Auto generated 2025-07-09T16:39:33*

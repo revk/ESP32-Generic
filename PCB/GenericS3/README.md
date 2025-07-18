@@ -1,17 +1,14 @@
-# USBA board
+# GenericS3
 
-A small PCB design to plug in directly to an old school USB socket for power. Does not connect to USB data - maybe I'll do one that does some time.
+These files are for use in [KiCad](https://www.kicad.org).
 
-Includes power supply and RGB LED.
+## Trademark
 
-[Buy](https://www.aa.net.uk/etc/circuit-boards/)
+This is an open source project, but bear in mind you cannot sell boards bearing the Andrews & Arnold Ltd name, the A&A logo, the registered trademark AJK logo, or the GS1 allocated EANs assigned to Andrews & Arnold Ltd.
 
-## Programming
+## Images
 
-Use a [Tasmotizer board](https://github.com/revk/Tasmotizer-PCB) to program using the 5 pads.
+<img src='GenericS3.png' width=32%><img src='GenericS3-90.png' width=32%><img src='GenericS3-bottom.png' width=32%>
+<img src='GenericS3-panel.png' width=49%><img src='GenericS3-panel-bottom.png' width=49%>
 
-![Front](Front.png)
-
-![Back](Back.png)
-
-![Example](Example.png)
+*Auto generated 2025-07-09T16:34:59*
