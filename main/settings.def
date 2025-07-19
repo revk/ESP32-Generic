@@ -43,3 +43,4 @@ u8	lora.bw	7	//	LoRa Bandwidth 0-9
 u8	lora.sf	7	//	LoRa Spreading Factor 6-12
 u8	lora.power 17	//	LoRa Tx power 2-17
 u16	lora.freq 868 .unit="Mz"	// LoRa frequency
+bit	lora.tx		//	We are sending side

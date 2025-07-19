@@ -69,12 +69,7 @@
 #define TIMEOUT_RESET                  100
 
 // SPI Stuff
-#if CONFIG_SPI2_HOST
-#define HOST_ID SPI2_HOST
-#elif CONFIG_SPI3_HOST
 #define HOST_ID SPI3_HOST
-#endif
-
 
 #define TAG "LORA"
 
@@ -572,7 +567,7 @@ lora_init (void)
       .max_transfer_sz = 0
    };
 
-   ret = spi_bus_initialize (SPI2_HOST, &bus, SPI_DMA_CH_AUTO);
+   ret = spi_bus_initialize (HOST_ID, &bus, SPI_DMA_CH_AUTO);
    assert (ret == ESP_OK);
 
    spi_device_interface_config_t dev = {
@@ -583,8 +578,7 @@ lora_init (void)
       .flags = 0,
       .pre_cb = NULL
    };
-   //ret = spi_bus_add_device(VSPI_HOST, &dev, &_spi);
-   ret = spi_bus_add_device (SPI2_HOST, &dev, &_spi);
+   ret = spi_bus_add_device (HOST_ID, &dev, &_spi);
    assert (ret == ESP_OK);
 
    /*

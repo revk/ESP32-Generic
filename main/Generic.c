@@ -292,29 +292,35 @@ als_task (void *arg)
    }
 }
 
-static void
-lora_task (void *arg)
+static esp_err_t
+lora_start (void)
 {
-   if (lora_init ())
-   {
-      ESP_LOGE (TAG, "LoRA init failed");
-      vTaskDelete (NULL);
-      return;
-   }
+   esp_err_t e = lora_init ();
+   if (e)
+      return e;
    lora_set_frequency (1000000UL * lorafreq);
    lora_set_coding_rate (loracr);
    lora_set_bandwidth (lorabw);
    lora_set_spreading_factor (lorasf);
    lora_set_tx_power (lorapower);
-   lora_explicit_header_mode();
+   lora_explicit_header_mode ();
+   lora_enable_crc ();
+   return 0;
+}
+
+
+static void
+lora_rx_task (void *arg)
+{
    uint8_t buf[255];            // Maximum Payload size of SX1276/77/78/79 is 255
+   ESP_LOGE (TAG, "LoRa Rx start");
    while (1)
    {
       lora_receive ();
       if (lora_received ())
       {
          int rxlen = lora_receive_packet (buf, sizeof (buf));
-         ESP_LOGE (TAG, "?LoRa %d", rxlen);
+         ESP_LOGE (TAG, "LoRa Rx %d", rxlen);
       }
       vTaskDelay (1);           // Avoid WatchDog alerts
    }
@@ -699,6 +705,12 @@ app_callback (int client, const char *prefix, const char *target, const char *su
       return NULL;              //Not for us or not a command from main MQTT
    if (defcon && isdigit ((int) *suffix) && !suffix[1])
       return setdefcon (*suffix - '0', value);
+   if (!strcmp (suffix, "tx") && loratx)
+   {
+      lora_send_packet ((uint8_t *) value, len);
+      ESP_LOGE (TAG, "Tx %d (%d lost)", len, lora_packet_lost ());
+      return "";
+   }
    if (!strcmp (suffix, "connect"))
    {
       if (defcon)
@@ -1071,7 +1083,10 @@ app_main ()
    if (scl.set && sda.set && als)
       revk_task ("als", als_task, NULL, 4);
    if (lorarest.set)
-      revk_task ("lora", lora_task, NULL, 4);
+   {
+      if (!lora_start () && !loratx)
+         revk_task ("lora", lora_rx_task, NULL, 4);
+   }
    if (!period)
    {
       //We run forever, not sleeping
