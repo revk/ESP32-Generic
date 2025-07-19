@@ -34,8 +34,12 @@ gpio	input	.array=MAXGPIO	//	Inputs to track
 gpio	output	.array=MAXGPIO	//	Outputs to set
 gpio	power	.array=MAXGPIO	//	Power outputs
 gpio	lora.rest	//	LoRa REST
-gpio	lora.nss	//	LoRA NSS
-gpio	lora.sck	//	LoRA SCK
-gpio	lora.mosi	//	LoRA MOSI
+gpio	lora.nss	//	LoRa NSS
+gpio	lora.sck	//	LoRa SCK
+gpio	lora.mosi	//	LoRa MOSI
 gpio	lora.miso	//	LoRa MISO
-
+u8	lora.cr	1	//	LoRa Coding rate 1-4
+u8	lora.bw	7	//	LoRa Bandwidth 0-9
+u8	lora.sf	7	//	LoRa Spreading Factor 6-12
+u8	lora.power 17	//	LoRa Tx power 2-17
+u16	lora.freq 868 .unit="Mz"	// LoRa frequency

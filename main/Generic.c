@@ -29,6 +29,7 @@ static const char TAG[] = "Generic";
 #include <onewire_bus.h>
 #include <ds18b20.h>
 #include <math.h>
+#include "lora.h"
 #if 0
 #include <esp_adc/adc_cali.h>
 #endif
@@ -288,6 +289,34 @@ als_task (void *arg)
 
       ESP_LOGI (TAG, "ALS W=%04X ALS=%04X", r (0x04), r (0x05));
       sleep (1);
+   }
+}
+
+static void
+lora_task (void *arg)
+{
+   if (lora_init ())
+   {
+      ESP_LOGE (TAG, "LoRA init failed");
+      vTaskDelete (NULL);
+      return;
+   }
+   lora_set_frequency (1000000UL * lorafreq);
+   lora_set_coding_rate (loracr);
+   lora_set_bandwidth (lorabw);
+   lora_set_spreading_factor (lorasf);
+   lora_set_tx_power (lorapower);
+   lora_explicit_header_mode();
+   uint8_t buf[255];            // Maximum Payload size of SX1276/77/78/79 is 255
+   while (1)
+   {
+      lora_receive ();
+      if (lora_received ())
+      {
+         int rxlen = lora_receive_packet (buf, sizeof (buf));
+         ESP_LOGE (TAG, "?LoRa %d", rxlen);
+      }
+      vTaskDelay (1);           // Avoid WatchDog alerts
    }
 }
 
@@ -1041,6 +1070,8 @@ app_main ()
    }
    if (scl.set && sda.set && als)
       revk_task ("als", als_task, NULL, 4);
+   if (lorarest.set)
+      revk_task ("lora", lora_task, NULL, 4);
    if (!period)
    {
       //We run forever, not sleeping
