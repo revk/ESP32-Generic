@@ -1,0 +1,35 @@
+#define	MAXGPIO	36
+u32	period		//
+u32	awake		//
+gpio	usb		//
+gpio	charger		//
+bit	ranger.0x		//
+gpio	ranger.gnd		//
+gpio	ranger.pwr		//
+gpio	ranger.scl		//
+gpio	ranger.sda		//
+u8	ranger.address	29 .set .hex .fix .digits=2	//
+gpio	gfx.cs		//
+gpio	gfx.sck		//
+gpio	gfx.mosi		//
+gpio	gfx.dc		//
+gpio	gfx.rst		//
+gpio	gfx.busy		//
+gpio	gfx.ena		//
+u8	gfx.flip		//
+gpio	ds18b20		//
+gpio	uart1.rx		//
+gpio	uart2.rx		//
+u8	defcon		//
+u8	defconblink	9	//
+bit	s21		//
+bit	daikin		//
+s	se.key		//
+u32	se.site		//
+u8	i2c		//
+gpio	scl		//
+gpio	sda		//
+u8	als	10 .set .hex .fix .digits=2	//
+gpio	input	.array=MAXGPIO	//
+gpio	output	.array=MAXGPIO	//
+gpio	power	.array=MAXGPIO	//
