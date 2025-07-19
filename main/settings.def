@@ -1,35 +1,41 @@
 #define	MAXGPIO	36
-u32	period		//
-u32	awake		//
-gpio	usb		//
-gpio	charger		//
-bit	ranger.0x		//
-gpio	ranger.gnd		//
-gpio	ranger.pwr		//
-gpio	ranger.scl		//
-gpio	ranger.sda		//
-u8	ranger.address	29 .set .hex .fix .digits=2	//
-gpio	gfx.cs		//
-gpio	gfx.sck		//
-gpio	gfx.mosi		//
-gpio	gfx.dc		//
-gpio	gfx.rst		//
-gpio	gfx.busy		//
-gpio	gfx.ena		//
-u8	gfx.flip		//
-gpio	ds18b20		//
-gpio	uart1.rx		//
-gpio	uart2.rx		//
-u8	defcon		//
-u8	defconblink	9	//
-bit	s21		//
-bit	daikin		//
-s	se.key		//
-u32	se.site		//
-u8	i2c		//
-gpio	scl		//
-gpio	sda		//
-u8	als	10 .set .hex .fix .digits=2	//
-gpio	input	.array=MAXGPIO	//
-gpio	output	.array=MAXGPIO	//
-gpio	power	.array=MAXGPIO	//
+u32	period	.unit="s"	//	Period
+u32	awake	.unit="s"	//	Awake
+gpio	usb		//	USB present
+gpio	charger		//	Charging
+bit	ranger.0x		//	Ranger is 0X
+gpio	ranger.gnd		//	Ranger GND
+gpio	ranger.pwr		//	Ranger PWR
+gpio	ranger.scl		//	Ranger SCL
+gpio	ranger.sda		//	Ranger SDA
+u8	ranger.address	29 .set .hex .fix .digits=2	//	Ranger I2C address
+gpio	gfx.cs		//	GFX CS	
+gpio	gfx.sck		//	GFX SCK
+gpio	gfx.mosi	//	GFX MOSI
+gpio	gfx.dc		//	GFX DC
+gpio	gfx.rst		//	GFX RST
+gpio	gfx.busy	//	GFX BUSY
+gpio	gfx.ena		//	GFX ENA
+u8	gfx.flip	//	GFX flip
+gpio	ds18b20		//	DS18B20
+gpio	uart1.rx	//	UART1 Rx
+gpio	uart2.rx	//	UART2 rx
+bit	defcon		//	DEFCON Enable
+u8	defconblink	9	//	DEFCON blink level
+bit	s21		//	S21 logging
+bit	daikin		//	daikin logging
+s	se.key		//	Solar Edge key
+u32	se.site		//	Solar Edge site
+u8	i2c		//	I2C ID
+gpio	scl		//	SCL
+gpio	sda		//	SDA
+u8	als	10 .set .hex .fix .digits=2	// ALS address
+gpio	input	.array=MAXGPIO	//	Inputs to track
+gpio	output	.array=MAXGPIO	//	Outputs to set
+gpio	power	.array=MAXGPIO	//	Power outputs
+gpio	lora.rest	//	LoRa REST
+gpio	lora.nss	//	LoRA NSS
+gpio	lora.sck	//	LoRA SCK
+gpio	lora.mosi	//	LoRA MOSI
+gpio	lora.miso	//	LoRa MISO
+

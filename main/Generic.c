@@ -598,7 +598,7 @@ output_task (void *arg)
 const char *
 gfx_qr (const char *value)
 {
-#ifndef	CONFIG_GFX_NONE
+#ifndef	CONFIG_GFX_BUILD_SUFFIX_GFXNONE
    unsigned int width = 0;
  uint8_t *qr = qr_encode (strlen (value), value, widthp: &width, noquiet:1);
    if (!qr)
@@ -795,7 +795,7 @@ app_main ()
       }
       revk_web_settings_add (webserver);
    }
-
+#ifndef	CONFIG_GFX_BUILD_SUFFIX_GFXNONE
    if (gfxmosi.set || gfxdc.set || gfxsck.set)
    {
     const char *e = gfx_init (cs: gfxcs.num, sck: gfxsck.num, mosi: gfxmosi.num, dc: gfxdc.num, rst: gfxrst.num, busy: gfxbusy.num, ena: gfxena.num, flip: gfxflip, direct:1);
@@ -810,6 +810,7 @@ app_main ()
          revk_error ("gfx", &j);
       }
    }
+#endif
    {
     gpio_config_t o = { mode:GPIO_MODE_OUTPUT };
     gpio_config_t u = { mode: GPIO_MODE_INPUT, pull_up_en:GPIO_PULLUP_ENABLE };
@@ -1069,6 +1070,7 @@ app_main ()
 #else
       while (1)
       {
+#ifndef	CONFIG_GFX_BUILD_SUFFIX_GFXNONE
          if (gfxmosi.set || gfxdc.set || gfxsck.set)
          {
             char temp[100];
@@ -1086,6 +1088,7 @@ app_main ()
             gfx_unlock ();
             sleep (10 - (t.tm_sec % 10));
          } else
+#endif
             sleep (1);
       }
 #endif
