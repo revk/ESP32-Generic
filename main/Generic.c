@@ -308,6 +308,7 @@ lora_start (void)
    lora_set_tx_power (lorapower);
    lora_explicit_header_mode ();
    lora_enable_crc ();
+   ESP_LOGE (TAG, "LoRa cr %d bw %d sf %d tx %d", loracr, lorabw, lorasf, lorapower);
    return 1;
 }
 
@@ -323,7 +324,7 @@ lora_rx_task (void *arg)
       if (lora_received ())
       {
          int rxlen = lora_receive_packet (buf, sizeof (buf));
-	 ESP_LOG_BUFFER_HEX_LEVEL(TAG,buf,rxlen,ESP_LOG_ERROR);
+         ESP_LOG_BUFFER_HEX_LEVEL (TAG, buf, rxlen, ESP_LOG_ERROR);
       }
       vTaskDelay (1);           // Avoid WatchDog alerts
    }

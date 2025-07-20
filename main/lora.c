@@ -1,4 +1,5 @@
 // Based on https://github.com/nopnop2002/esp-idf-sx127x/blob/main/components/lora/lora.c
+// Data https://www.semtech.com/products/wireless-rf/lora-connect/sx1276#resources
 
 #include <string.h>
 #include "freertos/FreeRTOS.h"
