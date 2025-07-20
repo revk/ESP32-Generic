@@ -292,12 +292,15 @@ als_task (void *arg)
    }
 }
 
-static esp_err_t
+static uint8_t
 lora_start (void)
 {
    esp_err_t e = lora_init ();
-   if (e)
+   if (!e)
+   {
+      ESP_LOGE (TAG, "LoRA not started");
       return e;
+   }
    lora_set_frequency (1000000UL * lorafreq);
    lora_set_coding_rate (loracr);
    lora_set_bandwidth (lorabw);
@@ -305,7 +308,7 @@ lora_start (void)
    lora_set_tx_power (lorapower);
    lora_explicit_header_mode ();
    lora_enable_crc ();
-   return 0;
+   return 1;
 }
 
 
@@ -320,7 +323,7 @@ lora_rx_task (void *arg)
       if (lora_received ())
       {
          int rxlen = lora_receive_packet (buf, sizeof (buf));
-         ESP_LOGE (TAG, "LoRa Rx %d", rxlen);
+	 ESP_LOG_BUFFER_HEX_LEVEL(TAG,buf,rxlen,ESP_LOG_ERROR);
       }
       vTaskDelay (1);           // Avoid WatchDog alerts
    }
@@ -1084,7 +1087,7 @@ app_main ()
       revk_task ("als", als_task, NULL, 4);
    if (lorarest.set)
    {
-      if (!lora_start () && !loratx)
+      if (lora_start () && !loratx)
          revk_task ("lora", lora_rx_task, NULL, 4);
    }
    if (!period)

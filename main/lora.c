@@ -9,6 +9,8 @@
 #include "driver/gpio.h"
 #include "revk.h"
 
+//#define	DEBUG
+
 /*
  * Register definitions
  */
@@ -113,6 +115,9 @@ lora_write_reg (int reg, int val)
    spi_device_polling_transmit (_spi, &t);
 #endif
    //revk_gpio_set(loranss,0)
+#ifdef	DEBYG
+   ESP_LOGE(TAG,"Write %02X %02X",reg,val);
+#endif
 }
 
 /**
@@ -147,6 +152,9 @@ lora_write_reg_buffer (int reg, uint8_t * val, int len)
 #endif
    //revk_gpio_set(loranss,0)
    free (out);
+#ifdef	DEBYG
+   ESP_LOGE(TAG,"Write %02X %d bytes",reg,len);
+#endif
 }
 
 /**
@@ -158,7 +166,7 @@ int
 lora_read_reg (int reg)
 {
    uint8_t out[2] = { reg, 0xff };
-   uint8_t in[2];
+   uint8_t in[2]={0};
 
    spi_transaction_t t = {
       .flags = 0,
@@ -174,6 +182,9 @@ lora_read_reg (int reg)
    spi_device_polling_transmit (_spi, &t);
 #endif
    //revk_gpio_set(loranss,0)
+#ifdef	DEBYG
+   ESP_LOGE(TAG,"Read %02X %02X",reg,in[1]);
+#endif
    return in[1];
 }
 
@@ -216,6 +227,9 @@ lora_read_reg_buffer (int reg, uint8_t * val, int len)
    }
    free (out);
    free (in);
+#ifdef	DEBYG
+   ESP_LOGE(TAG,"Read %02X %d bytes",reg,len);
+#endif
 }
 
 /**
@@ -225,9 +239,9 @@ void
 lora_reset (void)
 {
    revk_gpio_set (lorarest, 1);
-   vTaskDelay (pdMS_TO_TICKS (1));
+   usleep(10000);
    revk_gpio_set (lorarest, 0);
-   vTaskDelay (pdMS_TO_TICKS (10));
+   usleep(10000);
 }
 
 /**
@@ -597,7 +611,7 @@ lora_init (void)
       ESP_LOGD (TAG, "version=0x%02x", version);
       if (version == 0x12)
          break;
-      vTaskDelay (2);
+      usleep(20000);
    }
    ESP_LOGD (TAG, "i=%d, TIMEOUT_RESET=%d", i, TIMEOUT_RESET);
    if (i == TIMEOUT_RESET + 1)
@@ -647,7 +661,7 @@ lora_send_packet (uint8_t * buf, int size)
    lora_write_reg (REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_TX);
 #if 0
    while ((lora_read_reg (REG_IRQ_FLAGS) & IRQ_TX_DONE_MASK) == 0)
-      vTaskDelay (2);
+	   usleep(20000);
 #endif
    int loop = 0;
    int max_retry;
@@ -677,7 +691,7 @@ lora_send_packet (uint8_t * buf, int size)
       loop++;
       if (loop == max_retry)
          break;
-      vTaskDelay (2);
+      usleep (20000);
    }
    if (loop == max_retry)
    {
