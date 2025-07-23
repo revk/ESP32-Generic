@@ -72,7 +72,7 @@
 #define TIMEOUT_RESET                  100
 
 // SPI Stuff
-#define HOST_ID SPI3_HOST
+#define HOST_ID SPI2_HOST
 
 #define TAG "LORA"
 
@@ -583,7 +583,7 @@ lora_init (void)
    };
 
    ret = spi_bus_initialize (HOST_ID, &bus, SPI_DMA_CH_AUTO);
-   assert (ret == ESP_OK);
+   if(ret)retgurn 0;
 
    spi_device_interface_config_t dev = {
       .clock_speed_hz = 9000000,
