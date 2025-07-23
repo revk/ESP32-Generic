@@ -662,7 +662,7 @@ gfx_qr (const char *value)
                for (int dx = 0; dx < s; dx++)
                   gfx_pixel (ox + x * s + dx, oy + y * s + dy, 0xFF);
    gfx_pos (1, 1, GFX_T | GFX_L);
-   gfx_text (1, "%s", value);
+   gfx_text (0, 1, "%s", value);
    gfx_unlock ();
    free (qr);
 #endif
@@ -1130,11 +1130,11 @@ app_main ()
             gfx_lock ();
             gfx_clear (0);
             gfx_pos (gfx_width () / 2, gfx_height () / 2, GFX_B | GFX_C | GFX_V);
-            gfx_text (6, "%lu", now);
+            gfx_text (0, 6, "%lu", now);
             strftime (temp, sizeof (temp), "%T", &t);
-            gfx_text (6, "%s", temp);
+            gfx_text (0, 6, "%s", temp);
             strftime (temp, sizeof (temp), "%F", &t);
-            gfx_text (6, "%s", temp);
+            gfx_text (0, 6, "%s", temp);
             gfx_unlock ();
             sleep (10 - (t.tm_sec % 10));
          } else

@@ -57,10 +57,14 @@ main/settings.h:     components/ESP32-RevK/revk_settings main/settings.def compo
 components/ESP32-RevK/revk_settings: components/ESP32-RevK/revk_settings.c
 	make -C components/ESP32-RevK
 
-set:    s3
+set:    lcd2 s3
 
 gd7965:
 	components/ESP32-RevK/setbuildsuffix -S3-MINI-N4-R2-GD7965
+	@make
+
+lcd2:
+	components/ESP32-RevK/setbuildsuffix -S3-MINI-N4-R2-LCD2
 	@make
 
 s3:
