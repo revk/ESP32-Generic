@@ -10,7 +10,7 @@
 #include "driver/gpio.h"
 #include "revk.h"
 
-//#define	DEBUG
+//#define       DEBUG
 
 /*
  * Register definitions
@@ -117,7 +117,7 @@ lora_write_reg (int reg, int val)
 #endif
    //revk_gpio_set(loranss,0)
 #ifdef	DEBYG
-   ESP_LOGE(TAG,"Write %02X %02X",reg,val);
+   ESP_LOGE (TAG, "Write %02X %02X", reg, val);
 #endif
 }
 
@@ -154,7 +154,7 @@ lora_write_reg_buffer (int reg, uint8_t * val, int len)
    //revk_gpio_set(loranss,0)
    free (out);
 #ifdef	DEBYG
-   ESP_LOGE(TAG,"Write %02X %d bytes",reg,len);
+   ESP_LOGE (TAG, "Write %02X %d bytes", reg, len);
 #endif
 }
 
@@ -167,7 +167,7 @@ int
 lora_read_reg (int reg)
 {
    uint8_t out[2] = { reg, 0xff };
-   uint8_t in[2]={0};
+   uint8_t in[2] = { 0 };
 
    spi_transaction_t t = {
       .flags = 0,
@@ -184,7 +184,7 @@ lora_read_reg (int reg)
 #endif
    //revk_gpio_set(loranss,0)
 #ifdef	DEBYG
-   ESP_LOGE(TAG,"Read %02X %02X",reg,in[1]);
+   ESP_LOGE (TAG, "Read %02X %02X", reg, in[1]);
 #endif
    return in[1];
 }
@@ -229,7 +229,7 @@ lora_read_reg_buffer (int reg, uint8_t * val, int len)
    free (out);
    free (in);
 #ifdef	DEBYG
-   ESP_LOGE(TAG,"Read %02X %d bytes",reg,len);
+   ESP_LOGE (TAG, "Read %02X %d bytes", reg, len);
 #endif
 }
 
@@ -240,9 +240,9 @@ void
 lora_reset (void)
 {
    revk_gpio_set (lorarest, 1);
-   usleep(10000);
+   usleep (10000);
    revk_gpio_set (lorarest, 0);
-   usleep(10000);
+   usleep (10000);
 }
 
 /**
@@ -583,7 +583,8 @@ lora_init (void)
    };
 
    ret = spi_bus_initialize (HOST_ID, &bus, SPI_DMA_CH_AUTO);
-   if(ret)retgurn 0;
+   if (ret)
+      return 0;
 
    spi_device_interface_config_t dev = {
       .clock_speed_hz = 9000000,
@@ -612,7 +613,7 @@ lora_init (void)
       ESP_LOGD (TAG, "version=0x%02x", version);
       if (version == 0x12)
          break;
-      usleep(20000);
+      usleep (20000);
    }
    ESP_LOGD (TAG, "i=%d, TIMEOUT_RESET=%d", i, TIMEOUT_RESET);
    if (i == TIMEOUT_RESET + 1)
@@ -662,7 +663,7 @@ lora_send_packet (uint8_t * buf, int size)
    lora_write_reg (REG_OP_MODE, MODE_LONG_RANGE_MODE | MODE_TX);
 #if 0
    while ((lora_read_reg (REG_IRQ_FLAGS) & IRQ_TX_DONE_MASK) == 0)
-	   usleep(20000);
+      usleep (20000);
 #endif
    int loop = 0;
    int max_retry;
