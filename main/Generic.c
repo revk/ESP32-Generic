@@ -301,6 +301,7 @@ lora_start (void)
       ESP_LOGE (TAG, "LoRA not started");
       return e;
    }
+   lora_sleep ();
    lora_set_frequency (1000000UL * lorafreq);
    lora_set_coding_rate (loracr);
    lora_set_bandwidth (lorabw);
@@ -308,23 +309,32 @@ lora_start (void)
    lora_set_tx_power (lorapower);
    lora_explicit_header_mode ();
    lora_enable_crc ();
+   lora_idle ();
    ESP_LOGE (TAG, "LoRa cr %d bw %d sf %d tx %d", loracr, lorabw, lorasf, lorapower);
    return 1;
 }
 
+static time_t rxtime = 0;
+static uint8_t rxlen = 0;
+static uint8_t rxbuf[255] = { 0 };
+
+static int rxrssi = 0;
+static int rxsnr = 0;
 
 static void
 lora_rx_task (void *arg)
 {
-   uint8_t buf[255];            // Maximum Payload size of SX1276/77/78/79 is 255
    ESP_LOGE (TAG, "LoRa Rx start");
    while (1)
    {
       lora_receive ();
       if (lora_received ())
       {
-         int rxlen = lora_receive_packet (buf, sizeof (buf));
-         ESP_LOG_BUFFER_HEX_LEVEL (TAG, buf, rxlen, ESP_LOG_ERROR);
+         rxlen = lora_receive_packet (rxbuf, sizeof (rxbuf));
+         rxrssi = lora_packet_rssi ();
+         rxsnr = lora_packet_snr ();
+         rxtime = time (0);
+         ESP_LOG_BUFFER_HEX_LEVEL (TAG, rxbuf, rxlen, ESP_LOG_ERROR);
       }
       vTaskDelay (1);           // Avoid WatchDog alerts
    }
@@ -1129,14 +1139,23 @@ app_main ()
             localtime_r (&now, &t);
             gfx_lock ();
             gfx_clear (0);
-            gfx_pos (gfx_width () / 2, gfx_height () / 2, GFX_B | GFX_C | GFX_V);
-            gfx_text (0, 6, "%lu", now);
-            strftime (temp, sizeof (temp), "%T", &t);
-            gfx_text (0, 6, "%s", temp);
+            gfx_pos (gfx_width () / 2, 0, GFX_T | GFX_C | GFX_V);
             strftime (temp, sizeof (temp), "%F", &t);
-            gfx_text (0, 6, "%s", temp);
+            gfx_text (0, 4, "%s", temp);
+            strftime (temp, sizeof (temp), "%T", &t);
+            gfx_text (0, 4, "%s", temp);
+            if (rxlen)
+            {
+               gfx_pos (gfx_width () / 2, gfx_y () + 20, GFX_T | GFX_C | GFX_V);
+               gfx_text (GFX_TEXT_DESCENDERS, 2, "%.*s", rxlen, rxbuf);
+
+               gfx_pos (gfx_width () / 2, gfx_height () - 1, GFX_B | GFX_C | GFX_V);
+               localtime_r (&rxtime, &t);
+               strftime (temp, sizeof (temp), "%F %T", &t);
+               gfx_text (0, 2, "%s %d %d", temp, rxrssi, rxsnr);
+            }
             gfx_unlock ();
-            sleep (10 - (t.tm_sec % 10));
+            sleep (1);
          } else
 #endif
             sleep (1);
