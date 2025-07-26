@@ -9753,7 +9753,7 @@
 				)
 			)
 		)
-		(property "Value" "DKS22"
+		(property "Value" "DKS34"
 			(at 151.4475 50.3498 0)
 			(effects
 				(font
@@ -11691,7 +11691,7 @@
 				)
 			)
 		)
-		(property "Value" "DKS22"
+		(property "Value" "DKS34"
 			(at 112.649 112.9143 0)
 			(effects
 				(font
