@@ -1,6 +1,6 @@
 all:	png stl
 
-stl:	GenericS3B.stl GenericS3T/stl
+stl:	GenericS3/GenericS3T.stl GenericS3/GenericS3B.stl
 
 png:	$(patsubst %.kicad_pcb,%.png,$(wildcard */*.kicad_pcb))
 
@@ -21,9 +21,9 @@ update:
 	-git commit -a -m "Library update"
 	-git push
 
-%.png:	%.kicad_pcb PCBCase/clean PCBCase/render Makefile
+%.png:	%.kicad_pcb PCBCase/clean PCBCase/render
 	PCBCase/render $<
 
-GenericS3/GenericS3B.scad: Faikin/Faikin.kicad_pcb PCBCase/case PCBCase/case
-	PCBCase/case -o $@ $< --edge=2 --top=7 --bottom=3 --pcb=2 --two-file --lip-type=1
+GenericS3/GenericS3T.scad: GenericS3/GenericS3.kicad_pcb PCBCase/case PCBCase/case
+	PCBCase/case -o $@ $< --edge=2 --top=7 --bottom=3 --pcb=2 --two-file
 
