@@ -1,6 +1,6 @@
 all:	png stl
 
-stl:	
+stl:	GenericS3B.stl GenericS3T/stl
 
 png:	$(patsubst %.kicad_pcb,%.png,$(wildcard */*.kicad_pcb))
 
@@ -23,3 +23,7 @@ update:
 
 %.png:	%.kicad_pcb PCBCase/clean PCBCase/render Makefile
 	PCBCase/render $<
+
+GenericS3/GenericS3B.scad: Faikin/Faikin.kicad_pcb PCBCase/case PCBCase/case
+	PCBCase/case -o $@ $< --edge=2 --top=7 --bottom=3 --pcb=2 --two-file --lip-type=1
+
