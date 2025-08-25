@@ -1,6 +1,6 @@
 // Generated case design for GenericS3/GenericS3.kicad_pcb
 // By https://github.com/revk/PCBCase
-// Generated 2025-08-25 10:30:49
+// Generated 2025-08-25 10:36:24
 // title:	GenericS3
 // rev:	1
 // comment:	www.me.uk
@@ -178,21 +178,21 @@ part_D1(part,hole,block);
 parts_top=5;
 module part_J3(part=true,hole=false,block=false)
 {
-// Missing model J3.1 PinHeader_2x08_P2.54mm_Vertical (back)
+translate([-13.240000,12.700000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m11(part,hole,block,casebottom,08); // J3
 };
 module part_V2(part=true,hole=false,block=false)
 {
 };
 module part_J5(part=true,hole=false,block=false)
 {
-// Missing model J5.1 PinHeader_2x07_P2.54mm_Vertical (back)
+translate([2.000000,-7.620000,0.000000])rotate([180,0,0])m11(part,hole,block,casebottom,07); // J3
 };
 module part_V1(part=true,hole=false,block=false)
 {
 };
 module part_J2(part=true,hole=false,block=false)
 {
-// Missing model J2.1 PinHeader_2x08_P2.54mm_Vertical (back)
+translate([-13.240000,-10.160000,0.000000])rotate([0,0,-90.000000])rotate([180,0,0])m11(part,hole,block,casebottom,08); // J3
 };
 // Parts to go on PCB (bottom)
 module parts_bottom(part=false,hole=false,block=false){
@@ -203,7 +203,7 @@ part_V1(part,hole,block);
 part_J2(part,hole,block);
 }
 
-parts_bottom=0;
+parts_bottom=3;
 module b(cx,cy,z,w,l,h){translate([cx-w/2,cy-l/2,z])cube([w,l,h]);}
 module m0(part=false,hole=false,block=false,height)
 { // RevK:USB-C-Socket-H CSP-USC16-TR
@@ -376,6 +376,21 @@ translate([-15.4/2,-15.45/2,0])
 		translate([0.7,0.5,0])cube([14,13.55,2.4]);
 		cube([15.4,20.5,0.8]);
 	}
+}
+}
+
+module m11(part=false,hole=false,block=false,height,N=0)
+{ // J3
+translate([0,-(N-1)*2.54/2,0])
+{
+if(part)
+{
+	b(0,0,0,5.08,N*2.54,4);
+}
+if(hole)
+{
+	b(0,0,0,5.08-0.01,N*2.54-0.01,height);
+}
 }
 }
 
