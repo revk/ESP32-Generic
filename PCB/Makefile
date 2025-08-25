@@ -25,5 +25,5 @@ update:
 	PCBCase/render $<
 
 GenericS3/GenericS3T.scad: GenericS3/GenericS3.kicad_pcb PCBCase/case PCBCase/case
-	PCBCase/case -o $@ $< --edge=2 --top=7 --bottom=3 --pcb=2 --two-file
+	PCBCase/case -o $@ $< --edge=2 --top=6 --bottom=2 --pcb=2 --two-file --date-angle=90 --date-x=11.4
 
