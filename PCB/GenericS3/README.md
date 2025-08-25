@@ -19,4 +19,4 @@ This is an open source project, but bear in mind you cannot sell boards bearing 
 <img src='GenericS3.png' width=32%><img src='GenericS3-90.png' width=32%><img src='GenericS3-bottom.png' width=32%>
 <img src='GenericS3-panel.png' width=49%><img src='GenericS3-panel-bottom.png' width=49%>
 
-*Auto generated 2025-08-25T12:12:02*
+*Auto generated 2025-08-25T12:45:23*
