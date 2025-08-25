@@ -1,6 +1,6 @@
 // Generated case design for GenericS3/GenericS3.kicad_pcb
 // By https://github.com/revk/PCBCase
-// Generated 2025-08-25 12:43:12
+// Generated 2025-08-25 14:25:48
 // title:	GenericS3
 // rev:	1
 // comment:	www.me.uk
@@ -23,6 +23,13 @@ nohull=false;
 hullcap=1.000000;
 hulledge=1.000000;
 useredge=false;
+datex=11.400000;
+datey=0.000000;
+datet=0.500000;
+dateh=3.000000;
+datea=90;
+date="2025-08-25";
+datef="OCRB";
 spacing=47.800000;
 pcbwidth=31.800000;
 pcblength=30.000000;
@@ -727,6 +734,15 @@ module bottom()
 		}
 		parts_space();
 		pcb(height,r=margin);
+	}
+}
+
+module datecode()
+{
+	minkowski()
+	{
+		translate([datex,datey,-1])rotate(datea)scale([-1,1])linear_extrude(datet)text(date,size=dateh,halign="center",valign="center",font=datef);
+		cylinder(d1=datet,d2=0,h=datet,$fn=6);
 	}
 }
 top();
