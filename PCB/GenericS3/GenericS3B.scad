@@ -1,6 +1,6 @@
 // Generated case design for GenericS3/GenericS3.kicad_pcb
 // By https://github.com/revk/PCBCase
-// Generated 2025-08-25 15:09:48
+// Generated 2025-08-25 15:17:03
 // title:	GenericS3
 // rev:	1
 // comment:	www.me.uk
@@ -741,7 +741,7 @@ module datecode()
 {
 	minkowski()
 	{
-		translate([datex,datey,-1])rotate(datea)scale([-1,1])linear_extrude(datet)text(date,size=dateh,halign="center",valign="center",font=datef);
+		translate([datex,datey,-1])rotate(datea)scale([-1,1])linear_extrude(1)text(date,size=dateh,halign="center",valign="center",font=datef);
 		cylinder(d1=datet,d2=0,h=datet,$fn=6);
 	}
 }
