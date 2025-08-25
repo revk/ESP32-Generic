@@ -1,4 +1,4 @@
-all:	png stl
+all:	png stl */README.md
 
 stl:	GenericS3/GenericS3T.stl GenericS3/GenericS3B.stl
 
@@ -23,6 +23,9 @@ update:
 
 %.png:	%.kicad_pcb PCBCase/clean PCBCase/render
 	PCBCase/render $<
+
+%/README.md: %/*.kicad_pcb %/*.stl PCBCase/readme
+	PCBCase/readme $@
 
 GenericS3/GenericS3T.scad: GenericS3/GenericS3.kicad_pcb PCBCase/case PCBCase/case
 	PCBCase/case -o $@ $< --edge=2 --top=6 --bottom=2 --pcb=2 --two-file --date-angle=90 --date-x=11.4

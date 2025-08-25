@@ -6,9 +6,17 @@ These files are for use in [KiCad](https://www.kicad.org).
 
 This is an open source project, but bear in mind you cannot sell boards bearing the Andrews & Arnold Ltd name, the A&A logo, the registered trademark AJK logo, or the GS1 allocated EANs assigned to Andrews & Arnold Ltd.
 
+## 3D
+
+3D case designs are normally automatically created from the PCB so as to ensure correct details and placement of apertures, etc.
+
+|Design|Bottom|Top|
+|------|------|---|
+|GenericS3|[GenericS3B](GenericS3B.stl)|[GenericS3T](GenericS3T.stl)|
+
 ## Images
 
 <img src='GenericS3.png' width=32%><img src='GenericS3-90.png' width=32%><img src='GenericS3-bottom.png' width=32%>
 <img src='GenericS3-panel.png' width=49%><img src='GenericS3-panel-bottom.png' width=49%>
 
-*Auto generated 2025-08-25T10:30:48*
+*Auto generated 2025-08-25T12:12:02*

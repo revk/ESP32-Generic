@@ -1,6 +1,6 @@
 // Generated case design for GenericS3/GenericS3.kicad_pcb
 // By https://github.com/revk/PCBCase
-// Generated 2025-08-25 10:52:44
+// Generated 2025-08-25 11:43:00
 // title:	GenericS3
 // rev:	1
 // comment:	www.me.uk
