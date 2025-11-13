@@ -375,13 +375,14 @@ web_root (httpd_req_t *req)
    if (revk_link_down ())
       return revk_web_settings (req);   // Direct to web set up
    web_head (req, *hostname ? hostname : appname);
+   size_t len = httpd_req_get_url_query_len (req);
+   char q[3] = { };
+   if (len < sizeof (q) - 1)
+      httpd_req_get_url_query_str (req, q, sizeof (q));
    if (defcon)
    {                            // Defcon controls
-      size_t len = httpd_req_get_url_query_len (req);
-      char q[2] = { };
       if (len == 1)
       {
-         httpd_req_get_url_query_str (req, q, sizeof (q));
          if (isdigit ((int) *q))
             defcon_level = *q - '0';
          else if (*q == '+' && defcon_level < 9)
@@ -393,16 +394,22 @@ web_root (httpd_req_t *req)
          if (i <= 6 || i == 9)
          {
             q[0] = '0' + i;
-            httpd_resp_sendstr_chunk (req, "<a href='?");
-            httpd_resp_sendstr_chunk (req, q);
-            httpd_resp_sendstr_chunk (req, "' class='defcon d");
-            httpd_resp_sendstr_chunk (req, q);
-            if (i == defcon_level)
-               httpd_resp_sendstr_chunk (req, " on");
-            httpd_resp_sendstr_chunk (req, "'>");
-            httpd_resp_sendstr_chunk (req, i == 9 ? "X" : q);
-            httpd_resp_sendstr_chunk (req, "</a>");
+            revk_web_send (req, "<a href='?%s' class='defcon d%d%s>%s</a>", q, q, i == defcon_level ? " on" : "", i == 9 ? "X" : q);
          }
+   } else
+   {
+      int i = atoi (q);
+      if (i > 0 && i <= MAXGPIO)
+      {
+         i--;
+         if (output[i].set)
+         {
+            outputcount[i] = 1;
+            outputremaining[i] = outputmark[i];
+            outputbits |= (1ULL << i);
+            revk_web_send (req, "<p>Output %d activated</p>", i + 1);
+         }
+      }
    }
    return revk_web_foot (req, 0, 1, NULL);
 }
@@ -605,8 +612,11 @@ input_task (void *arg)
          jo_array (j, "input");
          for (int i = 0; i <= max; i++)
             if (input[i].set)
+            {
+               if (strip && i + 1 < leds && !output[i].set)
+                  revk_led (strip, i + 1, 255, revk_rgb ((this >> i) & 1 ? 'R' : 'g'));
                jo_bool (j, NULL, (this >> i));
-            else
+            } else
                jo_null (j, NULL);
          jo_close (j);
          revk_info (NULL, &j);
@@ -632,7 +642,7 @@ output_task (void *arg)
                //REVK_ERR_CHECK(gpio_hold_dis(p));
                revk_gpio_set (output[i], (outputbits >> i) & 1);
                if (strip && i + 1 < leds)
-                  revk_led (strip, i + 1, 255, revk_rgb ((outputbits >> i) & 1 ? 'G' : 'R'));
+                  revk_led (strip, i + 1, 255, revk_rgb ((outputbits >> i) & 1 ? 'R' : 'g'));
                //REVK_ERR_CHECK(gpio_hold_en(p));
                if (outputbits & (1ULL << i))
                   outputremaining[i] = outputmark[i];   // Time
@@ -650,7 +660,7 @@ led_task (void *arg)
 {
    while (1)
    {
-      usleep (10000 - esp_timer_get_time () % 10000);
+      usleep (100000 - esp_timer_get_time () % 100000);
       revk_led (strip, 0, 255, revk_blinker ());
       led_strip_refresh (strip);
    }
@@ -907,8 +917,9 @@ app_main ()
       revk_gpio_output (output[i], 0);
       revk_gpio_output (power[i], 1);
       if (strip && output[i].set && i + 1 < leds)
-         revk_led (strip, i + 1, 255, 'R');
+         revk_led (strip, i + 1, 255, revk_rgb ('g'));
    }
+
    if (esp_reset_reason () != ESP_RST_DEEPSLEEP && awake < 60)
       awake = 60;
    if (usb.set)
