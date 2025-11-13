@@ -12,21 +12,23 @@ all:	main/settings.h
 	@cp build/$(PROJECT_NAME).bin $(PROJECT_NAME)$(SUFFIX).bin
 	@echo Done: $(PROJECT_NAME)$(SUFFIX).bin
 
-beta:   
+beta:	
 	-git pull
 	-git submodule update --recursive
 	-git commit -a
 	@make set
 	cp $(PROJECT_NAME)*.bin release/beta
+	rsync -az release/beta/$(PROJECT_NAME)* ota.faikout.uk:/var/www/ota/beta/
 	git commit -a -m Beta
 	git push
 
-issue:
+issue:	
 	-git pull
 	-git commit -a
 	cp -f release/beta/$(PROJECT_NAME)*.bin release
-	-git commit -a -m Release
-	-git push
+	rsync -az release/$(PROJECT_NAME)* ota.faikout.uk:/var/www/ota/
+	git commit -a -m Release
+	git push
 
 pull:
 	git pull

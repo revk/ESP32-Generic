@@ -30,8 +30,12 @@ u8	i2c		//	I2C ID
 gpio	scl		//	SCL
 gpio	sda		//	SDA
 u8	als	10 .set .hex .fix .digits=2	// ALS address
+gpio	rgb		// RGB strip (outpus)
+u8	leds		// LEDs
 gpio	input	.array=MAXGPIO	//	Inputs to track
 gpio	output	.array=MAXGPIO	//	Outputs to set
+u32	outputmark .array=MAXGPIO .unit="ms" .live	// Output mark time
+u32	outputspace .array=MAXGPIO .unit="ms" .live	// Output space time
 gpio	power	.array=MAXGPIO	//	Power outputs
 gpio	lora.rest	//	LoRa REST
 gpio	lora.nss	//	LoRa NSS

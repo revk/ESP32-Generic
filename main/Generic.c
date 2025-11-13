@@ -44,8 +44,8 @@ static const char TAG[] = "Generic";
 #warning CONFIG_BOOTLOADER_LOG_LEVEL recommended to be no output
 #endif
 
-static uint32_t outputmark[MAXGPIO];    //Output mark time(ms)
-static uint32_t outputspace[MAXGPIO];   //Output mark time(ms)
+led_strip_handle_t strip = NULL;
+
 int holding = 0;
 int refresh = 0;
 
@@ -53,8 +53,8 @@ int refresh = 0;
 static uint64_t volatile outputbits = 0;        // Requested output
 static uint64_t volatile outputraw = 0; // Current output
 static uint64_t volatile outputoverride = 0;    // Override output (e.g. PWM)
-static uint32_t outputremaining[MAXGPIO] = { }; //Output remaining time(ms)
-static uint32_t outputcount[MAXGPIO] = { };     //Output count
+static uint32_t outputremaining[MAXGPIO] = { 0 };       //Output remaining time(ms)
+static uint32_t outputcount[MAXGPIO] = { 0 };   //Output count (how many pulses)
 
 int64_t busy = 0;
 char usb_present = 0;
@@ -341,7 +341,7 @@ lora_rx_task (void *arg)
 }
 
 static void
-web_head (httpd_req_t * req, const char *title)
+web_head (httpd_req_t *req, const char *title)
 {
    revk_web_head (req, title);
    httpd_resp_sendstr_chunk (req, "<style>"     //
@@ -360,7 +360,7 @@ web_head (httpd_req_t * req, const char *title)
 }
 
 static esp_err_t
-web_icon (httpd_req_t * req)
+web_icon (httpd_req_t *req)
 {                               // serve image -  maybe make more generic file serve
    extern const char start[] asm ("_binary_apple_touch_icon_png_start");
    extern const char end[] asm ("_binary_apple_touch_icon_png_end");
@@ -370,7 +370,7 @@ web_icon (httpd_req_t * req)
 }
 
 static esp_err_t
-web_root (httpd_req_t * req)
+web_root (httpd_req_t *req)
 {
    if (revk_link_down ())
       return revk_web_settings (req);   // Direct to web set up
@@ -605,7 +605,7 @@ input_task (void *arg)
          jo_array (j, "input");
          for (int i = 0; i <= max; i++)
             if (input[i].set)
-               jo_bool (j, NULL, revk_gpio_get (input[i]));
+               jo_bool (j, NULL, (this >> i));
             else
                jo_null (j, NULL);
          jo_close (j);
@@ -620,27 +620,39 @@ output_task (void *arg)
    arg = arg;
    while (1)
    {
-      usleep (1000);
+      usleep (1000 - esp_timer_get_time () % 1000);
       for (int i = 0; i < MAXGPIO; i++)
          if (output[i].set && !(outputoverride & (1ULL << i)))
          {
-            int p = output[i].num;
             if (outputremaining[i] && !--outputremaining[i])
-               outputbits ^= (1ULL << i);       //timeout
+               outputbits ^= (1ULL << i);       // Timeout
             if ((outputbits ^ outputraw) & (1ULL << i))
             {                   //Change output
                outputraw ^= (1ULL << i);
                //REVK_ERR_CHECK(gpio_hold_dis(p));
-               REVK_ERR_CHECK (gpio_set_level (p, output[i].invert ^ ((outputbits >> i) & 1)));
+               revk_gpio_set (output[i], (outputbits >> i) & 1);
+               if (strip && i + 1 < leds)
+                  revk_led (strip, i + 1, 255, revk_rgb ((outputbits >> i) & 1 ? 'G' : 'R'));
                //REVK_ERR_CHECK(gpio_hold_en(p));
                if (outputbits & (1ULL << i))
-                  outputremaining[i] = outputmark[i];   //Time
-               else if (!outputcount[i] || (outputcount[i] != -1 && !--outputcount[i]))
+                  outputremaining[i] = outputmark[i];   // Time
+               else if (!outputcount[i] || (outputcount[i] != 0xFFFFFF && !--outputcount[i]))
                   outputremaining[i] = 0;
                else
-                  outputremaining[i] = outputspace[i];  //Time
+                  outputremaining[i] = outputspace[i];  // Time
             }
          }
+   }
+}
+
+void
+led_task (void *arg)
+{
+   while (1)
+   {
+      usleep (10000 - esp_timer_get_time () % 10000);
+      revk_led (strip, 0, 255, revk_blinker ());
+      led_strip_refresh (strip);
    }
 }
 
@@ -755,8 +767,9 @@ app_callback (int client, const char *prefix, const char *target, const char *su
    if (!strncmp (suffix, "output", 6))
    {
       int i = atoi (suffix + 6);
-      if (i < 0 || i >= MAXGPIO)
+      if (i <= 0 || i > MAXGPIO)
          return "Bad output number";
+      i--;
       if (!output[i].set)
          return "Output not configured";
       int c = atoi (value);
@@ -767,11 +780,13 @@ app_callback (int client, const char *prefix, const char *target, const char *su
          if (!outputcount[i])
          {                      // On
             outputcount[i] = c;
+            outputremaining[i] = outputmark[i];
             outputbits |= (1ULL << i);
          }
       } else
       {                         // Off
          outputcount[i] = 0;
+         outputremaining[i] = 0;
          outputbits &= ~(1ULL << i);
       }
       return "";
@@ -825,7 +840,27 @@ app_main ()
 {
    revk_boot (&app_callback);
    revk_start ();
-
+   if (leds && rgb.set)
+   {
+      led_strip_config_t strip_config = {
+         .strip_gpio_num = rgb.num,
+         .max_leds = leds,      // The number of LEDs in the strip,
+#ifdef  LED_STRIP_COLOR_COMPONENT_FMT_GRB
+         .color_component_format = LED_STRIP_COLOR_COMPONENT_FMT_GRB,
+#else
+         .led_pixel_format = LED_PIXEL_FORMAT_GRB,
+#endif
+         .led_model = LED_MODEL_WS2812, // LED strip model
+         .flags.invert_out = rgb.invert,
+      };
+      led_strip_rmt_config_t rmt_config = {
+         .clk_src = RMT_CLK_SRC_DEFAULT,        // different clock source can lead to different power consumption
+         .resolution_hz = 10 * 1000 * 1000,     // 10MHz
+      };
+      REVK_ERR_CHECK (led_strip_new_rmt_device (&strip_config, &rmt_config, &strip));
+      for (int i = 0; i < leds; i++)
+         revk_led (strip, i, 255, revk_rgb ('B'));
+   }
    // Web interface
    httpd_config_t config = HTTPD_DEFAULT_CONFIG ();
    if (!httpd_start (&webserver, &config))
@@ -866,55 +901,13 @@ app_main ()
       }
    }
 #endif
+   for (int i = 0; i < MAXGPIO; i++)
    {
-    gpio_config_t o = { mode:GPIO_MODE_OUTPUT };
-    gpio_config_t u = { mode: GPIO_MODE_INPUT, pull_up_en:GPIO_PULLUP_ENABLE };
-    gpio_config_t d = { mode: GPIO_MODE_INPUT, pull_down_en:GPIO_PULLDOWN_ENABLE };
-      for (int i = 0; i < MAXGPIO; i++)
-      {
-         if (input[i].set)
-         {
-            int p = input[i].num;
-            if (gpio_ok (p) & 2)
-            {
-               ESP_LOGE (TAG, "Input %d%s", p, input[i].invert ? "¬" : "");
-               if (input[i].invert)
-                  u.pin_bit_mask |= (1ULL << p);
-               else
-                  d.pin_bit_mask |= (1ULL << p);
-            }
-         }
-         if (output[i].set)
-         {
-            int p = output[i].num;
-            if (gpio_ok (p) & 1)
-            {
-               ESP_LOGE (TAG, "Output %d%s", p, output[i].invert ? "¬" : "");
-               o.pin_bit_mask |= (1ULL << p);
-               REVK_ERR_CHECK (gpio_set_level (p, output[i].invert));
-               holding++;
-            }
-         }
-         if (power[i].set)
-         {
-            int p = power[i].num;
-            if (gpio_ok (p) & 1)
-            {
-               ESP_LOGE (TAG, "Power %d%s", p, power[i].invert ? "-" : "+");
-               o.pin_bit_mask |= (1ULL << p);
-               //REVK_ERR_CHECK(gpio_hold_dis(p));
-               REVK_ERR_CHECK (gpio_set_level (p, power[i].invert));
-               //REVK_ERR_CHECK (gpio_set_drive_capability (p, GPIO_DRIVE_CAP_3));
-               holding++;
-            }
-         }
-      }
-      if (o.pin_bit_mask)
-         REVK_ERR_CHECK (gpio_config (&o));
-      if (u.pin_bit_mask)
-         REVK_ERR_CHECK (gpio_config (&u));
-      if (d.pin_bit_mask)
-         REVK_ERR_CHECK (gpio_config (&d));
+      revk_gpio_input (input[i]);
+      revk_gpio_output (output[i], 0);
+      revk_gpio_output (power[i], 1);
+      if (strip && output[i].set && i + 1 < leds)
+         revk_led (strip, i + 1, 255, 'R');
    }
    if (esp_reset_reason () != ESP_RST_DEEPSLEEP && awake < 60)
       awake = 60;
@@ -1018,6 +1011,8 @@ app_main ()
          }
       }
    }
+   if (strip)
+      revk_task ("led", led_task, NULL, 4);
    revk_task ("input", input_task, NULL, 4);
    revk_task ("output", output_task, NULL, 4);
    if (defcon)
@@ -1148,7 +1143,6 @@ app_main ()
             {
                gfx_pos (gfx_width () / 2, gfx_y () + 20, GFX_T | GFX_C | GFX_V);
                gfx_text (GFX_TEXT_DESCENDERS, 2, "%.*s", rxlen, rxbuf);
-
                gfx_pos (gfx_width () / 2, gfx_height () - 1, GFX_B | GFX_C | GFX_V);
                localtime_r (&rxtime, &t);
                strftime (temp, sizeof (temp), "%F %T", &t);
