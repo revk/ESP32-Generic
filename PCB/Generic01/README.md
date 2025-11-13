@@ -10,4 +10,4 @@ This is an open source project, but bear in mind you cannot sell boards bearing 
 
 <img src='Generic01.png' width=32%><img src='Generic01-90.png' width=32%><img src='Generic01-bottom.png' width=32%>
 
-*Auto generated 2025-07-09T16:24:34*
+*Auto generated 2025-08-24T13:28:44*
