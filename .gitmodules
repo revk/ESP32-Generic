@@ -20,4 +20,4 @@
 	url = https://github.com/revk/ESP32-GFX
 [submodule "PCB/PCBCase"]
 	path = PCB/PCBCase
-	url = https://github.com/revk/PCBCase
+	url = https://codeberg.org/RevK/PCBCase
