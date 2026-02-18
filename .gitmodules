@@ -14,7 +14,7 @@
 	branch = main
 [submodule "components/QR"]
 	path = components/QR
-	url = https://github.com/revk/QR
+	url = https://codeberg.org/RevK/QR
 [submodule "components/ESP32-GFX"]
 	path = components/ESP32-GFX
 	url = https://codeberg.org/RevK/ESP32-GFX
