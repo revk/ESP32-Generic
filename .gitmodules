@@ -3,7 +3,7 @@
 	url = https://codeberg.org/RevK/ESP32-RevK
 [submodule "ftdizap"]
 	path = ftdizap
-	url = https://github.com/revk/ftdizap
+	url = https://codeberg.org/RevK/ftdizap
 	branch = main
 [submodule "components/ESP32-VL53L0X"]
 	path = components/ESP32-VL53L0X
